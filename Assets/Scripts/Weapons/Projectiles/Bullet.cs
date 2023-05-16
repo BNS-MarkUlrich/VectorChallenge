@@ -11,7 +11,7 @@ public class Bullet : Projectile
     private Vector3 predictedPosition;
     private Vector3 predictionVelocity;
 
-    private void Start()
+    private void Awake()
     {
         var originTarget = origin.GetComponent<Turret>().Target;
         SetTarget(originTarget);
@@ -50,7 +50,7 @@ public class Bullet : Projectile
     public override Vector3 GetPredictionVelocity()
     {
         var targetPosition = target.position;
-        predictedPosition = targetPosition + targetRigidbody.velocity / speed;
+        predictedPosition = targetPosition + targetRigidbody.velocity * speed;
 
         var velocityDirection = predictedPosition - transform.position;
 
@@ -63,7 +63,6 @@ public class Bullet : Projectile
 
     public override void Launch()
     {
-        print(predictionVelocity);
         rigidbody.velocity = predictionVelocity;
     }
 }
