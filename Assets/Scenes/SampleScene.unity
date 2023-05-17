@@ -156,7 +156,7 @@ MonoBehaviour:
   target: {fileID: 576791721}
   fireBullet: 0
   aimAssist: {fileID: 512892209}
-  speed: 10
+  speed: 4
 --- !u!4 &53107041
 Transform:
   m_ObjectHideFlags: 0
@@ -270,7 +270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512892204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.18635, y: -17.000778, z: 12.844149}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -420,13 +420,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 576791716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1c9712b419d3b4489250d9fcc72947c, type: 3}
+  m_Script: {fileID: 11500000, guid: c674692bacf812141b8c21addb876aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 576791717}
-  velocity: {x: -1, y: 0, z: 0}
+  velocity: {x: 2, y: 0, z: 0}
   speed: 2
-  turnTimer: 7
+  turnTimer: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
