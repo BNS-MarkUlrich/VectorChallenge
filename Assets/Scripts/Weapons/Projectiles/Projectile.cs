@@ -10,10 +10,8 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField] protected Rigidbody rigidbody;
     
     [SerializeField] protected float speed = 5f;
+    [SerializeField] protected float maxTravelDistance = 100f;
 
-    public abstract void SetOrigin(Transform newOrigin);
-    public abstract void SetTarget(Transform newTarget);
-    public abstract Vector3 GetPredictionVelocity();
-    public abstract void Launch();
-
+    public abstract void SetOrigin(Turret newOrigin);
+    protected abstract void Launch(Vector3 velocity);
 }

@@ -5,64 +5,30 @@ using UnityEngine;
 
 public class Bullet : Projectile
 {
-    [SerializeField] private Transform origin;
-    [SerializeField] private float lifeTimer = 3f;
+    [SerializeField] private Turret origin;
 
-    private Vector3 predictedPosition;
     private Vector3 predictionVelocity;
-
-    private void Awake()
-    {
-        var originTarget = origin.GetComponent<Turret>().Target;
-        SetTarget(originTarget);
-    }
 
     void LateUpdate()
     {
-        /*if (transform.position == predictedPosition)
-        {
-            Destroy(gameObject);
-            return;
-        }*/
-        
-        lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0)
+        var distanceToOrigin = Vector3.Distance(transform.position, origin.transform.position);
+        if (distanceToOrigin >= maxTravelDistance)
         {
             Destroy(gameObject);
             return;
         }
         
-        Launch();
+        Launch(predictionVelocity);
     }
 
-    public override void SetOrigin(Transform newOrigin)
+    public override void SetOrigin(Turret newOrigin)
     {
         origin = newOrigin;
+        predictionVelocity = origin.PredictedVelocity;
     }
 
-    public override void SetTarget(Transform newTarget)
+    protected override void Launch(Vector3 velocity)
     {
-        target = newTarget;
-        targetRigidbody = target.GetComponent<Rigidbody>();
-        GetPredictionVelocity();
-    }
-
-    public override Vector3 GetPredictionVelocity()
-    {
-        var targetPosition = target.position;
-        predictedPosition = targetPosition + targetRigidbody.velocity * speed;
-
-        var velocityDirection = predictedPosition - transform.position;
-
-        var velocityMagnitude = velocityDirection.magnitude * speed;
-
-        predictionVelocity = velocityDirection.normalized * velocityMagnitude;
-
-        return predictionVelocity;
-    }
-
-    public override void Launch()
-    {
-        rigidbody.velocity = predictionVelocity;
+        rigidbody.velocity = velocity;
     }
 }

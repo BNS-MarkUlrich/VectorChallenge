@@ -101,7 +101,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -122,9 +122,9 @@ MonoBehaviour:
   target: {fileID: 0}
   targetRigidbody: {fileID: 0}
   rigidbody: {fileID: 7625445299389650292}
-  speed: 0.4
+  speed: 4
+  maxTravelDistance: 300
   origin: {fileID: 0}
-  lifeTimer: 10
 --- !u!54 &7625445299389650292
 Rigidbody:
   m_ObjectHideFlags: 0
