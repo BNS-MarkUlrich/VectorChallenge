@@ -9,8 +9,12 @@ public class Turret : Weapon
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Transform target;
     [SerializeField] private bool fireBullet;
+    [SerializeField] private bool autoFire;
+    [SerializeField] private float shootCooldown = 1f;
     [SerializeField] private Transform aimAssist;
     [SerializeField] private float speed = 2f;
+
+    private float oldSootCooldown;
     
     private Rigidbody _targetRigidbody;
     private Vector3 _predictedVelocity;
@@ -21,10 +25,22 @@ public class Turret : Weapon
     private void Start()
     {
         _targetRigidbody = target.GetComponent<Rigidbody>();
+        oldSootCooldown = shootCooldown;
     }
 
     private void Update()
     {
+        if (autoFire)
+        {
+            shootCooldown -= Time.deltaTime;
+
+            if (shootCooldown <= 0)
+            {
+                fireBullet = true;
+                shootCooldown = oldSootCooldown;
+            }
+        }
+
         if (fireBullet)
         {
             fireBullet = false;
@@ -66,7 +82,7 @@ public class Turret : Weapon
     private void Fire()
     {
         CalculatePredictionVelocity();
-        var newProjectile = Instantiate(projectilePrefab, transform);
+        var newProjectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
         newProjectile.InitBullet(this);
     }
 }
