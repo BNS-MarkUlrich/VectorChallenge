@@ -55,8 +55,9 @@ public class Turret : Weapon
     {
         var targetPosition = target.position;
         var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
         var predictedPosition = targetPosition + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-
+        
         return predictedPosition;
     }
 

@@ -16,13 +16,13 @@ public class ShipMovement : Movement
         
         var velocityDirection = target.position - transform.position;
 
-        var velocityMagnitude = velocityDirection.magnitude;// * (speed / mass);
+        var velocityMagnitude = velocityDirection.magnitude;
 
         var desiredVelocity = velocityDirection.normalized * velocityMagnitude;
         
         var angle = Vector3.Angle(velocityDirection, transform.forward);
 
-        var newAngle = angle / 10 / mass;
+        var newAngle = angle / 10;
         var newSpeed = speed / newAngle;
         
         if (newAngle < 1)
@@ -30,11 +30,9 @@ public class ShipMovement : Movement
             newSpeed = speed;
         }
         
-        //print(newSpeed);
-        //print(newSpeed);
-        MyRigidBody.velocity = transform.forward.normalized * (newSpeed / mass);
+        MyRigidBody.velocity = transform.forward.normalized * (newSpeed / Mass);
         //MyRigidBody.velocity = transform.forward.normalized * velocityMagnitude;
 
-        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (velocityDirection), Time.deltaTime * (rotationSpeed / newAngle));
+        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (velocityDirection), Time.deltaTime * ((rotationSpeed / newAngle) / Mass));
     }
 }

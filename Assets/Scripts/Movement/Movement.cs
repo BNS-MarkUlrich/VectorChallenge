@@ -5,11 +5,11 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    [SerializeField] protected float mass = 1f;
     [SerializeField] protected float speed = 2f;
     
     protected Rigidbody MyRigidBody;
-    public Vector3 Velocity => MyRigidBody.velocity;
+    protected Vector3 Velocity => MyRigidBody.velocity;
+    protected float Mass => MyRigidBody.mass;
     
     private void Awake()
     {
