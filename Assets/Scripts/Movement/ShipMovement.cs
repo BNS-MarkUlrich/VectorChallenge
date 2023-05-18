@@ -33,6 +33,6 @@ public class ShipMovement : Movement
         MyRigidBody.velocity = transform.forward.normalized * (newSpeed / Mass);
         //MyRigidBody.velocity = transform.forward.normalized * velocityMagnitude;
 
-        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (velocityDirection), Time.deltaTime * ((rotationSpeed / newAngle) / Mass));
+        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (velocityDirection), Time.deltaTime * (rotationSpeed / newAngle));
     }
 }
