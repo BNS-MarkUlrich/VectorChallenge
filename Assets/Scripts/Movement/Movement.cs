@@ -5,14 +5,14 @@ using UnityEngine;
 
 public abstract class Movement : MonoBehaviour
 {
-    [SerializeField] protected Vector3 velocity;
+    [SerializeField] protected float mass = 1f;
     [SerializeField] protected float speed = 2f;
-
-    protected Rigidbody Rigidbody;
+    
+    protected Rigidbody MyRigidBody;
+    public Vector3 Velocity => MyRigidBody.velocity;
     
     private void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody>();
+        MyRigidBody = GetComponent<Rigidbody>();
     }
-    
 }

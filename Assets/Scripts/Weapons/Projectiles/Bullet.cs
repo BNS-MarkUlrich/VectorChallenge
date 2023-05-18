@@ -29,6 +29,6 @@ public class Bullet : Projectile
 
     protected override void Launch(Vector3 newVelocity)
     {
-        Rigidbody.velocity = newVelocity;
+        MyRigidBody.velocity = newVelocity;
     }
 }

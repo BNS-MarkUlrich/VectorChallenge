@@ -11,7 +11,7 @@ public class TempMovement : Movement
 
     private void Start()
     {
-        Rigidbody = GetComponent<Rigidbody>();
+        MyRigidBody = GetComponent<Rigidbody>();
         originalTurnTimer = turnTimer;
         
         MoveForward(shouldTurn);
@@ -32,11 +32,11 @@ public class TempMovement : Movement
     {
         if (turn)
         {
-            Rigidbody.velocity = -velocity * speed;
+            MyRigidBody.velocity = -Velocity * speed;
         }
         else
         {
-            Rigidbody.velocity = velocity * speed;
+            MyRigidBody.velocity = Velocity * speed;
         }
     }
 }
