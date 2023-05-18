@@ -32,29 +32,29 @@ public class Turret : Weapon
         }
 
         if (aimAssist == null) return;
-        FollowTarget();
+        MoveAimAssist();
     }
 
-    private Vector3 PredictedPosition()
+    private Vector3 Aim()
     {
         var targetPosition = target.position;
         var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-        var predictedPosition = targetPosition + _targetRigidbody.velocity / (speed / (distanceToTarget / 3f));
+        var predictedPosition = targetPosition + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
 
         return predictedPosition;
     }
 
-    private void FollowTarget()
+    private void MoveAimAssist()
     {
-        aimAssist.position = PredictedPosition();
+        aimAssist.position = Aim();
     }
     
-    public Vector3 GetPredictionVelocity()
+    public Vector3 CalculatePredictionVelocity()
     {
-        _predictedVelocity = PredictedPosition();
+        _predictedVelocity = Aim();
         var velocityDirection = _predictedVelocity - transform.position;
 
-        var velocityMagnitude = velocityDirection.magnitude;
+        //var velocityMagnitude = velocityDirection.magnitude;
 
         _predictedVelocity = velocityDirection.normalized;
 
@@ -65,8 +65,8 @@ public class Turret : Weapon
 
     private void Fire()
     {
-        GetPredictionVelocity();
-        var newProjectile = Instantiate(projectilePrefab);
-        newProjectile.SetOrigin(this);
+        CalculatePredictionVelocity();
+        var newProjectile = Instantiate(projectilePrefab, transform);
+        newProjectile.InitBullet(this);
     }
 }

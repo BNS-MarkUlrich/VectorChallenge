@@ -11,8 +11,8 @@ public class Bullet : Projectile
 
     void LateUpdate()
     {
-        var distanceToOrigin = Vector3.Distance(transform.position, origin.transform.position);
-        if (distanceToOrigin >= maxTravelDistance)
+        var travelDistance = Vector3.Distance(transform.position, origin.transform.position);
+        if (travelDistance >= maxTravelDistance)
         {
             Destroy(gameObject);
             return;
@@ -21,14 +21,14 @@ public class Bullet : Projectile
         Launch(predictionVelocity);
     }
 
-    public override void SetOrigin(Turret newOrigin)
+    public override void InitBullet(Turret newOrigin)
     {
         origin = newOrigin;
         predictionVelocity = origin.PredictedVelocity;
     }
 
-    protected override void Launch(Vector3 velocity)
+    protected override void Launch(Vector3 newVelocity)
     {
-        rigidbody.velocity = velocity;
+        Rigidbody.velocity = newVelocity;
     }
 }

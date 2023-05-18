@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TempMovement : Movement
 {
+    [SerializeField] protected float turnTimer = 5f;
     private float originalTurnTimer;
     private bool shouldTurn;
 
