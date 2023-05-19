@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : Projectile
 {
-    [SerializeField] private Turret origin;
-
+    [SerializeField] private float maxTravelDistance = 100f;
     private Vector3 predictionVelocity;
 
     void LateUpdate()
@@ -23,12 +19,7 @@ public class Bullet : Projectile
 
     public override void InitBullet(Turret newOrigin)
     {
-        origin = newOrigin;
+        base.InitBullet(newOrigin);
         predictionVelocity = origin.PredictedVelocity;
-    }
-
-    protected override void Launch(Vector3 newVelocity)
-    {
-        MyRigidBody.velocity = newVelocity;
     }
 }

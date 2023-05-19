@@ -5,11 +5,17 @@ using UnityEngine;
 
 public abstract class Projectile : Movement
 {
+    [SerializeField] protected Turret origin;
     [SerializeField] protected Transform target;
     [SerializeField] protected Rigidbody targetRigidbody;
-    
-    [SerializeField] protected float maxTravelDistance = 100f;
 
-    public abstract void InitBullet(Turret newOrigin);
-    protected abstract void Launch(Vector3 newVelocity);
+    public virtual void InitBullet(Turret newOrigin)
+    {
+        origin = newOrigin;
+    }
+
+    protected virtual void Launch(Vector3 newVelocity)
+    {
+        MyRigidBody.velocity = newVelocity;
+    }
 }
