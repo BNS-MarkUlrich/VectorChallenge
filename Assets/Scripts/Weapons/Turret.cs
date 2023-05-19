@@ -24,12 +24,21 @@ public class Turret : Weapon
 
     private void Start()
     {
+        if (target == null)
+        {
+            return;
+        }
         _targetRigidbody = target.GetComponent<Rigidbody>();
         oldSootCooldown = shootCooldown;
     }
 
     private void Update()
     {
+        if (target == null)
+        {
+            return;
+        }
+        
         if (autoFire)
         {
             shootCooldown -= Time.deltaTime;
