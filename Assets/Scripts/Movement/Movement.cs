@@ -39,10 +39,10 @@ public abstract class Movement : MonoBehaviour
         //MyRigidBody.velocity = transform.forward.normalized * velocityMagnitude;
     }
     
-    protected Quaternion RotateToTarget(Transform rotationTarget)
+    protected void RotateToTarget(Transform rotationTarget)
     {
         var targetDirection = rotationTarget.position - transform.position;
         var angle = Vector3.Angle(targetDirection, transform.forward) / 10;
-        return Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotationSpeed / angle / Mass));
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotationSpeed / angle / Mass));
     }
 }
