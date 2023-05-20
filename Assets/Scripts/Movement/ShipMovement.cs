@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class ShipMovement : Movement
 {
-    [SerializeField] private GameObject target;
+    [SerializeField] private Transform target;
 
     protected float distanceToTarget;
     

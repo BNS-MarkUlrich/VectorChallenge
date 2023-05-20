@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &484058094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1917205031788427936, guid: 76448058ed48f42458001ec240acf00c, type: 3}
+  m_PrefabInstance: {fileID: 1604810440454043834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1029148874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4643931254834458829, guid: 76448058ed48f42458001ec240acf00c, type: 3}
@@ -140,6 +145,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1029148874}
+    - target: {fileID: 3495573734534047416, guid: 76448058ed48f42458001ec240acf00c, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 484058094}
     - target: {fileID: 4643931254834458829, guid: 76448058ed48f42458001ec240acf00c, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -193,7 +202,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2267386845206340118, guid: 76448058ed48f42458001ec240acf00c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76448058ed48f42458001ec240acf00c, type: 3}
