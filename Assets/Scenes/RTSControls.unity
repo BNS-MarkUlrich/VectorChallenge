@@ -23,9 +23,9 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 3
+  m_AmbientIntensity: 1
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.33726415, g: 0.3734277, b: 0.5, a: 1}
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 81f714daf7144784b8a2f42f1cd30927, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -145,14 +145,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1029148874}
-    - target: {fileID: 34457162324505281, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: projectilePrefab
-      value: 
-      objectReference: {fileID: -4647362279761830127, guid: 12fa57ee90fb4814ea356165c71d01ee, type: 3}
-    - target: {fileID: 1491027543133117201, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3495573734534047416, guid: 76448058ed48f42458001ec240acf00c, type: 3}
       propertyPath: target
       value: 
@@ -208,10 +200,6 @@ PrefabInstance:
     - target: {fileID: 6863474778857352959, guid: 76448058ed48f42458001ec240acf00c, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454963835673142279, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -422,22 +410,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1096575880}
-    - target: {fileID: 34457162324505281, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: projectilePrefab
-      value: 
-      objectReference: {fileID: 2129984051130309635, guid: 6cb01356ea92cd24b91bb7791f251598, type: 3}
-    - target: {fileID: 1491027543133117201, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3495573734534047416, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: maxSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3495573734534047416, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: rotationSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4643931254834458829, guid: 76448058ed48f42458001ec240acf00c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -485,10 +457,6 @@ PrefabInstance:
     - target: {fileID: 6863474778857352959, guid: 76448058ed48f42458001ec240acf00c, type: 3}
       propertyPath: m_Name
       value: Ship
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454963835673142279, guid: 76448058ed48f42458001ec240acf00c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
