@@ -2,37 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ShipMovement : Movement
 {
-    [SerializeField] private bool startMoving;
-    
     [SerializeField] private Transform target;
-    [SerializeField] private float rotationSpeed = 5f;
+
+    protected float distanceToTarget;
+    
+    private void Start()
+    {
+        InitTarget();
+    }
+
+    private void InitTarget()
+    {
+        target.transform.parent = transform.parent;
+    }
+
+    public void SetTargetDestination(Vector3 destination)
+    {
+        target.transform.position = destination;
+    }
 
     private void Update()
     {
-        if (!startMoving) return;
-        
-        var velocityDirection = target.position - transform.position;
-
-        var velocityMagnitude = velocityDirection.magnitude;
-
-        var desiredVelocity = velocityDirection.normalized * velocityMagnitude;
-        
-        var angle = Vector3.Angle(velocityDirection, transform.forward);
-
-        var newAngle = angle / 10;
-        var newSpeed = speed / newAngle;
-        
-        if (newAngle < 1)
+        distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        if (distanceToTarget < 2f)
         {
-            newSpeed = speed;
+            MyRigidBody.velocity *= 0.5f * Time.deltaTime;
+            return;
         }
         
-        MyRigidBody.velocity = transform.forward.normalized * (newSpeed / Mass);
-        //MyRigidBody.velocity = transform.forward.normalized * velocityMagnitude;
-
-        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (velocityDirection), Time.deltaTime * (rotationSpeed / newAngle / Mass));
+        MoveToTarget(target);
+        RotateToTarget(target);
     }
 }
