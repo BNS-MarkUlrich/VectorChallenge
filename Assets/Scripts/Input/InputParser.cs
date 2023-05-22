@@ -10,8 +10,10 @@ public class InputParser : MonoBehaviour
     private InputActionAsset _rtsControlsActions;
 
     [SerializeField] private ShipMovement shipMovement;
+    [SerializeField] private PlayerMovement playerMovement;
 
     private Vector3 mousePosition;
+    private Vector3 inputMovement;
     private Plane plane = new Plane(Vector3.up,0);
 
     private void Start()
@@ -19,9 +21,17 @@ public class InputParser : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _rtsControlsActions = _playerInput.actions;
 
-        shipMovement = GetComponent<ShipMovement>();
+        //shipMovement = GetComponent<ShipMovement>();
+        if (shipMovement != null)
+        {
+            _rtsControlsActions["SetShipDestination"].performed += SetTargetDestination;
+        }
         
-        _rtsControlsActions["SetShipDestination"].performed += SetTargetDestination;
+        /*if (playerMovement != null)
+        {
+            _rtsControlsActions["InputMovement"].performed += MovePlayer;
+        }*/
+        
         
         _rtsControlsActions.Enable();
     }
@@ -38,9 +48,25 @@ public class InputParser : MonoBehaviour
         shipMovement.SetTargetDestination(mousePosition);
     }
 
+    /*private void MovePlayer(InputAction.CallbackContext context)
+    {
+        inputMovement = context.ReadValue<Vector2>();
+        var input3D = new Vector3(inputMovement.x, 0, inputMovement.y);
+        
+        playerMovement.MovePlayer(input3D);
+    }*/
+
     private void FixedUpdate()
     {
         mousePosition = _rtsControlsActions["MousePosition"].ReadValue<Vector2>();
+
+        if (playerMovement != null)
+        {
+            inputMovement = _rtsControlsActions["InputMovement"].ReadValue<Vector2>();
+            var input3D = new Vector3(inputMovement.x, 0, inputMovement.y);
+        
+            playerMovement.MovePlayer(input3D);
+        }
     }
 
     private void OnDestroy()

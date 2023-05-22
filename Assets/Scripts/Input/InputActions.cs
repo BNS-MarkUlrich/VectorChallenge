@@ -44,6 +44,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InputMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""c7a95768-338f-4caa-8d67-2bc6ae811f3a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,61 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""289c669d-5d9c-400d-b2da-3ee697812034"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InputMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""d6e4b408-6bd3-49f3-96a0-96a1918c3088"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InputMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4d0843be-a1fe-49ea-91c8-7e2077851f2d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InputMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b1c3ffc6-abb2-4501-b57f-56c313a6327a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InputMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""edb2825a-b0ed-4137-9aea-d55c1a290da4"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InputMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -95,6 +159,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_RTSControls = asset.FindActionMap("RTSControls", throwIfNotFound: true);
         m_RTSControls_SetShipDestination = m_RTSControls.FindAction("SetShipDestination", throwIfNotFound: true);
         m_RTSControls_MousePosition = m_RTSControls.FindAction("MousePosition", throwIfNotFound: true);
+        m_RTSControls_InputMovement = m_RTSControls.FindAction("InputMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -158,12 +223,14 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private List<IRTSControlsActions> m_RTSControlsActionsCallbackInterfaces = new List<IRTSControlsActions>();
     private readonly InputAction m_RTSControls_SetShipDestination;
     private readonly InputAction m_RTSControls_MousePosition;
+    private readonly InputAction m_RTSControls_InputMovement;
     public struct RTSControlsActions
     {
         private @InputActions m_Wrapper;
         public RTSControlsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @SetShipDestination => m_Wrapper.m_RTSControls_SetShipDestination;
         public InputAction @MousePosition => m_Wrapper.m_RTSControls_MousePosition;
+        public InputAction @InputMovement => m_Wrapper.m_RTSControls_InputMovement;
         public InputActionMap Get() { return m_Wrapper.m_RTSControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -179,6 +246,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
+            @InputMovement.started += instance.OnInputMovement;
+            @InputMovement.performed += instance.OnInputMovement;
+            @InputMovement.canceled += instance.OnInputMovement;
         }
 
         private void UnregisterCallbacks(IRTSControlsActions instance)
@@ -189,6 +259,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
+            @InputMovement.started -= instance.OnInputMovement;
+            @InputMovement.performed -= instance.OnInputMovement;
+            @InputMovement.canceled -= instance.OnInputMovement;
         }
 
         public void RemoveCallbacks(IRTSControlsActions instance)
@@ -219,5 +292,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     {
         void OnSetShipDestination(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnInputMovement(InputAction.CallbackContext context);
     }
 }
