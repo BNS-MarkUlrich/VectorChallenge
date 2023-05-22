@@ -16,11 +16,21 @@ public class Rocket : Projectile
     private void AreaOfEffect()
     {
         Physics.OverlapSphereNonAlloc(transform.position, areaRadius, targetsInRange);
+        print(targetsInRange.Length);
     }
 
     private void FollowTarget()
     {
         //var velocityDirection = target.position - transform.position;
+        
+        distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        lifeTimer -= Time.deltaTime;
+        if (lifeTimer <= 0 || distanceToTarget < 10f)
+        {
+            AreaOfEffect();
+            Destroy(this);
+            return;
+        }
         
         MoveToTarget(target);
         RotateToTarget(target);
@@ -28,19 +38,7 @@ public class Rocket : Projectile
 
     private void Update()
     {
-        distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-        lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0 || distanceToTarget < 2f)
-        {
-            Destroy(gameObject);
-            return;
-        }
-    }
-
-    private void LateUpdate()
-    {
         FollowTarget();
-        //Launch(followVelocity);
     }
 
     public override void InitBullet(Turret newOrigin)
