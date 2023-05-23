@@ -7,70 +7,105 @@ using UnityEngine.InputSystem;
 public class InputParser : MonoBehaviour
 {
     private PlayerInput _playerInput;
-    private InputActionAsset _rtsControlsActions;
+    private InputActionAsset _controlsActions;
+    private InputActionMap CurrentActionMap => _playerInput.currentActionMap;
 
-    [SerializeField] private ShipMovement shipMovement;
+    [Header("Player")]
     [SerializeField] private PlayerMovement playerMovement;
-
-    private Vector3 mousePosition;
-    private Vector3 inputMovement;
-    private Plane plane = new Plane(Vector3.up,0);
+    
+    [Header("RTS")]
+    [SerializeField] private ShipMovement shipMovement;
+    private Vector3 _mousePosition;
+    
+    [Header("MoveInput")]
+    private Vector3 _inputMovement;
 
     private void Start()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        _rtsControlsActions = _playerInput.actions;
-
-        //shipMovement = GetComponent<ShipMovement>();
-        if (shipMovement != null)
+        InitInput();
+        
+        AddRTSListeners();
+    }
+    
+    private void FixedUpdate()
+    {
+        switch (CurrentActionMap.name)
         {
-            _rtsControlsActions["SetShipDestination"].performed += SetTargetDestination;
+            // Player
+            case "Player":
+                MovePlayer(ReadMoveInput());
+                break;
+            // RTS
+            case "RTS":
+                FollowMousePosition();
+                break;
         }
-        
-        /*if (playerMovement != null)
-        {
-            _rtsControlsActions["InputMovement"].performed += MovePlayer;
-        }*/
-        
-        
-        _rtsControlsActions.Enable();
+    }
+    
+    public void SetInputActionMap(InputActionMap inputType)
+    {
+        _playerInput.currentActionMap = inputType;
     }
 
+    private void InitInput()
+    {
+        _playerInput = GetComponent<PlayerInput>();
+        _controlsActions = _playerInput.actions;
+        
+        _controlsActions.Enable();
+    }
+    
+    // Player
+    private void MovePlayer(Vector3 moveInput)
+    {
+        playerMovement.MovePlayer(moveInput);
+    }
+
+    // RTS
+    private void AddRTSListeners()
+    {
+        _controlsActions["SetShipDestination"].performed += SetTargetDestination;
+    }
+    
+    private void FollowMousePosition()
+    {
+        _mousePosition = _controlsActions["MousePosition"].ReadValue<Vector2>();
+    }
+    
     private void SetTargetDestination(InputAction.CallbackContext context)
     {
         float distance;
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        var ray = Camera.main!.ScreenPointToRay(_mousePosition);
+        var plane = new Plane(Vector3.up,0);
         if (plane.Raycast(ray, out distance))
         {
-            mousePosition = ray.GetPoint(distance);
+            _mousePosition = ray.GetPoint(distance);
         }
         
-        shipMovement.SetTargetDestination(mousePosition);
+        shipMovement.SetTargetDestination(_mousePosition);
+    }
+    
+    private void RemoveRTSListeners()
+    {
+        _controlsActions["SetShipDestination"].performed -= SetTargetDestination;
     }
 
-    /*private void MovePlayer(InputAction.CallbackContext context)
+    // MoveInput
+    private Vector3 ReadMoveInput()
     {
-        inputMovement = context.ReadValue<Vector2>();
-        var input3D = new Vector3(inputMovement.x, 0, inputMovement.y);
-        
-        playerMovement.MovePlayer(input3D);
-    }*/
+        var input3D = _controlsActions["Movement"].ReadValue<Vector2>();
+        _inputMovement.Set(input3D.x, 0, input3D.y);
 
-    private void FixedUpdate()
+        return _inputMovement;
+    }
+
+    private void RemoveAllListeners()
     {
-        mousePosition = _rtsControlsActions["MousePosition"].ReadValue<Vector2>();
-
-        if (playerMovement != null)
-        {
-            inputMovement = _rtsControlsActions["InputMovement"].ReadValue<Vector2>();
-            var input3D = new Vector3(inputMovement.x, 0, inputMovement.y);
-        
-            playerMovement.MovePlayer(input3D);
-        }
+        RemoveRTSListeners();
     }
 
     private void OnDestroy()
     {
-        _rtsControlsActions["SetShipDestination"].performed -= SetTargetDestination;
+        RemoveAllListeners();
     }
 }

@@ -24,7 +24,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     ""name"": ""InputActions"",
     ""maps"": [
         {
-            ""name"": ""RTSControls"",
+            ""name"": ""RTS"",
             ""id"": ""db75abd6-095e-4da9-9eab-318f29c4b2b1"",
             ""actions"": [
                 {
@@ -46,9 +46,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""InputMovement"",
+                    ""name"": ""Movement"",
                     ""type"": ""Value"",
-                    ""id"": ""c7a95768-338f-4caa-8d67-2bc6ae811f3a"",
+                    ""id"": ""b36924a3-84b4-4676-9131-768607e70dfe"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -62,7 +62,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""RTS"",
+                    ""groups"": ""PC"",
                     ""action"": ""SetShipDestination"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -73,63 +73,207 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""RTS"",
+                    ""groups"": ""PC"",
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""2D Vector"",
-                    ""id"": ""289c669d-5d9c-400d-b2da-3ee697812034"",
+                    ""id"": ""418c8804-b04e-4962-b596-fbb46db26e2a"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""InputMovement"",
+                    ""action"": ""Movement"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""d6e4b408-6bd3-49f3-96a0-96a1918c3088"",
+                    ""id"": ""5c5edae0-4494-4819-9b1b-75234a02b6e4"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""InputMovement"",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""4d0843be-a1fe-49ea-91c8-7e2077851f2d"",
+                    ""id"": ""885def62-bb65-4bc9-b755-7f2d8259b81a"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""InputMovement"",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""b1c3ffc6-abb2-4501-b57f-56c313a6327a"",
+                    ""id"": ""f553733c-782c-431c-b480-f53ac190b2b6"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""InputMovement"",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""edb2825a-b0ed-4137-9aea-d55c1a290da4"",
+                    ""id"": ""4660f7ba-1499-4f35-925f-4b734ed4419f"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Player"",
+            ""id"": ""5a584609-9184-4244-8365-c47eb7ea4bcf"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""ace47d6b-af71-419a-95a3-22daf81fb1be"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""5bc9279c-5243-4b14-a016-6be4b0701e11"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""InputMovement"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""7cb13459-a925-49f7-a40a-6e5be615ef8c"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2fee8dfa-0dec-4be7-9289-bbe283ccf3b0"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""452905c4-5b0f-4a16-8068-586a407ac541"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""6a0f5a87-ed11-4684-89cc-085dda00f6f0"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Ship"",
+            ""id"": ""10f8b3c2-c014-459d-975b-c8fd39a571df"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""4d481d96-678d-40f2-bd58-7460f292e8a6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""434a54ab-2958-4028-ac95-83f4376f4878"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""c1b554fd-a609-4123-bf54-9c7e357e5246"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""09df635c-fc9c-496c-97ab-492972dc35f4"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""61ec10b5-8f03-429e-aec7-4be6bfbcd901"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""54fbeb62-1151-4056-8552-cbe0055cce6b"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -138,8 +282,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""RTS"",
-            ""bindingGroup"": ""RTS"",
+            ""name"": ""PC"",
+            ""bindingGroup"": ""PC"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Mouse>"",
@@ -155,11 +299,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // RTSControls
-        m_RTSControls = asset.FindActionMap("RTSControls", throwIfNotFound: true);
-        m_RTSControls_SetShipDestination = m_RTSControls.FindAction("SetShipDestination", throwIfNotFound: true);
-        m_RTSControls_MousePosition = m_RTSControls.FindAction("MousePosition", throwIfNotFound: true);
-        m_RTSControls_InputMovement = m_RTSControls.FindAction("InputMovement", throwIfNotFound: true);
+        // RTS
+        m_RTS = asset.FindActionMap("RTS", throwIfNotFound: true);
+        m_RTS_SetShipDestination = m_RTS.FindAction("SetShipDestination", throwIfNotFound: true);
+        m_RTS_MousePosition = m_RTS.FindAction("MousePosition", throwIfNotFound: true);
+        m_RTS_Movement = m_RTS.FindAction("Movement", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        // Ship
+        m_Ship = asset.FindActionMap("Ship", throwIfNotFound: true);
+        m_Ship_Movement = m_Ship.FindAction("Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -218,40 +368,40 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // RTSControls
-    private readonly InputActionMap m_RTSControls;
-    private List<IRTSControlsActions> m_RTSControlsActionsCallbackInterfaces = new List<IRTSControlsActions>();
-    private readonly InputAction m_RTSControls_SetShipDestination;
-    private readonly InputAction m_RTSControls_MousePosition;
-    private readonly InputAction m_RTSControls_InputMovement;
-    public struct RTSControlsActions
+    // RTS
+    private readonly InputActionMap m_RTS;
+    private List<IRTSActions> m_RTSActionsCallbackInterfaces = new List<IRTSActions>();
+    private readonly InputAction m_RTS_SetShipDestination;
+    private readonly InputAction m_RTS_MousePosition;
+    private readonly InputAction m_RTS_Movement;
+    public struct RTSActions
     {
         private @InputActions m_Wrapper;
-        public RTSControlsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @SetShipDestination => m_Wrapper.m_RTSControls_SetShipDestination;
-        public InputAction @MousePosition => m_Wrapper.m_RTSControls_MousePosition;
-        public InputAction @InputMovement => m_Wrapper.m_RTSControls_InputMovement;
-        public InputActionMap Get() { return m_Wrapper.m_RTSControls; }
+        public RTSActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SetShipDestination => m_Wrapper.m_RTS_SetShipDestination;
+        public InputAction @MousePosition => m_Wrapper.m_RTS_MousePosition;
+        public InputAction @Movement => m_Wrapper.m_RTS_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_RTS; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(RTSControlsActions set) { return set.Get(); }
-        public void AddCallbacks(IRTSControlsActions instance)
+        public static implicit operator InputActionMap(RTSActions set) { return set.Get(); }
+        public void AddCallbacks(IRTSActions instance)
         {
-            if (instance == null || m_Wrapper.m_RTSControlsActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_RTSControlsActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_RTSActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_RTSActionsCallbackInterfaces.Add(instance);
             @SetShipDestination.started += instance.OnSetShipDestination;
             @SetShipDestination.performed += instance.OnSetShipDestination;
             @SetShipDestination.canceled += instance.OnSetShipDestination;
             @MousePosition.started += instance.OnMousePosition;
             @MousePosition.performed += instance.OnMousePosition;
             @MousePosition.canceled += instance.OnMousePosition;
-            @InputMovement.started += instance.OnInputMovement;
-            @InputMovement.performed += instance.OnInputMovement;
-            @InputMovement.canceled += instance.OnInputMovement;
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
         }
 
-        private void UnregisterCallbacks(IRTSControlsActions instance)
+        private void UnregisterCallbacks(IRTSActions instance)
         {
             @SetShipDestination.started -= instance.OnSetShipDestination;
             @SetShipDestination.performed -= instance.OnSetShipDestination;
@@ -259,39 +409,139 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MousePosition.started -= instance.OnMousePosition;
             @MousePosition.performed -= instance.OnMousePosition;
             @MousePosition.canceled -= instance.OnMousePosition;
-            @InputMovement.started -= instance.OnInputMovement;
-            @InputMovement.performed -= instance.OnInputMovement;
-            @InputMovement.canceled -= instance.OnInputMovement;
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
         }
 
-        public void RemoveCallbacks(IRTSControlsActions instance)
+        public void RemoveCallbacks(IRTSActions instance)
         {
-            if (m_Wrapper.m_RTSControlsActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_RTSActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IRTSControlsActions instance)
+        public void SetCallbacks(IRTSActions instance)
         {
-            foreach (var item in m_Wrapper.m_RTSControlsActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_RTSActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_RTSControlsActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_RTSActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public RTSControlsActions @RTSControls => new RTSControlsActions(this);
-    private int m_RTSSchemeIndex = -1;
-    public InputControlScheme RTSScheme
+    public RTSActions @RTS => new RTSActions(this);
+
+    // Player
+    private readonly InputActionMap m_Player;
+    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_Movement;
+    public struct PlayerActions
+    {
+        private @InputActions m_Wrapper;
+        public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+        }
+
+        private void UnregisterCallbacks(IPlayerActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+        }
+
+        public void RemoveCallbacks(IPlayerActions instance)
+        {
+            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerActions @Player => new PlayerActions(this);
+
+    // Ship
+    private readonly InputActionMap m_Ship;
+    private List<IShipActions> m_ShipActionsCallbackInterfaces = new List<IShipActions>();
+    private readonly InputAction m_Ship_Movement;
+    public struct ShipActions
+    {
+        private @InputActions m_Wrapper;
+        public ShipActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Ship_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_Ship; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ShipActions set) { return set.Get(); }
+        public void AddCallbacks(IShipActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ShipActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ShipActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+        }
+
+        private void UnregisterCallbacks(IShipActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+        }
+
+        public void RemoveCallbacks(IShipActions instance)
+        {
+            if (m_Wrapper.m_ShipActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IShipActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ShipActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ShipActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ShipActions @Ship => new ShipActions(this);
+    private int m_PCSchemeIndex = -1;
+    public InputControlScheme PCScheme
     {
         get
         {
-            if (m_RTSSchemeIndex == -1) m_RTSSchemeIndex = asset.FindControlSchemeIndex("RTS");
-            return asset.controlSchemes[m_RTSSchemeIndex];
+            if (m_PCSchemeIndex == -1) m_PCSchemeIndex = asset.FindControlSchemeIndex("PC");
+            return asset.controlSchemes[m_PCSchemeIndex];
         }
     }
-    public interface IRTSControlsActions
+    public interface IRTSActions
     {
         void OnSetShipDestination(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
-        void OnInputMovement(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
+    }
+    public interface IPlayerActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+    }
+    public interface IShipActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
     }
 }
