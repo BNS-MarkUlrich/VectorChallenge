@@ -1,34 +1,31 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : Projectile
 {
-    [SerializeField] private Turret origin;
-
-    private Vector3 predictionVelocity;
+    private Vector3 launchVelocity;
 
     void LateUpdate()
     {
-        var travelDistance = Vector3.Distance(transform.position, origin.transform.position);
-        if (travelDistance >= maxTravelDistance)
+        var travelDistance = Vector3.Distance(transform.position, Origin.transform.position);
+        if (travelDistance >= maxTravelDistance || HasReachedTarget())
         {
             Destroy(gameObject);
             return;
         }
         
-        Launch(predictionVelocity);
+        Launch(launchVelocity);
     }
 
-    public override void InitBullet(Turret newOrigin)
+    public override void InitBullet(Transform shipOrigin, Turret newOrigin)
     {
-        origin = newOrigin;
-        predictionVelocity = origin.PredictedVelocity;
+        base.InitBullet(shipOrigin, newOrigin);
+        launchVelocity = Origin.PredictedVelocity;
+        Target = Origin.Target;
     }
 
-    protected override void Launch(Vector3 newVelocity)
+    protected override void TargetHit(GameObject target)
     {
-        MyRigidBody.velocity = newVelocity;
+        Destroy(gameObject);
+        print(target.name);
     }
 }

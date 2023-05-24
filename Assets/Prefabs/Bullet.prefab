@@ -119,12 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740b2c37f2b32194992866a51401adef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 0}
-  speed: 4
-  target: {fileID: 0}
-  targetRigidbody: {fileID: 0}
+  maxSpeed: 3
+  rotationSpeed: 5
   maxTravelDistance: 200
-  origin: {fileID: 0}
 --- !u!54 &7625445299389650292
 Rigidbody:
   m_ObjectHideFlags: 0
