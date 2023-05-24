@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class Bullet : Projectile
 {
-    [SerializeField] private float maxTravelDistance = 100f;
-    private Vector3 predictionVelocity;
+    private Vector3 launchVelocity;
 
     void LateUpdate()
     {
-        var travelDistance = Vector3.Distance(transform.position, origin.transform.position);
-        if (travelDistance >= maxTravelDistance)
+        var travelDistance = Vector3.Distance(transform.position, Origin.transform.position);
+        if (travelDistance >= maxTravelDistance || HasReachedTarget())
         {
             Destroy(gameObject);
             return;
         }
         
-        Launch(predictionVelocity);
+        Launch(launchVelocity);
     }
 
     public override void InitBullet(Turret newOrigin)
     {
         base.InitBullet(newOrigin);
-        predictionVelocity = origin.PredictedVelocity;
+        launchVelocity = Origin.PredictedVelocity;
+        Target = Origin.Target;
     }
 }

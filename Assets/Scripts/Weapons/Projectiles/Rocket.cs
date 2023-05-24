@@ -8,15 +8,13 @@ public class Rocket : Projectile
     [SerializeField] private float areaRadius = 5f;
     [SerializeField] private float lifeTimer = 8f;
     
-    [SerializeField] private Collider[] targetsInRange;
+    private Collider[] targetsInRange;
     private Vector3 followVelocity;
-    
-    protected float distanceToTarget;
-    
+
     public override void InitBullet(Turret newOrigin)
     {
         base.InitBullet(newOrigin);
-        target = origin.Target;
+        Target = Origin.Target;
     }
 
     private void AreaOfEffect()
@@ -38,21 +36,20 @@ public class Rocket : Projectile
 
     private void FollowTarget()
     {
-        distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        MoveToTarget(Target);
+        RotateToTarget(Target);
+    }
+
+    private void Update()
+    {
         lifeTimer -= Time.deltaTime;
-        if (lifeTimer <= 0 || distanceToTarget < 1f)
+        if (lifeTimer <= 0 || HasReachedTarget())
         {
             AreaOfEffect();
             Destroy(gameObject);
             return;
         }
         
-        MoveToTarget(target);
-        RotateToTarget(target);
-    }
-
-    private void Update()
-    {
         FollowTarget();
     }
 

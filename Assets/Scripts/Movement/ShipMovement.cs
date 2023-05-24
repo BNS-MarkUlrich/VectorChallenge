@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShipMovement : Movement
+public class ShipMovement : ZeroGMovement
 {
     [SerializeField] private Transform target;
-
-    protected float distanceToTarget;
     
     private void Start()
     {
@@ -17,6 +15,7 @@ public class ShipMovement : Movement
 
     private void InitTarget()
     {
+        Target = target;
         target.transform.parent = transform.parent;
     }
 
@@ -27,8 +26,7 @@ public class ShipMovement : Movement
 
     private void Update()
     {
-        distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-        if (distanceToTarget < 2f)
+        if (HasReachedTarget(2f))
         {
             MyRigidBody.velocity *= 0.5f * Time.deltaTime;
             return;

@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Projectile : Movement
+public abstract class Projectile : ZeroGMovement
 {
-    [SerializeField] protected Turret origin;
-    [SerializeField] protected Transform target;
-    [SerializeField] protected Rigidbody targetRigidbody;
+    [SerializeField] protected float maxTravelDistance = 100f;
+    protected Turret Origin;
+    protected Rigidbody TargetRigidbody;
 
     public virtual void InitBullet(Turret newOrigin)
     {
-        origin = newOrigin;
+        Origin = newOrigin;
     }
 
     protected virtual void Launch(Vector3 newVelocity)

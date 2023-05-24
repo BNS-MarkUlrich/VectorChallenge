@@ -12,19 +12,18 @@ public class Turret : Weapon
     [SerializeField] private bool autoFire;
     [SerializeField] private float shootCooldown = 1f;
     [SerializeField] private Transform aimAssist;
-    [SerializeField] private float speed = 2f;
 
     private float oldSootCooldown;
     
-    private Rigidbody _targetRigidbody;
-    private Vector3 _predictedVelocity;
+    private Rigidbody targetRigidbody;
+    private Vector3 predictedVelocity;
 
     public Transform Target => target;
-    public Vector3 PredictedVelocity => _predictedVelocity;
+    public Vector3 PredictedVelocity => predictedVelocity;
 
     private void Start()
     {
-        _targetRigidbody = target.GetComponent<Rigidbody>();
+        targetRigidbody = target.GetComponent<Rigidbody>();
         oldSootCooldown = shootCooldown;
     }
 
@@ -51,9 +50,9 @@ public class Turret : Weapon
         MoveAimAssist();
     }
 
-    private Vector3 Aim()
+    private Vector3 Aim(float speed)
     {
-        if (_targetRigidbody == null)
+        if (targetRigidbody == null)
         {
             return target.position;
         }
@@ -61,33 +60,33 @@ public class Turret : Weapon
         var targetPosition = target.position;
         var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
         //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-        var predictedPosition = targetPosition + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
+        var predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
         
         return predictedPosition;
     }
 
     private void MoveAimAssist()
     {
-        aimAssist.position = Aim();
+        aimAssist.position = Aim(projectilePrefab.MaxSpeed);
     }
     
-    public Vector3 CalculatePredictionVelocity()
+    public Vector3 CalculatePredictionVelocity(float speed)
     {
-        _predictedVelocity = Aim();
-        var velocityDirection = _predictedVelocity - transform.position;
+        predictedVelocity = Aim(speed);
+        var velocityDirection = predictedVelocity - transform.position;
 
         //var velocityMagnitude = velocityDirection.magnitude;
 
-        _predictedVelocity = velocityDirection.normalized;
+        predictedVelocity = velocityDirection.normalized;
 
-        _predictedVelocity *= (speed * speed);
+        predictedVelocity *= speed;
 
-        return _predictedVelocity;
+        return predictedVelocity;
     }
 
     private void Fire()
     {
-        CalculatePredictionVelocity();
+        CalculatePredictionVelocity(projectilePrefab.MaxSpeed);
         var newProjectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
         newProjectile.InitBullet(this);
     }

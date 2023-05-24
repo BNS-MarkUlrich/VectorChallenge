@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8792505507753460416}
   - component: {fileID: 7011553543217477646}
   - component: {fileID: 6332699222688442975}
-  - component: {fileID: 7625445299389650292}
   - component: {fileID: -4647362279761830127}
+  - component: {fileID: 7625445299389650292}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -107,6 +107,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4647362279761830127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582769676839924839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d28987a8ff459f418cb1713f596382c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 10
+  rotationSpeed: 10
+  maxTravelDistance: 100
+  areaRadius: 5
+  lifeTimer: 8
 --- !u!54 &7625445299389650292
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,21 +151,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-4647362279761830127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5582769676839924839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d28987a8ff459f418cb1713f596382c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 20
-  rotationSpeed: 5
-  origin: {fileID: 0}
-  target: {fileID: 0}
-  targetRigidbody: {fileID: 0}
-  areaRadius: 5
