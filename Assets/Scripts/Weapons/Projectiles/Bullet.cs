@@ -16,10 +16,16 @@ public class Bullet : Projectile
         Launch(launchVelocity);
     }
 
-    public override void InitBullet(Turret newOrigin)
+    public override void InitBullet(Transform shipOrigin, Turret newOrigin)
     {
-        base.InitBullet(newOrigin);
+        base.InitBullet(shipOrigin, newOrigin);
         launchVelocity = Origin.PredictedVelocity;
         Target = Origin.Target;
+    }
+
+    protected override void TargetHit(GameObject target)
+    {
+        Destroy(gameObject);
+        print(target.name);
     }
 }

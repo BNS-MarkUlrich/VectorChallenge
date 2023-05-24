@@ -19,10 +19,6 @@ public class ZeroGMovement : Movement
     {
         var velocityDirection = target.position - transform.position;
 
-        /*var velocityMagnitude = velocityDirection.magnitude;
-
-        var desiredVelocity = velocityDirection.normalized * velocityMagnitude;*/
-        
         var angle = Vector3.Angle(velocityDirection, transform.forward) / 10;
         
         var currentSpeed = maxSpeed / angle;
@@ -33,7 +29,6 @@ public class ZeroGMovement : Movement
         }
         
         MyRigidBody.velocity = transform.forward.normalized * (currentSpeed / Mass);
-        //MyRigidBody.velocity = transform.forward.normalized * velocityMagnitude;
     }
     
     protected override void RotateToTarget(Transform rotationTarget)

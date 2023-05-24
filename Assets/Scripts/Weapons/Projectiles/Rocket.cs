@@ -11,10 +11,16 @@ public class Rocket : Projectile
     private Collider[] targetsInRange;
     private Vector3 followVelocity;
 
-    public override void InitBullet(Turret newOrigin)
+    public override void InitBullet(Transform shipOrigin, Turret newOrigin)
     {
-        base.InitBullet(newOrigin);
+        base.InitBullet(shipOrigin, newOrigin);
         Target = Origin.Target;
+    }
+
+    protected override void TargetHit(GameObject target)
+    {
+        AreaOfEffect();
+        Destroy(gameObject);
     }
 
     private void AreaOfEffect()

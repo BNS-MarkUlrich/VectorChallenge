@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Turret : Weapon
 {
@@ -79,7 +75,7 @@ public class Turret : Weapon
 
         predictedVelocity = velocityDirection.normalized;
 
-        predictedVelocity *= speed;
+        predictedVelocity *= speed * speed;
 
         return predictedVelocity;
     }
@@ -88,6 +84,6 @@ public class Turret : Weapon
     {
         CalculatePredictionVelocity(projectilePrefab.MaxSpeed);
         var newProjectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
-        newProjectile.InitBullet(this);
+        newProjectile.InitBullet(transform.parent, this);
     }
 }
