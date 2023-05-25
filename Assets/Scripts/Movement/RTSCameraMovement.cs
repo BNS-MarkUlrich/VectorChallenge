@@ -7,12 +7,14 @@ public class RTSCameraMovement : Movement
     public void MoveRTSCamera(Vector3 input)
     {
         var velocity = input * maxSpeed;
-        MyRigidBody.velocity = velocity;
+        MyRigidBody.velocity = transform.TransformDirection(velocity); //transform.InverseTransformDirection(velocity);
+
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), 0.15f);
     }
 
     public void RotateRTSCamera(Vector3 rotatePoint, Vector2 rotationDelta)
     {
+        //MoveRTSCamera(Vector3.zero);
         var rotationVelocity = rotationDelta.x;
         transform.RotateAround(rotatePoint, Vector3.up, rotationVelocity);
     }

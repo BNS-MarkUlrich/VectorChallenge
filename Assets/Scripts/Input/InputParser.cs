@@ -17,7 +17,6 @@ public class InputParser : MonoBehaviour
     [SerializeField] private RTSCameraMovement _rtsCameraMovement;
     [SerializeField] private ShipMovement shipMovement;
     private Vector3 _mousePosition;
-    private Vector2 _mouseDelta;
     private bool activateCameraRotation;
     
     [Header("MoveInput")]
@@ -42,17 +41,15 @@ public class InputParser : MonoBehaviour
                 break;
             // RTS
             case "RTS":
-                print(_controlsActions["ActivateRotation"].inProgress);
+                MoveRTSCamera(ReadMoveInput());
                 if (_controlsActions["ActivateRotation"].inProgress && activateCameraRotation)
                 {
-                    print("No");
                     RotateRTSCamera(_mousePosition, GetMouseDelta());
                     return;
                 }
 
                 activateCameraRotation = false;
                 FollowMousePosition();
-                MoveRTSCamera(ReadMoveInput());
                 break;
         }
     }
@@ -90,7 +87,7 @@ public class InputParser : MonoBehaviour
 
     private Vector2 GetMouseDelta()
     {
-        return _mouseDelta = _controlsActions["MouseDelta"].ReadValue<Vector2>();
+        return _controlsActions["MouseDelta"].ReadValue<Vector2>();
     }
 
     private Vector3 CalculateMouseWorldPosition()
@@ -108,12 +105,12 @@ public class InputParser : MonoBehaviour
     
     private void SetTargetDestination(InputAction.CallbackContext context)
     {
+        if (activateCameraRotation) return; // Remove later
         shipMovement.SetTargetDestination(CalculateMouseWorldPosition());
     }
     
     private void SetRotationTarget(InputAction.CallbackContext context)
     {
-        print("Yes");
         activateCameraRotation = true;
         CalculateMouseWorldPosition();
     }
