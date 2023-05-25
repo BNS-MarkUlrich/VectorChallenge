@@ -14,8 +14,11 @@ public class InputParser : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     
     [Header("RTS")]
+    [SerializeField] private RTSCameraMovement _rtsCameraMovement;
     [SerializeField] private ShipMovement shipMovement;
     private Vector3 _mousePosition;
+    private Vector2 _mouseDelta;
+    private bool activateCameraRotation;
     
     [Header("MoveInput")]
     private Vector3 _inputMovement;
@@ -25,6 +28,8 @@ public class InputParser : MonoBehaviour
         InitInput();
         
         AddRTSListeners();
+        
+        SetInputActionMap("RTS");
     }
     
     private void FixedUpdate()
@@ -37,14 +42,24 @@ public class InputParser : MonoBehaviour
                 break;
             // RTS
             case "RTS":
+                print(_controlsActions["ActivateRotation"].inProgress);
+                if (_controlsActions["ActivateRotation"].inProgress && activateCameraRotation)
+                {
+                    print("No");
+                    RotateRTSCamera(_mousePosition, GetMouseDelta());
+                    return;
+                }
+
+                activateCameraRotation = false;
                 FollowMousePosition();
+                MoveRTSCamera(ReadMoveInput());
                 break;
         }
     }
     
-    public void SetInputActionMap(InputActionMap inputType)
+    public void SetInputActionMap(string inputType)
     {
-        _playerInput.currentActionMap = inputType;
+        _playerInput.currentActionMap = _controlsActions.FindActionMap(inputType);
     }
 
     private void InitInput()
@@ -65,14 +80,20 @@ public class InputParser : MonoBehaviour
     private void AddRTSListeners()
     {
         _controlsActions["SetShipDestination"].performed += SetTargetDestination;
+        _controlsActions["ActivateRotation"].performed += SetRotationTarget;
     }
     
     private void FollowMousePosition()
     {
         _mousePosition = _controlsActions["MousePosition"].ReadValue<Vector2>();
     }
-    
-    private void SetTargetDestination(InputAction.CallbackContext context)
+
+    private Vector2 GetMouseDelta()
+    {
+        return _mouseDelta = _controlsActions["MouseDelta"].ReadValue<Vector2>();
+    }
+
+    private Vector3 CalculateMouseWorldPosition()
     {
         float distance;
         var ray = Camera.main!.ScreenPointToRay(_mousePosition);
@@ -81,8 +102,30 @@ public class InputParser : MonoBehaviour
         {
             _mousePosition = ray.GetPoint(distance);
         }
-        
-        shipMovement.SetTargetDestination(_mousePosition);
+
+        return _mousePosition;
+    }
+    
+    private void SetTargetDestination(InputAction.CallbackContext context)
+    {
+        shipMovement.SetTargetDestination(CalculateMouseWorldPosition());
+    }
+    
+    private void SetRotationTarget(InputAction.CallbackContext context)
+    {
+        print("Yes");
+        activateCameraRotation = true;
+        CalculateMouseWorldPosition();
+    }
+    
+    private void MoveRTSCamera(Vector3 moveInput)
+    {
+        _rtsCameraMovement.MoveRTSCamera(moveInput);
+    }
+    
+    private void RotateRTSCamera(Vector3 rotatePoint, Vector2 rotationDelta) 
+    {
+        _rtsCameraMovement.RotateRTSCamera(rotatePoint, rotationDelta);
     }
     
     private void RemoveRTSListeners()

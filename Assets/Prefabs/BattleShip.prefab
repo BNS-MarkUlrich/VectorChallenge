@@ -181,9 +181,6 @@ PrefabInstance:
       addedObject: {fileID: 6548194733382244349}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4708437139244428223}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2266168387274676936}
   m_SourcePrefab: {fileID: 100100000, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
 --- !u!4 &6007558081010927647 stripped
@@ -238,19 +235,6 @@ MonoBehaviour:
   maxSpeed: 5
   rotationSpeed: 2
   target: {fileID: 4252507619575557498}
---- !u!114 &4708437139244428223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6346964485103637157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aaca7be720a36b4d91ec2155d36acde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipMovement: {fileID: 6548194733382244349}
 --- !u!114 &2266168387274676936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,9 +268,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1cb276e6-688e-4ee2-b40d-7f51df560a9b
     m_ActionName: RTSControls/MousePosition[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b36924a3-84b4-4676-9131-768607e70dfe
+    m_ActionName: RTS/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ace47d6b-af71-419a-95a3-22daf81fb1be
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4d481d96-678d-40f2-bd58-7460f292e8a6
+    m_ActionName: Ship/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: RTS
-  m_DefaultActionMap: RTSControls
+  m_DefaultControlScheme: PC
+  m_DefaultActionMap: RTS
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1001 &7723443679305366709

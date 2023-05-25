@@ -53,6 +53,24 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ActivateRotation"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8cdce70-d667-4abf-bf4a-38b5bcc58c24"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""7318003e-9cc9-4490-a1be-d537ae0148a7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +150,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adc440a2-fd27-4998-8ee8-1246dd17d01c"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ActivateRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7bdacc2-d6a8-4753-aa98-77c5a10e41bd"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -304,6 +344,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_RTS_SetShipDestination = m_RTS.FindAction("SetShipDestination", throwIfNotFound: true);
         m_RTS_MousePosition = m_RTS.FindAction("MousePosition", throwIfNotFound: true);
         m_RTS_Movement = m_RTS.FindAction("Movement", throwIfNotFound: true);
+        m_RTS_ActivateRotation = m_RTS.FindAction("ActivateRotation", throwIfNotFound: true);
+        m_RTS_MouseDelta = m_RTS.FindAction("MouseDelta", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
@@ -374,6 +416,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_RTS_SetShipDestination;
     private readonly InputAction m_RTS_MousePosition;
     private readonly InputAction m_RTS_Movement;
+    private readonly InputAction m_RTS_ActivateRotation;
+    private readonly InputAction m_RTS_MouseDelta;
     public struct RTSActions
     {
         private @InputActions m_Wrapper;
@@ -381,6 +425,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @SetShipDestination => m_Wrapper.m_RTS_SetShipDestination;
         public InputAction @MousePosition => m_Wrapper.m_RTS_MousePosition;
         public InputAction @Movement => m_Wrapper.m_RTS_Movement;
+        public InputAction @ActivateRotation => m_Wrapper.m_RTS_ActivateRotation;
+        public InputAction @MouseDelta => m_Wrapper.m_RTS_MouseDelta;
         public InputActionMap Get() { return m_Wrapper.m_RTS; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -399,6 +445,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @ActivateRotation.started += instance.OnActivateRotation;
+            @ActivateRotation.performed += instance.OnActivateRotation;
+            @ActivateRotation.canceled += instance.OnActivateRotation;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         private void UnregisterCallbacks(IRTSActions instance)
@@ -412,6 +464,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @ActivateRotation.started -= instance.OnActivateRotation;
+            @ActivateRotation.performed -= instance.OnActivateRotation;
+            @ActivateRotation.canceled -= instance.OnActivateRotation;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         public void RemoveCallbacks(IRTSActions instance)
@@ -535,6 +593,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnSetShipDestination(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnActivateRotation(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {

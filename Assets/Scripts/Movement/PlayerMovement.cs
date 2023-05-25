@@ -17,4 +17,14 @@ public class PlayerMovement : Movement
         
         //Debug.DrawRay(transform.position, moveDirection);
     }
+
+    protected override void MoveToTarget(Transform target)
+    {
+        
+    }
+
+    protected override void RotateToTarget(Transform rotationTarget)
+    {
+        
+    }
 }
