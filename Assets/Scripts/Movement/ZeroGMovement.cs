@@ -15,7 +15,7 @@ public class ZeroGMovement : Movement
         return DistanceToTarget < distanceThreshold;
     }
     
-    protected override void MoveToTarget(Transform target)
+    protected void MoveToTarget(Transform target)
     {
         var velocityDirection = target.position - transform.position;
 
@@ -31,7 +31,7 @@ public class ZeroGMovement : Movement
         MyRigidBody.velocity = transform.forward.normalized * (currentSpeed / Mass);
     }
     
-    protected override void RotateToTarget(Transform rotationTarget)
+    protected void RotateToTarget(Transform rotationTarget)
     {
         var targetDirection = rotationTarget.position - transform.position;
         var angle = Vector3.Angle(targetDirection, transform.forward) / 10;

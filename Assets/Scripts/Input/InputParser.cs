@@ -42,6 +42,7 @@ public class InputParser : MonoBehaviour
             // RTS
             case "RTS":
                 MoveRTSCamera(ReadMoveInput());
+                ZoomRTSCamera(GetScrollDelta());
                 if (_controlsActions["ActivateRotation"].inProgress && activateCameraRotation)
                 {
                     RotateRTSCamera(_mousePosition, GetMouseDelta());
@@ -89,6 +90,11 @@ public class InputParser : MonoBehaviour
     {
         return _controlsActions["MouseDelta"].ReadValue<Vector2>();
     }
+    
+    private Vector2 GetScrollDelta()
+    {
+        return _controlsActions["ScrollZoom"].ReadValue<Vector2>();
+    }
 
     private Vector3 CalculateMouseWorldPosition()
     {
@@ -125,6 +131,11 @@ public class InputParser : MonoBehaviour
         _rtsCameraMovement.RotateRTSCamera(rotatePoint, rotationDelta);
     }
     
+    private void ZoomRTSCamera(Vector2 zoomDelta)
+    {
+        _rtsCameraMovement.ZoomRTSCamera(zoomDelta);
+    }
+    
     private void RemoveRTSListeners()
     {
         _controlsActions["SetShipDestination"].performed -= SetTargetDestination;
@@ -134,7 +145,7 @@ public class InputParser : MonoBehaviour
     private Vector3 ReadMoveInput()
     {
         var input3D = _controlsActions["Movement"].ReadValue<Vector2>();
-        _inputMovement.Set(input3D.x, 0, input3D.y);
+        _inputMovement.Set(input3D.x, input3D.y, input3D.y);
 
         return _inputMovement;
     }

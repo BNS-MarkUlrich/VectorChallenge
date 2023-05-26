@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollZoom",
+                    "type": "PassThrough",
+                    "id": "d5a19152-6d63-4697-9992-82a8448cc167",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MouseDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b43b00e2-6f16-4614-97ba-ce70b08e0fcf",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "ScrollZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

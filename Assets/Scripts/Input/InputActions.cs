@@ -71,6 +71,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollZoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""d5a19152-6d63-4697-9992-82a8448cc167"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,6 +179,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b43b00e2-6f16-4614-97ba-ce70b08e0fcf"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ScrollZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -346,6 +366,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_RTS_Movement = m_RTS.FindAction("Movement", throwIfNotFound: true);
         m_RTS_ActivateRotation = m_RTS.FindAction("ActivateRotation", throwIfNotFound: true);
         m_RTS_MouseDelta = m_RTS.FindAction("MouseDelta", throwIfNotFound: true);
+        m_RTS_ScrollZoom = m_RTS.FindAction("ScrollZoom", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
@@ -418,6 +439,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_RTS_Movement;
     private readonly InputAction m_RTS_ActivateRotation;
     private readonly InputAction m_RTS_MouseDelta;
+    private readonly InputAction m_RTS_ScrollZoom;
     public struct RTSActions
     {
         private @InputActions m_Wrapper;
@@ -427,6 +449,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_RTS_Movement;
         public InputAction @ActivateRotation => m_Wrapper.m_RTS_ActivateRotation;
         public InputAction @MouseDelta => m_Wrapper.m_RTS_MouseDelta;
+        public InputAction @ScrollZoom => m_Wrapper.m_RTS_ScrollZoom;
         public InputActionMap Get() { return m_Wrapper.m_RTS; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -451,6 +474,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
+            @ScrollZoom.started += instance.OnScrollZoom;
+            @ScrollZoom.performed += instance.OnScrollZoom;
+            @ScrollZoom.canceled += instance.OnScrollZoom;
         }
 
         private void UnregisterCallbacks(IRTSActions instance)
@@ -470,6 +496,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
+            @ScrollZoom.started -= instance.OnScrollZoom;
+            @ScrollZoom.performed -= instance.OnScrollZoom;
+            @ScrollZoom.canceled -= instance.OnScrollZoom;
         }
 
         public void RemoveCallbacks(IRTSActions instance)
@@ -595,6 +624,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnActivateRotation(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
+        void OnScrollZoom(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {

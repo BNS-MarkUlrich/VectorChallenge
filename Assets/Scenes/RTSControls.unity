@@ -457,7 +457,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 4
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &1412450206
 MonoBehaviour:
@@ -471,8 +471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94db233c74956c4b9d1a281b7554f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 50
+  maxSpeed: 30
   rotationSpeed: 5
+  zoomSpeed: 1
 --- !u!1 &1432343662 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6346964485103637157, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}

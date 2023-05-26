@@ -19,8 +19,4 @@ public abstract class Movement : MonoBehaviour
     {
         MyRigidBody = GetComponent<Rigidbody>();
     }
-
-    protected abstract void MoveToTarget(Transform target);
-
-    protected abstract void RotateToTarget(Transform rotationTarget);
 }
