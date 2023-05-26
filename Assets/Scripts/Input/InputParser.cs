@@ -18,7 +18,7 @@ public class InputParser : MonoBehaviour
     [SerializeField] private ShipMovement shipMovement;
     private Vector3 _mousePosition;
     private bool activateCameraRotation;
-    
+
     [Header("MoveInput")]
     private Vector3 _inputMovement;
 
@@ -49,6 +49,12 @@ public class InputParser : MonoBehaviour
                     return;
                 }
 
+                if (_controlsActions["FocusOnTarget"].inProgress)
+                {
+                    FocusOnTarget();
+                    return;
+                }
+                
                 activateCameraRotation = false;
                 FollowMousePosition();
                 break;
@@ -108,6 +114,20 @@ public class InputParser : MonoBehaviour
 
         return _mousePosition;
     }
+
+    private Vector3 CameraCenterToWorldPos()
+    {
+        float distance;
+        var worldPos = Vector3.zero;
+        var ray1 = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        var plane = new Plane(Vector3.up,0);
+        if (plane.Raycast(ray1, out distance))
+        {
+            worldPos = ray1.GetPoint(distance);
+        }
+
+        return worldPos;
+    }
     
     private void SetTargetDestination(InputAction.CallbackContext context)
     {
@@ -118,9 +138,14 @@ public class InputParser : MonoBehaviour
     private void SetRotationTarget(InputAction.CallbackContext context)
     {
         activateCameraRotation = true;
-        CalculateMouseWorldPosition();
+        _mousePosition = CameraCenterToWorldPos();
     }
     
+    private void FocusOnTarget()
+    {
+        _rtsCameraMovement.FocusOnTarget();
+    }
+
     private void MoveRTSCamera(Vector3 moveInput)
     {
         _rtsCameraMovement.MoveRTSCamera(moveInput);

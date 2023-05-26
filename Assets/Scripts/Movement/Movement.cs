@@ -15,8 +15,31 @@ public abstract class Movement : MonoBehaviour
 
     public float MaxSpeed => maxSpeed;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         MyRigidBody = GetComponent<Rigidbody>();
+    }
+    
+    protected virtual void MoveToTarget(Transform target)
+    {
+        var velocityDirection = target.position - transform.position;
+
+        var angle = Vector3.Angle(velocityDirection, transform.forward) / 10;
+        
+        var currentSpeed = maxSpeed / angle;
+        
+        if (currentSpeed >= maxSpeed)
+        {
+            currentSpeed = maxSpeed;
+        }
+        
+        MyRigidBody.velocity = transform.forward.normalized * (currentSpeed / Mass);
+    }
+    
+    protected virtual void RotateToTarget(Transform rotationTarget)
+    {
+        var targetDirection = rotationTarget.position - transform.position;
+        var angle = Vector3.Angle(targetDirection, transform.forward) / 10;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotationSpeed / angle / Mass));
     }
 }

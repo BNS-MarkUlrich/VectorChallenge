@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,14 @@ using UnityEngine;
 public class RTSCameraMovement : Movement
 {
     [SerializeField] private float zoomSpeed = 2f;
-    
+    [SerializeField] private Transform refocusTarget;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        refocusTarget.parent = transform.parent;
+    }
+
     public void MoveRTSCamera(Vector3 input)
     {
         var velocity = input * maxSpeed;
@@ -24,5 +32,14 @@ public class RTSCameraMovement : Movement
         scrollDelta.y = 0;
         var velocity = scrollDelta;
         MyRigidBody.velocity += transform.TransformVector(velocity) * zoomSpeed;
+    }
+
+    public void FocusOnTarget()
+    {
+        var refocusPos = refocusTarget.position;
+        refocusPos.y = transform.position.y;
+        refocusTarget.position = refocusPos;
+
+        MoveToTarget(refocusTarget);
     }
 }
