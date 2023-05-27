@@ -15,26 +15,27 @@ public class ZeroGMovement : Movement
         return DistanceToTarget < distanceThreshold;
     }
     
-    protected override void MoveToTarget(Transform target)
+    protected void MoveToTarget(Transform target, float speed = 0f)
     {
+        if (speed == 0f) speed = maxSpeed;
+
         var velocityDirection = target.position - transform.position;
 
         var angle = Vector3.Angle(velocityDirection, transform.forward) / 10;
         
-        var currentSpeed = maxSpeed / angle;
+        var currentSpeed = speed / angle;
         
-        if (currentSpeed >= maxSpeed)
-        {
-            currentSpeed = maxSpeed;
-        }
-        
+        if (currentSpeed >= speed) currentSpeed = speed;
+
         MyRigidBody.velocity = transform.forward.normalized * (currentSpeed / Mass);
     }
     
-    protected override void RotateToTarget(Transform rotationTarget)
+    protected void RotateToTarget(Transform rotationTarget, float rotatespeed = 0f)
     {
+        if (rotatespeed == 0f) rotatespeed = rotationSpeed;
+        
         var targetDirection = rotationTarget.position - transform.position;
         var angle = Vector3.Angle(targetDirection, transform.forward) / 10;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotationSpeed / angle / Mass));
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotatespeed / angle / Mass));
     }
 }

@@ -11,6 +11,12 @@ public class ShipMovement : ZeroGMovement
     private void Start()
     {
         InitTarget();
+        InitVelocity();
+    }
+
+    private void InitVelocity()
+    {
+        MyRigidBody.velocity = transform.forward * 0.05f;
     }
 
     private void InitTarget()
@@ -28,6 +34,7 @@ public class ShipMovement : ZeroGMovement
     {
         if (HasReachedTarget(2f))
         {
+            //InitVelocity();
             MyRigidBody.velocity *= 0.5f * Time.deltaTime;
             return;
         }

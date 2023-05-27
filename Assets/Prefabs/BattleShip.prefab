@@ -93,7 +93,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalScale.x
@@ -109,7 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.3
+      value: 20.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalPosition.y
@@ -117,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -55.36
+      value: 46.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalRotation.w
@@ -125,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.00000003774895
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalRotation.y
@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -161,7 +161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3451118302482216456, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -179,6 +179,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6548194733382244349}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6616441403516839989}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2266168387274676936}
@@ -235,6 +238,21 @@ MonoBehaviour:
   maxSpeed: 5
   rotationSpeed: 2
   target: {fileID: 4252507619575557498}
+--- !u!114 &6616441403516839989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346964485103637157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38af554f1aa9a1b47b97d4d8e3f1c83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  _rtsCameraMovement: {fileID: 0}
+  shipMovement: {fileID: 6548194733382244349}
 --- !u!114 &2266168387274676936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +298,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4d481d96-678d-40f2-bd58-7460f292e8a6
     m_ActionName: Ship/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e8cdce70-d667-4abf-bf4a-38b5bcc58c24
+    m_ActionName: RTS/ActivateRotation[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7318003e-9cc9-4490-a1be-d537ae0148a7
+    m_ActionName: RTS/MouseDelta[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d5a19152-6d63-4697-9992-82a8448cc167
+    m_ActionName: RTS/ScrollZoom[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6081ba4d-c84b-45f8-8758-46befe73d6e2
+    m_ActionName: RTS/FocusOnTarget[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: RTS
@@ -297,6 +331,10 @@ PrefabInstance:
       propertyPath: autoFire
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1647119152740009276, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: -4647362279761830127, guid: 12fa57ee90fb4814ea356165c71d01ee, type: 3}
     - target: {fileID: 4534642584539617273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
       propertyPath: m_Name
       value: Turret
