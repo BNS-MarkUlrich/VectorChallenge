@@ -33,29 +33,24 @@ public class Turret : Weapon
     {
         targetsInRange = Physics.OverlapSphere(transform.position, maxRange, detectionLayer);
 
-        if (targetsInRange.Length == 1)
+        /*if (targetsInRange.Length == 1)
         {
             hasTarget = false;
             return;
-        }
+        }*/
 
         if (hasTarget) return;
 
         for (int i = 0; i < targetsInRange.Length; i++)
         {
-            if (targetsInRange[i].transform == transform)
-                continue;
-
-            RaycastHit hitInfo = new RaycastHit();
-            var ray = new Ray(transform.position, targetsInRange[i].transform.position);
-            Physics.Raycast(ray, out hitInfo);
-            
-            Debug.DrawLine(transform.position, hitInfo.transform.position);
+            Physics.Linecast(transform.position, targetsInRange[i].transform.position, out var hitInfo);
 
             if (hitInfo.transform != targetsInRange[i].transform)
             {
                 continue;
             }
+            
+            Debug.DrawLine(transform.position, targetsInRange[i].transform.position);
             
             target = targetsInRange[i].transform;
             targetRigidbody = target.GetComponent<Rigidbody>(); // Make ComponentCache later
@@ -65,8 +60,8 @@ public class Turret : Weapon
         }
     }
 
-    private void Update()
-    {
+    private void FixedUpdate()
+    { 
         DetectTargets();
         
         if (!hasTarget) return;
