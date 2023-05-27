@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Turret : Weapon
@@ -8,9 +9,13 @@ public class Turret : Weapon
     [SerializeField] private bool autoFire;
     [SerializeField] private float shootCooldown = 1f;
     [SerializeField] private Transform aimAssist;
+    [SerializeField] private float maxRange = 100f;
+    [SerializeField] private LayerMask detectionLayer;
 
     private float oldSootCooldown;
-    
+    private bool hasTarget;
+
+    private Collider[] targetsInRange;
     private Rigidbody targetRigidbody;
     private Vector3 predictedVelocity;
 
@@ -19,12 +24,53 @@ public class Turret : Weapon
 
     private void Start()
     {
-        targetRigidbody = target.GetComponent<Rigidbody>();
         oldSootCooldown = shootCooldown;
+        
+        if (target == null) hasTarget = false;
+    }
+
+    private void DetectTargets()
+    {
+        targetsInRange = Physics.OverlapSphere(transform.position, maxRange, detectionLayer);
+
+        if (targetsInRange.Length == 1)
+        {
+            hasTarget = false;
+            return;
+        }
+
+        if (hasTarget) return;
+
+        for (int i = 0; i < targetsInRange.Length; i++)
+        {
+            if (targetsInRange[i].transform == transform)
+                continue;
+
+            RaycastHit hitInfo = new RaycastHit();
+            var ray = new Ray(transform.position, targetsInRange[i].transform.position);
+            Physics.Raycast(ray, out hitInfo);
+            
+            Debug.DrawLine(transform.position, hitInfo.transform.position);
+
+            if (hitInfo.transform != targetsInRange[i].transform)
+            {
+                continue;
+            }
+            
+            target = targetsInRange[i].transform;
+            targetRigidbody = target.GetComponent<Rigidbody>(); // Make ComponentCache later
+            hasTarget = true;
+
+            print(targetsInRange[i].name);
+        }
     }
 
     private void Update()
     {
+        DetectTargets();
+        
+        if (!hasTarget) return;
+
         if (autoFire)
         {
             shootCooldown -= Time.deltaTime;
@@ -85,5 +131,11 @@ public class Turret : Weapon
         CalculatePredictionVelocity(projectilePrefab.MaxSpeed);
         var newProjectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
         newProjectile.InitBullet(transform.parent, this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, transform.forward * maxRange);
+        Gizmos.DrawWireSphere(transform.position, maxRange);
     }
 }

@@ -123,20 +123,10 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &777372803 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6007558081010927647, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-  m_PrefabInstance: {fileID: 8695355720364785043}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &876149843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4252507619575557498, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
   m_PrefabInstance: {fileID: 8695355720364785043}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &990942392 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6007558081010927647, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-  m_PrefabInstance: {fileID: 1129081019}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1129081019
 PrefabInstance:
@@ -234,10 +224,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 876149843}
-    - target: {fileID: 9076038851284498825, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-      propertyPath: target
+    - target: {fileID: 8128170474815808493, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: _rtsCameraMovement
       value: 
-      objectReference: {fileID: 777372803}
+      objectReference: {fileID: 1412450206}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7173490882133240375, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
@@ -474,37 +464,6 @@ MonoBehaviour:
   maxSpeed: 30
   rotationSpeed: 5
   zoomSpeed: 1
---- !u!1 &1432343662 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6346964485103637157, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-  m_PrefabInstance: {fileID: 8695355720364785043}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1432343665 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6548194733382244349, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-  m_PrefabInstance: {fileID: 8695355720364785043}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432343662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb316620eb18cca449a15eabe2881ccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1432343670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432343662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38af554f1aa9a1b47b97d4d8e3f1c83b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
-  _rtsCameraMovement: {fileID: 1412450206}
-  shipMovement: {fileID: 1432343665}
 --- !u!1001 &8695355720364785043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -569,22 +528,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleShip
       objectReference: {fileID: 0}
-    - target: {fileID: 9076038851284498825, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-      propertyPath: target
+    - target: {fileID: 8128170474815808493, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: _rtsCameraMovement
       value: 
-      objectReference: {fileID: 990942392}
-    - target: {fileID: 9076038851284498825, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-      propertyPath: projectilePrefab
-      value: 
-      objectReference: {fileID: -4647362279761830127, guid: 12fa57ee90fb4814ea356165c71d01ee, type: 3}
+      objectReference: {fileID: 1412450206}
     m_RemovedComponents:
     - {fileID: 5058065190059320151, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     - {fileID: 7623871809192670569, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     - {fileID: 4708437139244428223, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+    - {fileID: 987171370027728852, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6346964485103637157, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-      insertIndex: 6
-      addedObject: {fileID: 1432343670}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}

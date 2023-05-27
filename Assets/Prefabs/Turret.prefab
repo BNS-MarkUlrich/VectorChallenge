@@ -134,3 +134,7 @@ MonoBehaviour:
   autoFire: 0
   shootCooldown: 5
   aimAssist: {fileID: 9007272381376066688}
+  maxRange: 30
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 64
