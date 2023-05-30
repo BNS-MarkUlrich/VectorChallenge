@@ -22,11 +22,11 @@ public class ZeroGMovement : Movement
 
         var angle = Vector3.Angle(velocityDirection, transform.forward) / 10;
         
-        var currentSpeed = speed / angle;
+        var currentSpeed = speed / angle / Mass;
         
         if (currentSpeed >= speed) currentSpeed = speed;
 
-        MyRigidBody.velocity = transform.forward.normalized * (currentSpeed / Mass);
+        MyRigidBody.velocity = transform.forward.normalized * (currentSpeed);
     }
     
     protected void RotateToTarget(Transform rotationTarget, float rotatespeed = 0f)
