@@ -231,9 +231,17 @@ PrefabInstance:
       value: BattleShip (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6548194733382244349, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: test
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6548194733382244349, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 876149843}
+    - target: {fileID: 6548194733382244349, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: rotationSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9076038851284498825, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
       propertyPath: target
       value: 
