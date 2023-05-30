@@ -55,6 +55,7 @@ public class Turret : Weapon
 
             if (hasTarget)
             {
+                Debug.DrawLine(transform.position, target.transform.position);
                 continue;
             }
 
@@ -86,6 +87,8 @@ public class Turret : Weapon
 
     private void FixedUpdate()
     {
+        ShootCooldown();
+        
         DetectTargets();
         
         if (!hasTarget) return;
@@ -150,7 +153,7 @@ public class Turret : Weapon
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position, transform.forward * maxRange);
+        //Gizmos.DrawRay(transform.position, transform.forward * maxRange);
         //Gizmos.DrawWireSphere(transform.position, maxRange);
     }
 }
