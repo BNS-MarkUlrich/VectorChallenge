@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 5
-  rotationSpeed: 2
+  rotationSpeed: 5
   target: {fileID: 4252507619575557498}
 --- !u!114 &6616441403516839989
 MonoBehaviour:

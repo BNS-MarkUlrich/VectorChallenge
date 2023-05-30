@@ -5,14 +5,13 @@ using UnityEngine;
 public class ZeroGMovement : Movement
 {
     protected Transform Target;
-    
-    protected float DistanceToTarget;
-    
+    private float _distanceToTarget;
+
     protected bool HasReachedTarget(float distanceThreshold = 1f)
     {
-        DistanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
+        _distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
-        return DistanceToTarget < distanceThreshold;
+        return _distanceToTarget < distanceThreshold;
     }
     
     protected void MoveToTarget(Transform target, float speed = 0f)
@@ -36,6 +35,13 @@ public class ZeroGMovement : Movement
         
         var targetDirection = rotationTarget.position - transform.position;
         var angle = Vector3.Angle(targetDirection, transform.forward) / 10;
+        var turnDirection = Vector3.Dot(targetDirection, transform.right);
+        var pitch = (angle / 100) / Mass;
+        if (turnDirection > 0f) 
+        {
+            pitch = -pitch;
+        } 
+        transform.Rotate(transform.InverseTransformDirection(transform.forward), pitch);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotatespeed / angle / Mass));
     }
 }
