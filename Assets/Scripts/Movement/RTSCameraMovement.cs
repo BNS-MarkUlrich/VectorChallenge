@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class RTSCameraMovement : ZeroGMovement
 {
     [SerializeField] private float zoomSpeed = 2f;
+    [SerializeField] private float refocusSpeedModifier = 3f;
     [SerializeField] private Transform refocusParent;
     [SerializeField] private Transform refocusTarget;
     [SerializeField] private Transform rtsCamera;
@@ -59,7 +60,7 @@ public class RTSCameraMovement : ZeroGMovement
             return;
         }
         
-        MoveToTarget(refocusTarget, maxSpeed * 3);
-        RotateToTarget(refocusTarget, rotationSpeed * 3);
+        MoveToTarget(refocusTarget, maxSpeed * refocusSpeedModifier);
+        RotateToTarget(refocusTarget, rotationSpeed * refocusSpeedModifier);
     }
 }
