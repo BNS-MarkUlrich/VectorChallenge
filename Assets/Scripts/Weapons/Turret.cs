@@ -33,8 +33,6 @@ public class Turret : Weapon
     {
         targetsInRange = Physics.OverlapSphere(transform.position, maxRange, detectionLayer);
 
-        //if (hasTarget) return;
-
         for (int i = 0; i < targetsInRange.Length; i++)
         {
             if (targetsInRange[i].transform == transform.parent)
@@ -49,6 +47,7 @@ public class Turret : Weapon
             {
                 //print(hitInfo.transform.name);
                 print(targetsInRange[i].transform.name);
+                hasTarget = false;
                 continue;
             }
 
