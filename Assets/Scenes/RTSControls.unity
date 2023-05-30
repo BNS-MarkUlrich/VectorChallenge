@@ -286,7 +286,9 @@ PrefabInstance:
       propertyPath: _rtsCameraMovement
       value: 
       objectReference: {fileID: 1910487557}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2266168387274676936, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+    - {fileID: 6616441403516839989, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7173490882133240375, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     m_AddedGameObjects: []
