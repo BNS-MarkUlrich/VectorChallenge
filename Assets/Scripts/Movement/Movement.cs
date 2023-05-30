@@ -15,7 +15,7 @@ public abstract class Movement : MonoBehaviour
 
     public float MaxSpeed => maxSpeed;
     
-    private void Awake()
+    protected virtual void Awake()
     {
         MyRigidBody = GetComponent<Rigidbody>();
     }

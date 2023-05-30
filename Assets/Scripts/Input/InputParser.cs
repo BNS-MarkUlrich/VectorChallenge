@@ -18,9 +18,16 @@ public class InputParser : MonoBehaviour
     [SerializeField] private ShipMovement shipMovement;
     private Vector3 _mousePosition;
     private bool activateCameraRotation;
-    
+    private bool isRefocusingTarget;
+
     [Header("MoveInput")]
     private Vector3 _inputMovement;
+
+    public bool IsRefocusingTarget
+    {
+        get => isRefocusingTarget;
+        set => isRefocusingTarget = value;
+    }
 
     private void Start()
     {
@@ -45,10 +52,16 @@ public class InputParser : MonoBehaviour
                 ZoomRTSCamera(GetScrollDelta());
                 if (_controlsActions["ActivateRotation"].inProgress && activateCameraRotation)
                 {
-                    RotateRTSCamera(_mousePosition, GetMouseDelta());
+                    RotateRTSCamera(GetMouseDelta());
                     return;
                 }
 
+                if (_controlsActions["FocusOnTarget"].inProgress || isRefocusingTarget)
+                {
+                    FocusOnTarget();
+                    return;
+                }
+                
                 activateCameraRotation = false;
                 FollowMousePosition();
                 break;
@@ -108,6 +121,20 @@ public class InputParser : MonoBehaviour
 
         return _mousePosition;
     }
+
+    private Vector3 CameraCenterToWorldPos()
+    {
+        float distance;
+        var worldPos = Vector3.zero;
+        var ray1 = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        var plane = new Plane(Vector3.up,0);
+        if (plane.Raycast(ray1, out distance))
+        {
+            worldPos = ray1.GetPoint(distance);
+        }
+
+        return worldPos;
+    }
     
     private void SetTargetDestination(InputAction.CallbackContext context)
     {
@@ -118,17 +145,23 @@ public class InputParser : MonoBehaviour
     private void SetRotationTarget(InputAction.CallbackContext context)
     {
         activateCameraRotation = true;
-        CalculateMouseWorldPosition();
+        _mousePosition = CameraCenterToWorldPos();
     }
     
+    private void FocusOnTarget()
+    {
+        isRefocusingTarget = true;
+        _rtsCameraMovement.FocusOnTarget();
+    }
+
     private void MoveRTSCamera(Vector3 moveInput)
     {
         _rtsCameraMovement.MoveRTSCamera(moveInput);
     }
     
-    private void RotateRTSCamera(Vector3 rotatePoint, Vector2 rotationDelta) 
+    private void RotateRTSCamera(Vector2 rotationDelta) 
     {
-        _rtsCameraMovement.RotateRTSCamera(rotatePoint, rotationDelta);
+        _rtsCameraMovement.RotateRTSCamera(rotationDelta);
     }
     
     private void ZoomRTSCamera(Vector2 zoomDelta)
@@ -145,7 +178,7 @@ public class InputParser : MonoBehaviour
     private Vector3 ReadMoveInput()
     {
         var input3D = _controlsActions["Movement"].ReadValue<Vector2>();
-        _inputMovement.Set(input3D.x, input3D.y, input3D.y);
+        _inputMovement.Set(input3D.x, input3D.y/2, input3D.y);
 
         return _inputMovement;
     }
