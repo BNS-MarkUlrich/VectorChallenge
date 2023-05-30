@@ -35,6 +35,7 @@ public class ZeroGMovement : Movement
     {
         var targetDirection = rotationTarget.position - transform.position;
         var angle = Vector3.Angle(targetDirection, transform.forward) / 10;
+        transform.Rotate(Vector3.forward, angle / 100);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * (rotationSpeed / angle / Mass));
     }
 }
