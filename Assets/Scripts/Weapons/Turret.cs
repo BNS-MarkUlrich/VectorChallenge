@@ -37,26 +37,27 @@ public class Turret : Weapon
 
         for (int i = 0; i < targetsInRange.Length; i++)
         {
-            var direction = targetsInRange[i].transform.position - transform.position;
-            
-            var yes = Physics.Raycast(transform.position, direction, out var hitInfo, maxRange);
-            //Debug.DrawRay(transform.position, direction, Color.red);
-
-            if (yes)
-            {
-                Debug.DrawLine(transform.position, hitInfo.transform.position);
-            }
-            
-            if (hitInfo.transform != targetsInRange[i].transform)
+            if (targetsInRange[i].transform == transform.parent)
             {
                 continue;
             }
+            
+            var direction = targetsInRange[i].transform.position - transform.position;
+            var hasHitCollider = Physics.Raycast(transform.position, direction, out var hitInfo, maxRange);
 
+            if (hitInfo.transform == null || hasHitCollider && hitInfo.transform != targetsInRange[i].transform)
+            {
+                //print(hitInfo.transform.name);
+                print(targetsInRange[i].transform.name);
+                continue;
+            }
+
+            Debug.DrawLine(transform.position, hitInfo.transform.position);
             target = targetsInRange[i].transform;
             targetRigidbody = target.GetComponent<Rigidbody>(); // Make ComponentCache later
             hasTarget = true;
 
-            print(targetsInRange[i].name);
+            //print(targetsInRange[i].name);
         }
     }
 
