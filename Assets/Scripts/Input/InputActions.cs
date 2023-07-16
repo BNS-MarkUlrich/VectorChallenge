@@ -89,6 +89,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchInput"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcbd4894-6600-4206-84d8-5f32477b47c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""FocusOnTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7290249a-cc10-490a-aedb-792032f0da4a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""SwitchInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -227,6 +247,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchInput"",
+                    ""type"": ""Button"",
+                    ""id"": ""ce9eb22f-f74c-4ec9-9e39-5cc21a0453a4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -284,6 +313,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56fea09f-63dc-43e1-adf3-5cf67ec5bfce"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""SwitchInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -388,9 +428,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_RTS_MouseDelta = m_RTS.FindAction("MouseDelta", throwIfNotFound: true);
         m_RTS_ScrollZoom = m_RTS.FindAction("ScrollZoom", throwIfNotFound: true);
         m_RTS_FocusOnTarget = m_RTS.FindAction("FocusOnTarget", throwIfNotFound: true);
+        m_RTS_SwitchInput = m_RTS.FindAction("SwitchInput", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_SwitchInput = m_Player.FindAction("SwitchInput", throwIfNotFound: true);
         // Ship
         m_Ship = asset.FindActionMap("Ship", throwIfNotFound: true);
         m_Ship_Movement = m_Ship.FindAction("Movement", throwIfNotFound: true);
@@ -462,6 +504,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_RTS_MouseDelta;
     private readonly InputAction m_RTS_ScrollZoom;
     private readonly InputAction m_RTS_FocusOnTarget;
+    private readonly InputAction m_RTS_SwitchInput;
     public struct RTSActions
     {
         private @InputActions m_Wrapper;
@@ -473,6 +516,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @MouseDelta => m_Wrapper.m_RTS_MouseDelta;
         public InputAction @ScrollZoom => m_Wrapper.m_RTS_ScrollZoom;
         public InputAction @FocusOnTarget => m_Wrapper.m_RTS_FocusOnTarget;
+        public InputAction @SwitchInput => m_Wrapper.m_RTS_SwitchInput;
         public InputActionMap Get() { return m_Wrapper.m_RTS; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -503,6 +547,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @FocusOnTarget.started += instance.OnFocusOnTarget;
             @FocusOnTarget.performed += instance.OnFocusOnTarget;
             @FocusOnTarget.canceled += instance.OnFocusOnTarget;
+            @SwitchInput.started += instance.OnSwitchInput;
+            @SwitchInput.performed += instance.OnSwitchInput;
+            @SwitchInput.canceled += instance.OnSwitchInput;
         }
 
         private void UnregisterCallbacks(IRTSActions instance)
@@ -528,6 +575,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @FocusOnTarget.started -= instance.OnFocusOnTarget;
             @FocusOnTarget.performed -= instance.OnFocusOnTarget;
             @FocusOnTarget.canceled -= instance.OnFocusOnTarget;
+            @SwitchInput.started -= instance.OnSwitchInput;
+            @SwitchInput.performed -= instance.OnSwitchInput;
+            @SwitchInput.canceled -= instance.OnSwitchInput;
         }
 
         public void RemoveCallbacks(IRTSActions instance)
@@ -550,11 +600,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_SwitchInput;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
         public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @SwitchInput => m_Wrapper.m_Player_SwitchInput;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -567,6 +619,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @SwitchInput.started += instance.OnSwitchInput;
+            @SwitchInput.performed += instance.OnSwitchInput;
+            @SwitchInput.canceled += instance.OnSwitchInput;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -574,6 +629,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @SwitchInput.started -= instance.OnSwitchInput;
+            @SwitchInput.performed -= instance.OnSwitchInput;
+            @SwitchInput.canceled -= instance.OnSwitchInput;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -655,10 +713,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnScrollZoom(InputAction.CallbackContext context);
         void OnFocusOnTarget(InputAction.CallbackContext context);
+        void OnSwitchInput(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnSwitchInput(InputAction.CallbackContext context);
     }
     public interface IShipActions
     {

@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchInput",
+                    "type": "Button",
+                    "id": "fcbd4894-6600-4206-84d8-5f32477b47c7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -190,6 +199,17 @@
                     "action": "FocusOnTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7290249a-cc10-490a-aedb-792032f0da4a",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "SwitchInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -205,6 +225,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SwitchInput",
+                    "type": "Button",
+                    "id": "ce9eb22f-f74c-4ec9-9e39-5cc21a0453a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -262,6 +291,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "56fea09f-63dc-43e1-adf3-5cf67ec5bfce",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "SwitchInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

@@ -3,58 +3,145 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
-public class RTSInputParser : MonoBehaviour
+public class RTSInputParser : InputParser
 {
-    [SerializeField] private ShipMovement shipMovement;
-    [SerializeField] private PlayerMovement playerMovement;
-
+    [Header("RTS")]
+    [SerializeField] private RTSCameraMovement _rtsCameraMovement;
+    [SerializeField] private ShipMovement _shipMovement;
     private Vector3 mousePosition;
+    private bool activateCameraRotation;
+
+    [Header("MoveInput")]
     private Vector3 inputMovement;
-    private Plane plane = new Plane(Vector3.up,0);
 
-    protected void Start()
+    public bool IsRefocusingTarget { get; set; }
+
+    protected override void TrailingStart()
     {
-        if (shipMovement != null)
-        {
-            //ControlsActions["SetShipDestination"].performed += SetTargetDestination;
-        }
-        
-        /*if (playerMovement != null)
-        {
-            _rtsControlsActions["InputMovement"].performed += MovePlayer;
-        }*/
-
-        //EnableInput();
-    }
-
-    private void SetTargetDestination(InputAction.CallbackContext context)
-    {
-        float distance;
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (plane.Raycast(ray, out distance))
-        {
-            mousePosition = ray.GetPoint(distance);
-        }
-        
-        shipMovement.SetTargetDestination(mousePosition);
+        SetInputActionMap("RTS");
     }
 
     private void FixedUpdate()
     {
-        /*mousePosition = ControlsActions["MousePosition"].ReadValue<Vector2>();
-
-        if (playerMovement != null)
+        switch (CurrentActionMap.name)
         {
-            inputMovement = ControlsActions["CameraMovement"].ReadValue<Vector2>();
-            var input3D = new Vector3(inputMovement.x, 0, inputMovement.y);
-            
-            playerMovement.MovePlayer(input3D);
-        }*/
+            // RTS
+            case "RTS":
+                MoveCamera(ReadMoveInput());
+                ZoomCamera(GetScrollDelta());
+                if (ControlsActions["ActivateRotation"].inProgress && activateCameraRotation)
+                {
+                    RotateCamera(GetMouseDelta());
+                    return;
+                }
+
+                if (ControlsActions["FocusOnTarget"].inProgress || IsRefocusingTarget)
+                {
+                    FocusOnTarget();
+                    return;
+                }
+
+                activateCameraRotation = false;
+                FollowMousePosition();
+                break;
+        }
     }
 
-    private void OnDestroy()
+    // RTS
+    protected override void AddListeners()
     {
-        //ControlsActions["SetShipDestination"].performed -= SetTargetDestination;
+        ControlsActions["SetShipDestination"].performed += SetTargetDestination;
+        ControlsActions["ActivateRotation"].performed += SetRotationTarget;
+    }
+
+    private void FollowMousePosition()
+    {
+        mousePosition = ControlsActions["MousePosition"].ReadValue<Vector2>();
+    }
+
+    private Vector2 GetMouseDelta()
+    {
+        return ControlsActions["MouseDelta"].ReadValue<Vector2>();
+    }
+
+    private Vector2 GetScrollDelta()
+    {
+        return ControlsActions["ScrollZoom"].ReadValue<Vector2>();
+    }
+
+    private Vector3 CalculateMouseWorldPosition()
+    {
+        float distance;
+        var ray = Camera.main!.ScreenPointToRay(mousePosition);
+        var plane = new Plane(Vector3.up, 0);
+        if (plane.Raycast(ray, out distance))
+        {
+            mousePosition = ray.GetPoint(distance);
+        }
+
+        return mousePosition;
+    }
+
+    private Vector3 CameraCenterToWorldPos()
+    {
+        float distance;
+        var worldPos = Vector3.zero;
+        var ray1 = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        var plane = new Plane(Vector3.up, 0);
+        if (plane.Raycast(ray1, out distance))
+        {
+            worldPos = ray1.GetPoint(distance);
+        }
+
+        return worldPos;
+    }
+
+    private void SetTargetDestination(InputAction.CallbackContext context)
+    {
+        if (activateCameraRotation) return; // Remove later
+        _shipMovement.SetTargetDestination(CalculateMouseWorldPosition());
+    }
+
+    private void SetRotationTarget(InputAction.CallbackContext context)
+    {
+        activateCameraRotation = true;
+        mousePosition = CameraCenterToWorldPos();
+    }
+
+    private void FocusOnTarget()
+    {
+        IsRefocusingTarget = true;
+        _rtsCameraMovement.FocusOnTarget();
+    }
+
+    private void MoveCamera(Vector3 moveInput)
+    {
+        _rtsCameraMovement.MoveRTSCamera(moveInput);
+    }
+
+    private void RotateCamera(Vector2 rotationDelta)
+    {
+        _rtsCameraMovement.RotateRTSCamera(rotationDelta);
+    }
+
+    private void ZoomCamera(Vector2 zoomDelta)
+    {
+        _rtsCameraMovement.ZoomRTSCamera(zoomDelta);
+    }
+
+    protected override void RemoveListeners()
+    {
+        ControlsActions["SetShipDestination"].performed -= SetTargetDestination;
+    }
+
+    // MoveInput
+    private Vector3 ReadMoveInput()
+    {
+        var input3D = ControlsActions["Movement"].ReadValue<Vector2>();
+        inputMovement.Set(input3D.x, input3D.y / 2, input3D.y);
+
+        return inputMovement;
     }
 }
