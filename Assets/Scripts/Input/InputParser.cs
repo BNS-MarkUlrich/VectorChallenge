@@ -31,6 +31,11 @@ public abstract class InputParser : MonoBehaviour
         PlayerInput.currentActionMap = ControlsActions.FindActionMap(inputType);
     }
 
+    public void SwitchInput(GameObject target, string inputType)
+    {
+        
+    }
+
     protected abstract void AddListeners();
 
     protected abstract void RemoveListeners();

@@ -185,7 +185,7 @@ PrefabInstance:
       addedObject: {fileID: 6548194733382244349}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6616441403516839989}
+      addedObject: {fileID: 8965171980680267854}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2266168387274676936}
@@ -242,7 +242,7 @@ MonoBehaviour:
   maxSpeed: 2
   rotationSpeed: 5
   target: {fileID: 4252507619575557498}
---- !u!114 &6616441403516839989
+--- !u!114 &8965171980680267854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,12 +251,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6346964485103637157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38af554f1aa9a1b47b97d4d8e3f1c83b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7aaca7be720a36b4d91ec2155d36acde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
   _rtsCameraMovement: {fileID: 0}
-  shipMovement: {fileID: 6548194733382244349}
+  _shipMovement: {fileID: 6548194733382244349}
 --- !u!114 &2266168387274676936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +317,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6081ba4d-c84b-45f8-8758-46befe73d6e2
     m_ActionName: RTS/FocusOnTarget[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fcbd4894-6600-4206-84d8-5f32477b47c7
+    m_ActionName: RTS/SwitchInput[/Keyboard/1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce9eb22f-f74c-4ec9-9e39-5cc21a0453a4
+    m_ActionName: Player/SwitchInput[/Keyboard/1]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: RTS

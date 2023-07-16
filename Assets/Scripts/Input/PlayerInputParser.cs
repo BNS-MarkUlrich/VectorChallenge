@@ -26,7 +26,7 @@ public class PlayerInputParser : InputParser
 
     protected override void AddListeners()
     {
-
+        //ControlsActions["SwitchInput"].performed += SetTargetDestination;
     }
 
     protected override void RemoveListeners()

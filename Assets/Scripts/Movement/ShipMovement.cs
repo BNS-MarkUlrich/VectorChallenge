@@ -22,7 +22,7 @@ public class ShipMovement : ZeroGMovement
     private void InitTarget()
     {
         Target = target;
-        target.transform.parent = transform.parent;
+        target.transform.parent = transform.root.parent;
     }
 
     public void SetTargetDestination(Vector3 destination)
