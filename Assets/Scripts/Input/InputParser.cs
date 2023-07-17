@@ -78,6 +78,7 @@ public abstract class InputParser : MonoBehaviour
         if (target._myCamera == null)
         {
             target._myCamera = _myCamera;
+            Debug.LogError("No Target Camera was set, using current camera");
         }
         else
         {
