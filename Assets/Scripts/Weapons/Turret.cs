@@ -154,6 +154,6 @@ public class Turret : Weapon
     private void OnDrawGizmos()
     {
         //Gizmos.DrawRay(transform.position, transform.forward * maxRange);
-        //Gizmos.DrawWireSphere(transform.position, maxRange);
+        Gizmos.DrawWireSphere(transform.position, maxRange);
     }
 }

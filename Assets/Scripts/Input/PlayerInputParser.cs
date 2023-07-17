@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerInputParser : InputParser
 {
@@ -22,12 +21,12 @@ public class PlayerInputParser : InputParser
 
     protected override void AddListeners()
     {
-        
+
     }
 
     protected override void RemoveListeners()
     {
-        
+
     }
 
     // Player

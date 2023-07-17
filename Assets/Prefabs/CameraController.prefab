@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3052732517493100033
 Transform:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7157301534495667120}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -335,10 +335,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6308409377021389134}
     - target: {fileID: 8965171980680267854, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: _myCamera
+      value: 
+      objectReference: {fileID: 5959961861159853614}
+    - target: {fileID: 8965171980680267854, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965171980680267854, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
       propertyPath: _rtsCameraMovement
       value: 
       objectReference: {fileID: 6308409377021389134}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2266168387274676936, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
