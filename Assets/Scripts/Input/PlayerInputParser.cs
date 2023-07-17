@@ -15,6 +15,7 @@ public class PlayerInputParser : InputParser
             // Player
             case "Player":
                 MovePlayer(ReadMoveInput());
+                RotateCamera(GetMouseDelta());
                 break;
         }
     }
@@ -39,8 +40,18 @@ public class PlayerInputParser : InputParser
     private Vector3 ReadMoveInput()
     {
         var input3D = ControlsActions["Movement"].ReadValue<Vector2>();
-        _inputMovement.Set(input3D.x, input3D.y / 2, input3D.y);
+        _inputMovement.Set(input3D.x, 0, input3D.y);
 
         return _inputMovement;
+    }
+    
+    private Vector2 GetMouseDelta()
+    {
+        return ControlsActions["MouseDelta"].ReadValue<Vector2>();
+    }
+    
+    private void RotateCamera(Vector2 rotationDelta)
+    {
+        playerMovement.RotatePlayer(rotationDelta);
     }
 }

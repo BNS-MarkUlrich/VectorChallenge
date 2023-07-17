@@ -256,6 +256,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookRotation"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""fcb4f7b2-3fc4-43ce-94a7-19f878b470e9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -322,6 +331,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""SwitchInput"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c487305d-f271-4049-a4a5-63fda268bdb8"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""LookRotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -433,6 +453,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_SwitchInput = m_Player.FindAction("SwitchInput", throwIfNotFound: true);
+        m_Player_LookRotation = m_Player.FindAction("LookRotation", throwIfNotFound: true);
         // Ship
         m_Ship = asset.FindActionMap("Ship", throwIfNotFound: true);
         m_Ship_Movement = m_Ship.FindAction("Movement", throwIfNotFound: true);
@@ -601,12 +622,14 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_SwitchInput;
+    private readonly InputAction m_Player_LookRotation;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
         public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @SwitchInput => m_Wrapper.m_Player_SwitchInput;
+        public InputAction @LookRotation => m_Wrapper.m_Player_LookRotation;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -622,6 +645,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @SwitchInput.started += instance.OnSwitchInput;
             @SwitchInput.performed += instance.OnSwitchInput;
             @SwitchInput.canceled += instance.OnSwitchInput;
+            @LookRotation.started += instance.OnLookRotation;
+            @LookRotation.performed += instance.OnLookRotation;
+            @LookRotation.canceled += instance.OnLookRotation;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -632,6 +658,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @SwitchInput.started -= instance.OnSwitchInput;
             @SwitchInput.performed -= instance.OnSwitchInput;
             @SwitchInput.canceled -= instance.OnSwitchInput;
+            @LookRotation.started -= instance.OnLookRotation;
+            @LookRotation.performed -= instance.OnLookRotation;
+            @LookRotation.canceled -= instance.OnLookRotation;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -719,6 +748,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnSwitchInput(InputAction.CallbackContext context);
+        void OnLookRotation(InputAction.CallbackContext context);
     }
     public interface IShipActions
     {
