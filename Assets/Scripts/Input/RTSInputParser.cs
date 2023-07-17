@@ -18,11 +18,6 @@ public class RTSInputParser : InputParser
 
     public bool IsRefocusingTarget { get; set; }
 
-    protected override void TrailingStart()
-    {
-        SetInputActionMap("RTS");
-    }
-
     private void FixedUpdate()
     {
         switch (CurrentActionMap.name)
@@ -134,6 +129,7 @@ public class RTSInputParser : InputParser
     protected override void RemoveListeners()
     {
         ControlsActions["SetShipDestination"].performed -= SetTargetDestination;
+        ControlsActions["ActivateRotation"].performed -= SetRotationTarget;
     }
 
     // MoveInput

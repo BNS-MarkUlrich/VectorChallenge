@@ -9,11 +9,6 @@ public class InputSwitcher : InputParser
         PlayerInput.currentActionMap = ControlsActions.FindActionMap(inputType);
     }
 
-    protected override void TrailingStart()
-    {
-        
-    }
-
     protected override void AddListeners()
     {
         

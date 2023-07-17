@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public abstract class InputParser : MonoBehaviour
 {
@@ -7,20 +9,20 @@ public abstract class InputParser : MonoBehaviour
     protected PlayerInput PlayerInput;
     protected InputActionMap CurrentActionMap => PlayerInput.currentActionMap;
     
-    protected void Start()
+    [SerializeField] protected InputParser _switchInputObject;
+    [SerializeField] protected InputTypes _inputActionMap;
+    
+    private void OnEnable()
     {
         InitInput();
-
+        
         AddListeners();
-
-        TrailingStart();
+        ControlsActions["SwitchInput"].performed += SwitchInputContext;
     }
-
-    protected abstract void TrailingStart();
     
     private void InitInput()
     {
-        PlayerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponentInChildren<PlayerInput>();
         ControlsActions = PlayerInput.actions;
 
         ControlsActions.Enable();
@@ -31,22 +33,38 @@ public abstract class InputParser : MonoBehaviour
         PlayerInput.currentActionMap = ControlsActions.FindActionMap(inputType);
     }
 
-    public void SwitchInput(GameObject target, string inputType)
+    public void SwitchInput(InputParser target = null)
     {
-        
+        if (target == null)
+        {
+            target = _switchInputObject;
+        }
+
+        PlayerInput.transform.SetParent(target.transform);
+        SetInputActionMap(target._inputActionMap.ToString());
+
+        target.enabled = true;
+
+        enabled = false;
+    }
+    
+    private void SwitchInputContext(InputAction.CallbackContext context)
+    {
+        SwitchInput();
+        RemoveListeners();
     }
 
     protected abstract void AddListeners();
 
     protected abstract void RemoveListeners();
 
-    protected void RemoveAllListeners()
+    private void OnDisable()
     {
-        RemoveListeners();
+        ControlsActions["SwitchInput"].performed -= SwitchInputContext;
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        RemoveAllListeners();
+        RemoveListeners();
     }
 }
