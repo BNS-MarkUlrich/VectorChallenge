@@ -210,11 +210,6 @@ PrefabInstance:
       addedObject: {fileID: 1636706422}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b4a4077ff01fb74298c2037feb25019, type: 3}
---- !u!20 &806723835 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 5959961861159853614, guid: 2b4a4077ff01fb74298c2037feb25019, type: 3}
-  m_PrefabInstance: {fileID: 806723834}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &806723836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8222420529677672138, guid: 2b4a4077ff01fb74298c2037feb25019, type: 3}
@@ -397,10 +392,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleShip (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8965171980680267854, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-      propertyPath: _myCamera
-      value: 
-      objectReference: {fileID: 806723835}
     - target: {fileID: 8965171980680267854, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
       propertyPath: m_Enabled
       value: 0

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public abstract class InputParser : MonoBehaviour
 {
@@ -16,17 +15,39 @@ public abstract class InputParser : MonoBehaviour
         InitInput();
 
         AddListeners();
-        ControlsActions["SwitchInput"].performed += SwitchInputContext;
+
+        AddSwitchListener();
     }
 
     private void OnDisable()
     {
-        ControlsActions["SwitchInput"].performed -= SwitchInputContext;
+        RemoveSwitchListener();
     }
 
     protected virtual void OnDestroy()
     {
         RemoveListeners();
+        RemoveSwitchListener();
+    }
+
+    private void AddSwitchListener()
+    {
+        if (_targetInputObject != null)
+        {
+            ControlsActions["SwitchInput"].performed += SwitchInputContext;
+        }
+        else
+        {
+            Debug.LogError("Target Input Object is Null, cannot add listener!");
+        }
+    }
+
+    private void RemoveSwitchListener()
+    {
+        if (ControlsActions["SwitchInput"] != null)
+        {
+            ControlsActions["SwitchInput"].performed -= SwitchInputContext;
+        }
     }
 
     private void InitInput()
@@ -53,13 +74,19 @@ public abstract class InputParser : MonoBehaviour
         SetInputActionMap(target._inputActionMap.ToString());
 
         target.enabled = true;
-        
-        _myCamera.gameObject.SetActive(false);
 
-        var targetCamera = target._myCamera;
-        targetCamera.gameObject.SetActive(true);
-        Camera.SetupCurrent(targetCamera);
-        
+        if (target._myCamera == null)
+        {
+            target._myCamera = _myCamera;
+        }
+        else
+        {
+            _myCamera.gameObject.SetActive(false);
+            var targetCamera = target._myCamera;
+            targetCamera.gameObject.SetActive(true);
+            Camera.SetupCurrent(targetCamera);
+        }
+
         enabled = false;
     }
 
