@@ -334,7 +334,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 1023653661}
   - component: {fileID: 1023653660}
   - component: {fileID: 1023653659}
+  - component: {fileID: 1023653666}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -389,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ece9211a4c8c24e8fe59fbe379bdc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1
+  maxSpeed: 4
   rotationSpeed: 5
   _gravityValue: -9.81
   _jumpHeight: 1
@@ -511,6 +512,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &1023653666
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023653658}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1035553565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -827,7 +854,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412450201}
   m_LocalRotation: {x: -0.029993739, y: 0.002760277, z: 0.00011111282, w: 0.9995463}
-  m_LocalPosition: {x: 0.009334087, y: 0.68347275, z: -0.3299641}
+  m_LocalPosition: {x: 0.011, y: 0.702, z: -0.018}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
