@@ -11,28 +11,32 @@ public class Interactor : MonoBehaviour
     private CharacterController characterController;
     private Ray ray;
     private RaycastHit hit;
-    private bool hasHit;
+    private bool canInteract;
+
+    private InputParser myInputParser;
+    private Interactable currentInteractable;
+
+    private void Awake()
+    {
+        myInputParser = GetComponent<InputParser>();
+    }
 
     private void Update()
     {
         ray.origin = transform.position;
         ray.direction = transform.forward;
 
-        var isHitting = Physics.Raycast(ray, out hit, _interactorRange, _layerMask);
+        canInteract = Physics.Raycast(ray, out hit, _interactorRange, _layerMask);
+    }
 
-        if (isHitting)
-        {
-            if (!hasHit)
-            {
-                print(hit.transform.name);
-            }
-            
-            hasHit = true;
-        }
-        else
-        {
-            hasHit = false;
-        }
+    public void Interact()
+    {
+        if (!canInteract) return;
+
+        hit.transform.TryGetComponent(out currentInteractable);
+
+        currentInteractable.SetInteractor(this);
+        currentInteractable.Interact();
     }
 
     private void OnDrawGizmos()

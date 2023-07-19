@@ -1,12 +1,21 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInputParser : InputParser
 {
+    private Interactor interactor;
+    
     [Header("Player")]
     [SerializeField] private PlayerMovement playerMovement;
 
     [Header("MoveInput")]
     private Vector3 _inputMovement;
+
+    private void Awake()
+    {
+        interactor = GetComponent<Interactor>();
+    }
 
     private void FixedUpdate()
     {
@@ -22,12 +31,17 @@ public class PlayerInputParser : InputParser
 
     protected override void AddListeners()
     {
-
+        ControlsActions["Interact"].performed += Interact;
     }
 
     protected override void RemoveListeners()
     {
+        ControlsActions["Interact"].performed -= Interact;
+    }
 
+    private void Interact(InputAction.CallbackContext context)
+    {
+        interactor.Interact();
     }
 
     // Player
