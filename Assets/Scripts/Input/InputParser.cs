@@ -3,10 +3,11 @@ using UnityEngine.InputSystem;
 
 public abstract class InputParser : MonoBehaviour
 {
-    [SerializeField] protected InputParser _targetInputObject;
     [SerializeField] protected InputTypes _inputActionMap;
     [SerializeField] protected Camera _myCamera;
     protected InputActionAsset ControlsActions;
+
+    protected bool HasListeners;
     protected PlayerInput PlayerInput;
     protected InputActionMap CurrentActionMap => PlayerInput.currentActionMap;
 
@@ -14,40 +15,12 @@ public abstract class InputParser : MonoBehaviour
     {
         InitInput();
 
-        AddListeners();
-
-        AddSwitchListener();
-    }
-
-    private void OnDisable()
-    {
-        RemoveSwitchListener();
+        AddListeners(out HasListeners);
     }
 
     protected virtual void OnDestroy()
     {
         RemoveListeners();
-        RemoveSwitchListener();
-    }
-
-    private void AddSwitchListener()
-    {
-        if (_targetInputObject != null)
-        {
-            ControlsActions["SwitchInput"].performed += SwitchInputContext;
-        }
-        else
-        {
-            Debug.LogError("Target Input Object is Null, cannot add listener!");
-        }
-    }
-
-    private void RemoveSwitchListener()
-    {
-        if (ControlsActions["SwitchInput"] != null)
-        {
-            ControlsActions["SwitchInput"].performed -= SwitchInputContext;
-        }
     }
 
     private void InitInput()
@@ -63,13 +36,8 @@ public abstract class InputParser : MonoBehaviour
         PlayerInput.currentActionMap = ControlsActions.FindActionMap(inputType);
     }
 
-    public void SwitchInput(InputParser target = null)
+    public void SwitchInput(InputParser target)
     {
-        if (target == null)
-        {
-            target = _targetInputObject;
-        }
-
         PlayerInput.transform.SetParent(target.transform);
         SetInputActionMap(target._inputActionMap.ToString());
 
@@ -91,13 +59,7 @@ public abstract class InputParser : MonoBehaviour
         enabled = false;
     }
 
-    private void SwitchInputContext(InputAction.CallbackContext context)
-    {
-        SwitchInput();
-        RemoveListeners();
-    }
-
-    protected abstract void AddListeners();
+    protected abstract void AddListeners(out bool hasListeners);
 
     protected abstract void RemoveListeners();
 }

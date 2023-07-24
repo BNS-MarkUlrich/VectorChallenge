@@ -1,16 +1,14 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputParser : InputParser
 {
-    private Interactor interactor;
-    
     [Header("Player")]
-    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerMovement _playerMovement;
 
-    [Header("MoveInput")]
-    private Vector3 _inputMovement;
+    [Header("Other Input")]
+    private Vector3 inputMovement;
+    private Interactor interactor;
 
     private void Awake()
     {
@@ -29,9 +27,10 @@ public class PlayerInputParser : InputParser
         }
     }
 
-    protected override void AddListeners()
+    protected override void AddListeners(out bool hasListeners)
     {
         ControlsActions["Interact"].performed += Interact;
+        hasListeners = true;
     }
 
     protected override void RemoveListeners()
@@ -47,25 +46,25 @@ public class PlayerInputParser : InputParser
     // Player
     private void MovePlayer(Vector3 moveInput)
     {
-        playerMovement.MovePlayer(moveInput);
+        _playerMovement.MovePlayer(moveInput);
     }
 
     // MoveInput
     private Vector3 ReadMoveInput()
     {
         var input3D = ControlsActions["Movement"].ReadValue<Vector2>();
-        _inputMovement.Set(input3D.x, 0, input3D.y);
+        inputMovement.Set(input3D.x, 0, input3D.y);
 
-        return _inputMovement;
+        return inputMovement;
     }
-    
+
     private Vector2 GetMouseDelta()
     {
         return ControlsActions["MouseDelta"].ReadValue<Vector2>();
     }
-    
+
     private void RotateCamera(Vector2 rotationDelta)
     {
-        playerMovement.RotatePlayer(rotationDelta);
+        _playerMovement.RotatePlayer(rotationDelta);
     }
 }

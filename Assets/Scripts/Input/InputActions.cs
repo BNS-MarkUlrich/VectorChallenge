@@ -91,9 +91,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchInput"",
+                    ""name"": ""Disconnect"",
                     ""type"": ""Button"",
-                    ""id"": ""fcbd4894-6600-4206-84d8-5f32477b47c7"",
+                    ""id"": ""c55e5b51-7089-462d-bf47-849be9e593e7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -224,12 +224,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7290249a-cc10-490a-aedb-792032f0da4a"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""id"": ""e9375fd1-2271-430f-988e-f48ee0e343f2"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""SwitchInput"",
+                    ""action"": ""Disconnect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -247,15 +247,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""SwitchInput"",
-                    ""type"": ""Button"",
-                    ""id"": ""ce9eb22f-f74c-4ec9-9e39-5cc21a0453a4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""LookRotation"",
@@ -331,17 +322,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""56fea09f-63dc-43e1-adf3-5cf67ec5bfce"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""SwitchInput"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -468,11 +448,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_RTS_MouseDelta = m_RTS.FindAction("MouseDelta", throwIfNotFound: true);
         m_RTS_ScrollZoom = m_RTS.FindAction("ScrollZoom", throwIfNotFound: true);
         m_RTS_FocusOnTarget = m_RTS.FindAction("FocusOnTarget", throwIfNotFound: true);
-        m_RTS_SwitchInput = m_RTS.FindAction("SwitchInput", throwIfNotFound: true);
+        m_RTS_Disconnect = m_RTS.FindAction("Disconnect", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_SwitchInput = m_Player.FindAction("SwitchInput", throwIfNotFound: true);
         m_Player_LookRotation = m_Player.FindAction("LookRotation", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // Ship
@@ -546,7 +525,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_RTS_MouseDelta;
     private readonly InputAction m_RTS_ScrollZoom;
     private readonly InputAction m_RTS_FocusOnTarget;
-    private readonly InputAction m_RTS_SwitchInput;
+    private readonly InputAction m_RTS_Disconnect;
     public struct RTSActions
     {
         private @InputActions m_Wrapper;
@@ -558,7 +537,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @MouseDelta => m_Wrapper.m_RTS_MouseDelta;
         public InputAction @ScrollZoom => m_Wrapper.m_RTS_ScrollZoom;
         public InputAction @FocusOnTarget => m_Wrapper.m_RTS_FocusOnTarget;
-        public InputAction @SwitchInput => m_Wrapper.m_RTS_SwitchInput;
+        public InputAction @Disconnect => m_Wrapper.m_RTS_Disconnect;
         public InputActionMap Get() { return m_Wrapper.m_RTS; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -589,9 +568,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @FocusOnTarget.started += instance.OnFocusOnTarget;
             @FocusOnTarget.performed += instance.OnFocusOnTarget;
             @FocusOnTarget.canceled += instance.OnFocusOnTarget;
-            @SwitchInput.started += instance.OnSwitchInput;
-            @SwitchInput.performed += instance.OnSwitchInput;
-            @SwitchInput.canceled += instance.OnSwitchInput;
+            @Disconnect.started += instance.OnDisconnect;
+            @Disconnect.performed += instance.OnDisconnect;
+            @Disconnect.canceled += instance.OnDisconnect;
         }
 
         private void UnregisterCallbacks(IRTSActions instance)
@@ -617,9 +596,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @FocusOnTarget.started -= instance.OnFocusOnTarget;
             @FocusOnTarget.performed -= instance.OnFocusOnTarget;
             @FocusOnTarget.canceled -= instance.OnFocusOnTarget;
-            @SwitchInput.started -= instance.OnSwitchInput;
-            @SwitchInput.performed -= instance.OnSwitchInput;
-            @SwitchInput.canceled -= instance.OnSwitchInput;
+            @Disconnect.started -= instance.OnDisconnect;
+            @Disconnect.performed -= instance.OnDisconnect;
+            @Disconnect.canceled -= instance.OnDisconnect;
         }
 
         public void RemoveCallbacks(IRTSActions instance)
@@ -642,7 +621,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_SwitchInput;
     private readonly InputAction m_Player_LookRotation;
     private readonly InputAction m_Player_Interact;
     public struct PlayerActions
@@ -650,7 +628,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         private @InputActions m_Wrapper;
         public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @SwitchInput => m_Wrapper.m_Player_SwitchInput;
         public InputAction @LookRotation => m_Wrapper.m_Player_LookRotation;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -665,9 +642,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @SwitchInput.started += instance.OnSwitchInput;
-            @SwitchInput.performed += instance.OnSwitchInput;
-            @SwitchInput.canceled += instance.OnSwitchInput;
             @LookRotation.started += instance.OnLookRotation;
             @LookRotation.performed += instance.OnLookRotation;
             @LookRotation.canceled += instance.OnLookRotation;
@@ -681,9 +655,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @SwitchInput.started -= instance.OnSwitchInput;
-            @SwitchInput.performed -= instance.OnSwitchInput;
-            @SwitchInput.canceled -= instance.OnSwitchInput;
             @LookRotation.started -= instance.OnLookRotation;
             @LookRotation.performed -= instance.OnLookRotation;
             @LookRotation.canceled -= instance.OnLookRotation;
@@ -771,12 +742,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnScrollZoom(InputAction.CallbackContext context);
         void OnFocusOnTarget(InputAction.CallbackContext context);
-        void OnSwitchInput(InputAction.CallbackContext context);
+        void OnDisconnect(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnSwitchInput(InputAction.CallbackContext context);
         void OnLookRotation(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }

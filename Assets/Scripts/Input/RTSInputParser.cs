@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,15 @@ public class RTSInputParser : InputParser
     [Header("MoveInput")]
     private Vector3 inputMovement;
 
+    [Header("Other")]
+    private CommandTerminal commandTerminal;
+
     public bool IsRefocusingTarget { get; set; }
+
+    private void Awake()
+    {
+        commandTerminal = GetComponentInChildren<CommandTerminal>();
+    }
 
     private void FixedUpdate()
     {
@@ -41,10 +50,20 @@ public class RTSInputParser : InputParser
     }
 
     // RTS
-    protected override void AddListeners()
+    protected override void AddListeners(out bool hasListeners)
     {
         ControlsActions["SetShipDestination"].performed += SetTargetDestination;
         ControlsActions["ActivateRotation"].performed += SetRotationTarget;
+        ControlsActions["Disconnect"].performed += Disconnect;
+        hasListeners = true;
+    }
+    
+    protected override void RemoveListeners()
+    {
+        if (!HasListeners) return;
+        ControlsActions["SetShipDestination"].performed -= SetTargetDestination;
+        ControlsActions["ActivateRotation"].performed -= SetRotationTarget;
+        ControlsActions["Disconnect"].performed -= Disconnect;
     }
 
     private void FollowMousePosition()
@@ -122,12 +141,6 @@ public class RTSInputParser : InputParser
         _rtsCameraMovement.ZoomRTSCamera(zoomDelta);
     }
 
-    protected override void RemoveListeners()
-    {
-        ControlsActions["SetShipDestination"].performed -= SetTargetDestination;
-        ControlsActions["ActivateRotation"].performed -= SetRotationTarget;
-    }
-
     // MoveInput
     private Vector3 ReadMoveInput()
     {
@@ -135,5 +148,11 @@ public class RTSInputParser : InputParser
         inputMovement.Set(input3D.x, input3D.y / 2, input3D.y);
 
         return inputMovement;
+    }
+    
+    // Other
+    private void Disconnect(InputAction.CallbackContext context)
+    {
+        commandTerminal.Disconnect();
     }
 }

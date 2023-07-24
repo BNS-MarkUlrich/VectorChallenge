@@ -1,25 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Interactor : MonoBehaviour
 {
     [SerializeField] private float _interactorRange;
     [SerializeField] private LayerMask _layerMask;
-    private CharacterController characterController;
-    private Ray ray;
-    private RaycastHit hit;
+
     private bool canInteract;
 
-    private InputParser myInputParser;
+    private CharacterController characterController;
     private Interactable currentInteractable;
 
-    private void Awake()
-    {
-        myInputParser = GetComponent<InputParser>();
-    }
+    private RaycastHit hit;
+    private Ray ray;
 
     private void Update()
     {
@@ -29,18 +21,18 @@ public class Interactor : MonoBehaviour
         canInteract = Physics.Raycast(ray, out hit, _interactorRange, _layerMask);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, transform.forward * _interactorRange);
+    }
+
     public void Interact()
     {
         if (!canInteract) return;
 
-        hit.transform.TryGetComponent(out currentInteractable);
+        hit.collider.transform.TryGetComponent(out currentInteractable);
 
         currentInteractable.SetInteractor(this);
         currentInteractable.Interact();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(transform.position, transform.forward * _interactorRange);
     }
 }

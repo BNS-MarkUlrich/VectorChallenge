@@ -1,20 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class CommandTerminal : Interactable
 {
-    [SerializeField] protected InputParser _targetInputObject;
+    private InputParser targetInputObject;
+    private InputParser originInputParser;
     private bool isInUse;
-    
+
+    private void Start()
+    {
+        targetInputObject = GetComponentInParent<InputParser>();
+    }
+
     public override void Interact()
     {
         if (isInUse) return;
 
-        if (!OriginInteractor.TryGetComponent(out InputParser inputParser)) return;
-        
-        inputParser.SwitchInput(_targetInputObject);
+        if (!OriginInteractor.TryGetComponent(out originInputParser)) return;
+
+        originInputParser.SwitchInput(targetInputObject);
+        isInUse = true;
+    }
+
+    public override void Disconnect()
+    {
+        targetInputObject.SwitchInput(originInputParser);
+        isInUse = false;
     }
 }
