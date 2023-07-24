@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9157839037197522612}
   - component: {fileID: 5159940172636266375}
   - component: {fileID: 2678897946894739085}
+  - component: {fileID: 2497454673507458575}
   - component: {fileID: 2221451849717555851}
   m_Layer: 0
   m_Name: Player
@@ -31,14 +32,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3062019459968733936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.27, y: 1.077, z: -0.666}
+  m_LocalPosition: {x: 2.27, y: 4.4, z: -0.666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2524007797016753493}
   - {fileID: 2152617699638142851}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8982180319221472246
 MeshFilter:
@@ -169,10 +170,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62994c7d4ee25924d844c348021ddd72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetInputObject: {fileID: 0}
   _inputActionMap: 1
   _myCamera: {fileID: 3821985631032056129}
-  playerMovement: {fileID: 5159940172636266375}
+  _playerMovement: {fileID: 5159940172636266375}
+--- !u!114 &2497454673507458575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3062019459968733936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7cabdf6b17adc42a5a96dd66429335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactorRange: 2
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!143 &2221451849717555851
 CharacterController:
   m_ObjectHideFlags: 0
@@ -342,6 +358,58 @@ PrefabInstance:
     - target: {fileID: 4053605073255419216, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[7].m_ActionId
+      value: ace47d6b-af71-419a-95a3-22daf81fb1be
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[8].m_ActionId
+      value: 4d481d96-678d-40f2-bd58-7460f292e8a6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionId
+      value: c55e5b51-7089-462d-bf47-849be9e593e7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionId
+      value: fcb4f7b2-3fc4-43ce-94a7-19f878b470e9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionId
+      value: 426393f0-ed69-4cc9-8e4d-7742c3206fe0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[7].m_ActionName
+      value: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[8].m_ActionName
+      value: Ship/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionName
+      value: RTS/Disconnect[/Keyboard/tab]
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionName
+      value: Player/LookRotation[/Mouse/delta,/XInputControllerWindows/rightStick]
+      objectReference: {fileID: 0}
+    - target: {fileID: 8987502439805660704, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionName
+      value: Player/Interact[/Keyboard/e,/XInputControllerWindows/buttonSouth]
       objectReference: {fileID: 0}
     - target: {fileID: 9002767006422670737, guid: 26d5da38fca556a49aff3b11ed4afdb6, type: 3}
       propertyPath: m_Name

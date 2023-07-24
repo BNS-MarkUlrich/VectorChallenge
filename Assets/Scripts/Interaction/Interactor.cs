@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
@@ -12,6 +13,13 @@ public class Interactor : MonoBehaviour
 
     private RaycastHit hit;
     private Ray ray;
+
+    private InputParser myInputParser;
+
+    private void Awake()
+    {
+        myInputParser = GetComponentInChildren<InputParser>();
+    }
 
     private void Update()
     {
@@ -34,5 +42,18 @@ public class Interactor : MonoBehaviour
 
         currentInteractable.SetInteractor(this);
         currentInteractable.Interact();
+    }
+
+    private void Disconnect()
+    {
+        if (currentInteractable == null) return;
+        
+        currentInteractable.Disconnect();
+    }
+
+    private void OnDestroy()
+    {
+        myInputParser.DestroyInputHandler();
+        Disconnect();
     }
 }

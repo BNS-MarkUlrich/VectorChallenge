@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,7 +41,6 @@ public abstract class InputParser : MonoBehaviour
     {
         PlayerInput.transform.SetParent(target.transform);
         SetInputActionMap(target._inputActionMap.ToString());
-
         target.enabled = true;
 
         if (target._myCamera == null)
@@ -57,6 +57,11 @@ public abstract class InputParser : MonoBehaviour
         }
 
         enabled = false;
+    }
+
+    public void DestroyInputHandler()
+    {
+        Destroy(PlayerInput.gameObject);
     }
 
     protected abstract void AddListeners(out bool hasListeners);

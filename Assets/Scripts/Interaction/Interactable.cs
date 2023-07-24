@@ -6,6 +6,8 @@ public abstract class Interactable : MonoBehaviour
 
     private Vector3 originalPosition; // Temp
     protected Interactor OriginInteractor;
+    
+    protected bool IsInUse;
 
     private void Awake()
     {
@@ -21,7 +23,11 @@ public abstract class Interactable : MonoBehaviour
 
     public void SetInteractor(Interactor newInteractor)
     {
+        if (IsInUse) return;
+        
         OriginInteractor = newInteractor;
+        
+        IsInUse = true;
     }
 
     public abstract void Interact();
