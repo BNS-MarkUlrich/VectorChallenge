@@ -6,8 +6,11 @@ using UnityEngine;
 public abstract class Projectile : ZeroGMovement
 {
     [SerializeField] protected float maxTravelDistance = 100f;
+    [SerializeField] protected float _overheatCost = 10;
     protected Transform ShipOrigin;
     protected Turret Origin;
+
+    public float OverheatCost => _overheatCost;
     
     public virtual void InitBullet(Transform shipOrigin, Turret newOrigin)
     {

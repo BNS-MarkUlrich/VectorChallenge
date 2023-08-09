@@ -27,8 +27,9 @@ public class FPCameraController : MonoBehaviour
         yRotation += input.x;
         
         xRotation = Mathf.Clamp(xRotation, -60f, 60f);
-
-        //transform.Rotate(Vector3.up * input.x);
+        
+        // Todo: Fix camera rotation and turret rotation not matching
+        
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         
         _myCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);

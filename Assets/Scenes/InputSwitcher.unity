@@ -250,6 +250,10 @@ PrefabInstance:
       propertyPath: shootCooldown
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1647119152740009276, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: _shootCooldownTimer
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4534642584539617273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
       propertyPath: m_Name
       value: Turret

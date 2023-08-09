@@ -5,9 +5,12 @@ using UnityEngine.Serialization;
 public class Turret : Weapon
 {
     [SerializeField] private Projectile _projectilePrefab;
-    [SerializeField] private bool _hasPulledTrigger; // Serialised for Debugging
-    [SerializeField] private float _shootCooldown = 1f;
+    [SerializeField] private float _shootCooldownTimer = 1f;
     [SerializeField] private Transform _aimAssist;
+    [SerializeField] private float _heatCapacity;
+    [SerializeField] private float _maxHeatCapacity = 100f;
+    [SerializeField] private float _overheatTimer = 5f;
+    [SerializeField] private float _cooldownStartTimer = 0.5f;
 
     [Header("Automatic Turret")]
     [SerializeField] private bool _isAutomaticTurret;
@@ -16,10 +19,12 @@ public class Turret : Weapon
     [SerializeField] private float _maxRange = 100f;
     [SerializeField] private LayerMask _detectionLayer;
 
-    private float oldSootCooldown;
+    private float maxCooldownStartTimer;
+    private float maxShootCooldownTimer;
     private bool canShoot;
     private bool hasTarget;
     private bool hasAimAssist;
+    private bool hasPulledTrigger;
 
     private Collider[] targetsInRange;
     private Rigidbody targetRigidbody;
@@ -36,7 +41,8 @@ public class Turret : Weapon
 
     private void Start()
     {
-        oldSootCooldown = _shootCooldown;
+        maxCooldownStartTimer = _cooldownStartTimer;
+        maxShootCooldownTimer = _shootCooldownTimer;
         
         if (_target == null) hasTarget = false;
         
@@ -75,32 +81,50 @@ public class Turret : Weapon
         }
     }
 
-    private void ShootCooldown()
+    private void Cooldown()
     {
-        if (canShoot)
+        _cooldownStartTimer -= Time.deltaTime;
+        if (_cooldownStartTimer > 0) return;
+        
+        _cooldownStartTimer = 0;
+        
+        if (_heatCapacity < 1)
         {
-            print("Yes");
+            _heatCapacity = 0;
             return;
         }
 
-        if (_shootCooldown > 0)
+        var lerp = Mathf.Lerp(_heatCapacity, 0, Time.deltaTime); // Todo: Add OverHeatTimer percentile
+        _heatCapacity = lerp;
+    }
+
+    private void ShootCooldown()
+    {
+        if (_shootCooldownTimer <= 0) return;
+
+        _shootCooldownTimer -= Time.deltaTime;
+
+        canShoot = _shootCooldownTimer <= 0;
+
+        if (canShoot)
         {
-            _shootCooldown -= Time.deltaTime;
+            print("yes");
+            _shootCooldownTimer = 0;
         }
-        
-        canShoot = _shootCooldown <= 0;
     }
 
     private void AutoFire()
     {
-        if (_shootCooldown <= 0)
+        if (canShoot)
         {
-            _hasPulledTrigger = true;
+            hasPulledTrigger = true;
         }
     }
 
     private void FixedUpdate()
     {
+        Cooldown();
+
         ShootCooldown();
 
         DetectTargets();
@@ -112,7 +136,7 @@ public class Turret : Weapon
             AutoFire();
         }
 
-        if (_hasPulledTrigger)
+        if (hasPulledTrigger)
         {
             Fire();
         }
@@ -128,6 +152,8 @@ public class Turret : Weapon
             return _target.position;
         }
 
+        // Todo: Add Aim Assist/Lock on feature?
+        
         var targetPosition = transform.forward;
         var predictedPosition = targetPosition * 100;
         
@@ -168,10 +194,32 @@ public class Turret : Weapon
         CalculatePredictionVelocity(_projectilePrefab.MaxSpeed);
         var newProjectile = Instantiate(_projectilePrefab, transform.position, transform.rotation);
         newProjectile.InitBullet(transform.parent, this);
+
+        AddHeat(newProjectile.OverheatCost);
         
-        _hasPulledTrigger = false;
-        _shootCooldown = oldSootCooldown;
-        canShoot = false;
+        TurretReset();
+    }
+
+    private void AddHeat(float heat)
+    {
+        // Todo: Possibly add check whether adding heat would exceed max capacity, block action if so
+        
+        _heatCapacity += heat;
+        _cooldownStartTimer = maxCooldownStartTimer;
+        
+        if (_heatCapacity >= _maxHeatCapacity)
+        {
+            // Todo: Add percentile debuff based on how much the heat capacity does/would exceed the max capacity
+            
+            canShoot = false;
+            _shootCooldownTimer += _overheatTimer;
+        }
+    }
+
+    private void TurretReset()
+    {
+        hasPulledTrigger = false;
+        _shootCooldownTimer += maxShootCooldownTimer;
     }
 
     private void OnDrawGizmos()

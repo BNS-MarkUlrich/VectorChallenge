@@ -252,9 +252,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 2129984051130309635, guid: 6cb01356ea92cd24b91bb7791f251598, type: 3}
-  _hasPulledTrigger: 0
-  _shootCooldown: 5
+  _shootCooldownTimer: 0.25
   _aimAssist: {fileID: 9007272381376066688}
+  _heatCapacity: 0
+  _maxHeatCapacity: 100
+  _overheatTimer: 5
+  _cooldownStartTimer: 0.5
   _isAutomaticTurret: 0
   _autoFire: 0
   _target: {fileID: 0}
@@ -290,7 +293,7 @@ MonoBehaviour:
   _inputActionMap: 2
   _myCamera: {fileID: 6073975960318396029}
   _mouseSensitivity: 15
-  _cursorVisibility: 1
+  _cursorVisibility: 0
   _cursorLockMode: 1
   _turret: {fileID: 1647119152740009276}
   _fpCameraController: {fileID: 6948551301743510741}
