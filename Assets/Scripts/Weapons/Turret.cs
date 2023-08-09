@@ -106,11 +106,7 @@ public class Turret : Weapon
 
         canShoot = _shootCooldownTimer <= 0;
 
-        if (canShoot)
-        {
-            print("yes");
-            _shootCooldownTimer = 0;
-        }
+        if (canShoot) _shootCooldownTimer = 0;
     }
 
     private void AutoFire()
