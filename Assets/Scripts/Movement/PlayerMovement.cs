@@ -6,6 +6,7 @@ public class PlayerMovement : Movement
     [SerializeField] private float _gravityValue = -9.81f;
     [SerializeField] private float _jumpHeight = 1.0f;
     [SerializeField] private Camera _myCamera;
+    [SerializeField] private float xRotation;
     private bool groundedPlayer;
 
     private CharacterController characterController;
@@ -42,13 +43,20 @@ public class PlayerMovement : Movement
 
     public void RotatePlayer(Vector2 input)
     {
-        Transform myTransform;
-        (myTransform = transform).Rotate(0, input.x, 0);
-        var eulerAngles = myTransform.eulerAngles;
+        //var currentRotation = _myCamera.transform.rotation.x;
+        //var clampedRotation = Mathf.Clamp(currentRotation, -90f, 90f);
+        xRotation += -input.y;
+        xRotation = Mathf.Clamp(xRotation, -60f, 60f);
+
+        transform.Rotate(0, input.x, 0);
+        var eulerAngles = transform.eulerAngles;
         var z = eulerAngles.z;
         var x = eulerAngles.x;
+        
         transform.Rotate(-x, 0, -z);
         
-        _myCamera.transform.Rotate(-input.y,0,0);
+        //_myCamera.transform.Rotate(xRotation,0,0);
+
+        _myCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 }

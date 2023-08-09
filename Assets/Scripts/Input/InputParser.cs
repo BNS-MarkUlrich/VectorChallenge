@@ -6,6 +6,7 @@ public abstract class InputParser : MonoBehaviour
 {
     [SerializeField] protected InputTypes _inputActionMap;
     [SerializeField] protected Camera _myCamera;
+    [SerializeField] protected float mouseSensitivity = 5;
     protected InputActionAsset ControlsActions;
 
     protected bool HasListeners;

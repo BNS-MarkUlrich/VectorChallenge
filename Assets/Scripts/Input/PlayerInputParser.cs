@@ -60,7 +60,7 @@ public class PlayerInputParser : InputParser
 
     private Vector2 GetMouseDelta()
     {
-        return ControlsActions["MouseDelta"].ReadValue<Vector2>();
+        return ControlsActions["MouseDelta"].ReadValue<Vector2>() * (mouseSensitivity * Time.deltaTime);
     }
 
     private void RotateCamera(Vector2 rotationDelta)

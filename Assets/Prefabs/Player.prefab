@@ -158,6 +158,7 @@ MonoBehaviour:
   _gravityValue: -9.81
   _jumpHeight: 1
   _myCamera: {fileID: 3821985631032056129}
+  xRotation: 0
 --- !u!114 &2678897946894739085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputActionMap: 1
   _myCamera: {fileID: 3821985631032056129}
+  mouseSensitivity: 10
   _playerMovement: {fileID: 5159940172636266375}
 --- !u!114 &2497454673507458575
 MonoBehaviour:
