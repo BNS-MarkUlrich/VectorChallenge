@@ -94,7 +94,7 @@ public class Turret : Weapon
             return;
         }
 
-        var lerp = Mathf.Lerp(_heatCapacity, 0, Time.deltaTime); // Todo: Add OverHeatTimer percentile
+        var lerp = Mathf.Lerp(_heatCapacity, 0, Time.deltaTime);
         _heatCapacity = lerp;
     }
 
