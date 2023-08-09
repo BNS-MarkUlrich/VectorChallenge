@@ -29,6 +29,7 @@ public class FPCameraController : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -60f, 60f);
         
         // Todo: Fix camera rotation and turret rotation not matching
+        // Todo#2: Add Aim Stabiliser feature (rotation of turret does not change with rotation of mothership, but keeps steady instead
         
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         
