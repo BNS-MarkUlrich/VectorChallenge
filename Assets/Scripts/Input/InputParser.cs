@@ -1,13 +1,19 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public abstract class InputParser : MonoBehaviour
 {
     [SerializeField] protected InputTypes _inputActionMap;
     [SerializeField] protected Camera _myCamera;
-    [SerializeField] protected float mouseSensitivity = 5;
     protected InputActionAsset ControlsActions;
+    
+    [Header("Cursor")]
+    [SerializeField] protected float _mouseSensitivity = 5;
+    [SerializeField] private bool _cursorVisibility = true;
+    [SerializeField] private CursorLockMode _cursorLockMode;
 
     protected bool HasListeners;
     protected PlayerInput PlayerInput;
@@ -20,17 +26,25 @@ public abstract class InputParser : MonoBehaviour
         AddListeners(out HasListeners);
     }
 
+    private void OnDisable()
+    {
+        RemoveListeners();
+    }
+
     protected virtual void OnDestroy()
     {
         RemoveListeners();
     }
 
-    private void InitInput()
+    protected virtual void InitInput()
     {
         PlayerInput = GetComponentInChildren<PlayerInput>();
         ControlsActions = PlayerInput.actions;
 
         ControlsActions.Enable();
+        
+        Cursor.lockState = _cursorLockMode;
+        Cursor.visible = _cursorVisibility;
     }
 
     private void SetInputActionMap(string inputType)
@@ -58,6 +72,11 @@ public abstract class InputParser : MonoBehaviour
         }
 
         enabled = false;
+    }
+    
+    protected Vector2 GetMouseDelta()
+    {
+        return ControlsActions["MouseDelta"].ReadValue<Vector2>() * (_mouseSensitivity * Time.deltaTime);
     }
 
     public void DestroyInputHandler()

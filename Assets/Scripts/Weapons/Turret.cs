@@ -4,16 +4,20 @@ using UnityEngine.Serialization;
 
 public class Turret : Weapon
 {
-    [SerializeField] private Projectile projectilePrefab;
-    [SerializeField] private Transform target;
-    [SerializeField] private bool isFiringBullet;
-    [SerializeField] private bool autoFire;
-    [SerializeField] private float shootCooldown = 1f;
-    [SerializeField] private Transform aimAssist;
-    [SerializeField] private float maxRange = 100f;
-    [SerializeField] private LayerMask detectionLayer;
+    [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private bool _hasPulledTrigger; // Serialised for Debugging
+    [SerializeField] private float _shootCooldown = 1f;
+    [SerializeField] private Transform _aimAssist;
+
+    [Header("Automatic Turret")]
+    [SerializeField] private bool _isAutomaticTurret;
+    [SerializeField] private bool _autoFire;
+    [SerializeField] private Transform _target;
+    [SerializeField] private float _maxRange = 100f;
+    [SerializeField] private LayerMask _detectionLayer;
 
     private float oldSootCooldown;
+    private bool canShoot;
     private bool hasTarget;
     private bool hasAimAssist;
 
@@ -21,21 +25,27 @@ public class Turret : Weapon
     private Rigidbody targetRigidbody;
     private Vector3 predictedVelocity;
 
-    public Transform Target => target;
+    public Transform Target => _target;
     public Vector3 PredictedVelocity => predictedVelocity;
+
+    public bool IsAutomaticTurret
+    {
+        get => _isAutomaticTurret;
+        set => _isAutomaticTurret = value;
+    }
 
     private void Start()
     {
-        oldSootCooldown = shootCooldown;
+        oldSootCooldown = _shootCooldown;
         
-        if (target == null) hasTarget = false;
+        if (_target == null) hasTarget = false;
         
-        if (aimAssist == null) hasAimAssist = false;
+        if (_aimAssist == null) hasAimAssist = false;
     }
 
     private void DetectTargets()
     {
-        targetsInRange = Physics.OverlapSphere(transform.position, maxRange, detectionLayer);
+        targetsInRange = Physics.OverlapSphere(transform.position, _maxRange, _detectionLayer);
 
         for (int i = 0; i < targetsInRange.Length; i++)
         {
@@ -45,7 +55,7 @@ public class Turret : Weapon
             }
             
             var direction = targetsInRange[i].transform.position - transform.position;
-            Physics.Raycast(transform.position, direction, out var hitInfo, maxRange);
+            Physics.Raycast(transform.position, direction, out var hitInfo, _maxRange);
 
             if (hitInfo.transform == null || hitInfo.transform != targetsInRange[i].transform)
             {
@@ -55,50 +65,54 @@ public class Turret : Weapon
 
             if (hasTarget)
             {
-                Debug.DrawLine(transform.position, target.transform.position);
+                Debug.DrawLine(transform.position, _target.transform.position);
                 continue;
             }
 
-            target = targetsInRange[i].transform;
-            targetRigidbody = target.GetComponent<Rigidbody>(); // Make ComponentCache later
+            _target = targetsInRange[i].transform;
+            _target.TryGetComponent(out targetRigidbody);
             hasTarget = true;
         }
     }
 
     private void ShootCooldown()
     {
-        if (shootCooldown > 0)
+        if (canShoot)
         {
-            shootCooldown -= Time.deltaTime;
+            print("Yes");
+            return;
         }
-        else
+
+        if (_shootCooldown > 0)
         {
-            shootCooldown = 0f;
+            _shootCooldown -= Time.deltaTime;
         }
+        
+        canShoot = _shootCooldown <= 0;
     }
 
     private void AutoFire()
     {
-        if (shootCooldown <= 0)
+        if (_shootCooldown <= 0)
         {
-            isFiringBullet = true;
+            _hasPulledTrigger = true;
         }
     }
 
     private void FixedUpdate()
     {
         ShootCooldown();
-        
+
         DetectTargets();
         
         if (!hasTarget) return;
 
-        if (autoFire)
+        if (_autoFire)
         {
             AutoFire();
         }
 
-        if (isFiringBullet)
+        if (_hasPulledTrigger)
         {
             Fire();
         }
@@ -109,22 +123,28 @@ public class Turret : Weapon
 
     private Vector3 Aim(float speed)
     {
-        if (targetRigidbody == null)
+        if (targetRigidbody == null && _target != null)
         {
-            return target.position;
+            return _target.position;
         }
+
+        var targetPosition = transform.forward;
+        var predictedPosition = targetPosition * 100;
         
-        var targetPosition = target.position;
-        var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-        //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-        var predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-        
+        if (_target != null && _isAutomaticTurret)
+        {
+            targetPosition = _target.position;
+            var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+            //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
+            predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
+        }
+
         return predictedPosition;
     }
 
     private void MoveAimAssist()
     {
-        aimAssist.position = Aim(projectilePrefab.MaxSpeed);
+        _aimAssist.position = Aim(_projectilePrefab.MaxSpeed);
     }
     
     public Vector3 CalculatePredictionVelocity(float speed)
@@ -141,19 +161,22 @@ public class Turret : Weapon
         return predictedVelocity;
     }
 
-    private void Fire()
+    public void Fire()
     {
-        CalculatePredictionVelocity(projectilePrefab.MaxSpeed);
-        var newProjectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+        if (!canShoot) return;
+        
+        CalculatePredictionVelocity(_projectilePrefab.MaxSpeed);
+        var newProjectile = Instantiate(_projectilePrefab, transform.position, transform.rotation);
         newProjectile.InitBullet(transform.parent, this);
         
-        isFiringBullet = false;
-        shootCooldown = oldSootCooldown;
+        _hasPulledTrigger = false;
+        _shootCooldown = oldSootCooldown;
+        canShoot = false;
     }
 
     private void OnDrawGizmos()
     {
         //Gizmos.DrawRay(transform.position, transform.forward * maxRange);
-        Gizmos.DrawWireSphere(transform.position, maxRange);
+        Gizmos.DrawWireSphere(transform.position, _maxRange);
     }
 }

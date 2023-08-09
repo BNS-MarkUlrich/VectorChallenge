@@ -71,11 +71,6 @@ public class RTSInputParser : InputParser
         mousePosition = ControlsActions["MousePosition"].ReadValue<Vector2>();
     }
 
-    private Vector2 GetMouseDelta()
-    {
-        return ControlsActions["MouseDelta"].ReadValue<Vector2>();
-    }
-
     private Vector2 GetScrollDelta()
     {
         return ControlsActions["ScrollZoom"].ReadValue<Vector2>();

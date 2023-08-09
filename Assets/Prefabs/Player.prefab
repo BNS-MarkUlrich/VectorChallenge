@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2893892661416701644}
   - component: {fileID: 2630100703672394503}
   - component: {fileID: 9157839037197522612}
+  - component: {fileID: 2426607186098738170}
   - component: {fileID: 5159940172636266375}
   - component: {fileID: 2678897946894739085}
   - component: {fileID: 2497454673507458575}
@@ -141,6 +142,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2426607186098738170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3062019459968733936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0c1624545703047b90d6a91bd01e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myCamera: {fileID: 3821985631032056129}
 --- !u!114 &5159940172636266375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,8 +171,6 @@ MonoBehaviour:
   rotationSpeed: 5
   _gravityValue: -9.81
   _jumpHeight: 1
-  _myCamera: {fileID: 3821985631032056129}
-  xRotation: 0
 --- !u!114 &2678897946894739085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,8 +185,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputActionMap: 1
   _myCamera: {fileID: 3821985631032056129}
-  mouseSensitivity: 10
+  _mouseSensitivity: 15
+  _cursorVisibility: 1
+  _cursorLockMode: 1
   _playerMovement: {fileID: 5159940172636266375}
+  _fpCameraController: {fileID: 2426607186098738170}
 --- !u!114 &2497454673507458575
 MonoBehaviour:
   m_ObjectHideFlags: 0

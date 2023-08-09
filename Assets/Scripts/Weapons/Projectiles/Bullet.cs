@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Bullet : Projectile
 {
     private Vector3 launchVelocity;
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         var travelDistance = Vector3.Distance(transform.position, Origin.transform.position);
         if (travelDistance >= maxTravelDistance || HasReachedTarget())
@@ -28,4 +29,11 @@ public class Bullet : Projectile
         Destroy(gameObject);
         print(target.name);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Todo: Add Hit Event
+        Destroy(gameObject);
+    }
+
 }

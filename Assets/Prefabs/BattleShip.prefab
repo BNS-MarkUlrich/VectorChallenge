@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockInPlace: 1
-  _targetInputObject: {fileID: 8965171980680267854}
 --- !u!1 &7173490882133240375
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb316620eb18cca449a15eabe2881ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 2
+  maxSpeed: 6
   rotationSpeed: 5
   target: {fileID: 4252507619575557498}
 --- !u!114 &8965171980680267854
@@ -376,6 +375,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputActionMap: 0
   _myCamera: {fileID: 0}
+  _mouseSensitivity: 15
+  _cursorVisibility: 1
+  _cursorLockMode: 2
   _rtsCameraMovement: {fileID: 0}
   _shipMovement: {fileID: 6548194733382244349}
 --- !u!1001 &7723443679305366709

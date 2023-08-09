@@ -5,6 +5,7 @@ public class PlayerInputParser : InputParser
 {
     [Header("Player")]
     [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private FPCameraController _fpCameraController;
 
     [Header("Other Input")]
     private Vector3 inputMovement;
@@ -22,7 +23,7 @@ public class PlayerInputParser : InputParser
             // Player
             case "Player":
                 MovePlayer(ReadMoveInput());
-                RotateCamera(GetMouseDelta());
+                RotatePlayer(GetMouseDelta());
                 break;
         }
     }
@@ -58,13 +59,8 @@ public class PlayerInputParser : InputParser
         return inputMovement;
     }
 
-    private Vector2 GetMouseDelta()
+    private void RotatePlayer(Vector2 rotationDelta)
     {
-        return ControlsActions["MouseDelta"].ReadValue<Vector2>() * (mouseSensitivity * Time.deltaTime);
-    }
-
-    private void RotateCamera(Vector2 rotationDelta)
-    {
-        _playerMovement.RotatePlayer(rotationDelta);
+        _fpCameraController.RotateCamera(rotationDelta);
     }
 }

@@ -9,6 +9,8 @@ public class ZeroGMovement : Movement
 
     protected bool HasReachedTarget(float distanceThreshold = 1f)
     {
+        if (Target == null) return false;
+
         _distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
         return _distanceToTarget < distanceThreshold;

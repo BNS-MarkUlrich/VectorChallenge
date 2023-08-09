@@ -458,6 +458,107 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""Turret"",
+            ""id"": ""17b30623-0e12-4ed6-a350-19c410b9253d"",
+            ""actions"": [
+                {
+                    ""name"": ""LookRotation"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""eafa6c3f-5f9c-4349-9da6-0e4c63a93a67"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Disconnect"",
+                    ""type"": ""Button"",
+                    ""id"": ""93d66d2d-ebac-4e3d-bea1-8b653ae594a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""aac96a45-c5d6-4b7c-b3f4-f562a4bb794c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""20917257-8602-4f5d-b00d-4cf683775910"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""LookRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c799b11-cd7b-4f00-ba42-4a090e91b187"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""LookRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c11d94e-b574-4e36-88d4-b0c177aa2c50"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Disconnect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9492128-6dc4-4fa5-ba1f-29d1c1a0191b"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Disconnect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b2c63ab-8111-492c-b875-76f9fdbd10e5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7d1c5ba-658e-4d03-b782-0065ec11059f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Ship"",
             ""id"": ""10f8b3c2-c014-459d-975b-c8fd39a571df"",
             ""actions"": [
@@ -575,6 +676,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_LookRotation = m_Player.FindAction("LookRotation", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // Turret
+        m_Turret = asset.FindActionMap("Turret", throwIfNotFound: true);
+        m_Turret_LookRotation = m_Turret.FindAction("LookRotation", throwIfNotFound: true);
+        m_Turret_Disconnect = m_Turret.FindAction("Disconnect", throwIfNotFound: true);
+        m_Turret_Shoot = m_Turret.FindAction("Shoot", throwIfNotFound: true);
         // Ship
         m_Ship = asset.FindActionMap("Ship", throwIfNotFound: true);
         m_Ship_Movement = m_Ship.FindAction("Movement", throwIfNotFound: true);
@@ -800,6 +906,68 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
+    // Turret
+    private readonly InputActionMap m_Turret;
+    private List<ITurretActions> m_TurretActionsCallbackInterfaces = new List<ITurretActions>();
+    private readonly InputAction m_Turret_LookRotation;
+    private readonly InputAction m_Turret_Disconnect;
+    private readonly InputAction m_Turret_Shoot;
+    public struct TurretActions
+    {
+        private @InputActions m_Wrapper;
+        public TurretActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @LookRotation => m_Wrapper.m_Turret_LookRotation;
+        public InputAction @Disconnect => m_Wrapper.m_Turret_Disconnect;
+        public InputAction @Shoot => m_Wrapper.m_Turret_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_Turret; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TurretActions set) { return set.Get(); }
+        public void AddCallbacks(ITurretActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TurretActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TurretActionsCallbackInterfaces.Add(instance);
+            @LookRotation.started += instance.OnLookRotation;
+            @LookRotation.performed += instance.OnLookRotation;
+            @LookRotation.canceled += instance.OnLookRotation;
+            @Disconnect.started += instance.OnDisconnect;
+            @Disconnect.performed += instance.OnDisconnect;
+            @Disconnect.canceled += instance.OnDisconnect;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+        }
+
+        private void UnregisterCallbacks(ITurretActions instance)
+        {
+            @LookRotation.started -= instance.OnLookRotation;
+            @LookRotation.performed -= instance.OnLookRotation;
+            @LookRotation.canceled -= instance.OnLookRotation;
+            @Disconnect.started -= instance.OnDisconnect;
+            @Disconnect.performed -= instance.OnDisconnect;
+            @Disconnect.canceled -= instance.OnDisconnect;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+        }
+
+        public void RemoveCallbacks(ITurretActions instance)
+        {
+            if (m_Wrapper.m_TurretActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITurretActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TurretActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TurretActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TurretActions @Turret => new TurretActions(this);
+
     // Ship
     private readonly InputActionMap m_Ship;
     private List<IShipActions> m_ShipActionsCallbackInterfaces = new List<IShipActions>();
@@ -879,6 +1047,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnLookRotation(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface ITurretActions
+    {
+        void OnLookRotation(InputAction.CallbackContext context);
+        void OnDisconnect(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
     public interface IShipActions
     {
