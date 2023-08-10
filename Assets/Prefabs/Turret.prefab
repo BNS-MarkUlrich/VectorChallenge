@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockInPlace: 1
+  targetInputObject: {fileID: 0}
 --- !u!1 &4534642584539617273
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ MonoBehaviour:
   _isAutomaticTurret: 0
   _autoFire: 0
   _target: {fileID: 0}
-  _maxRange: 30
+  _maxRange: 40
   _detectionLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -297,6 +298,7 @@ MonoBehaviour:
   _cursorLockMode: 1
   _turret: {fileID: 1647119152740009276}
   _fpCameraController: {fileID: 6948551301743510741}
+  commandTerminal: {fileID: 0}
 --- !u!1 &8418993302811254816
 GameObject:
   m_ObjectHideFlags: 0

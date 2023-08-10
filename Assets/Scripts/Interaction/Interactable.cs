@@ -5,7 +5,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected bool _lockInPlace = true;
 
     private Vector3 originalPosition; // Temp
-    protected Interactor OriginInteractor;
+    protected Interactor UserInteractor;
     
     protected bool IsInUse;
 
@@ -25,7 +25,7 @@ public abstract class Interactable : MonoBehaviour
     {
         if (IsInUse) return;
         
-        OriginInteractor = newInteractor;
+        UserInteractor = newInteractor;
         
         IsInUse = true;
     }

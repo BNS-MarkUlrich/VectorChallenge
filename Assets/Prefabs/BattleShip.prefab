@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockInPlace: 1
+  targetInputObject: {fileID: 0}
 --- !u!1 &7173490882133240375
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +381,7 @@ MonoBehaviour:
   _cursorLockMode: 2
   _rtsCameraMovement: {fileID: 0}
   _shipMovement: {fileID: 6548194733382244349}
+  commandTerminal: {fileID: 2658606421835311373}
 --- !u!1001 &7723443679305366709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -397,9 +399,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1647119152740009276, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: _autoFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1647119152740009276, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
       propertyPath: projectilePrefab
       value: 
       objectReference: {fileID: -4647362279761830127, guid: 12fa57ee90fb4814ea356165c71d01ee, type: 3}
+    - target: {fileID: 1647119152740009276, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: _isAutomaticTurret
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4534642584539617273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
       propertyPath: m_Name
       value: Turret

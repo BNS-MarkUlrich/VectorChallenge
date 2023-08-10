@@ -143,23 +143,21 @@ public class Turret : Weapon
 
     private Vector3 Aim(float speed)
     {
-        if (targetRigidbody == null && _target != null)
-        {
-            return _target.position;
-        }
-
         // Todo: Add Aim Assist/Lock on feature?
         
         var targetPosition = transform.forward;
-        var predictedPosition = targetPosition * 100;
-        
-        if (_target != null && _isAutomaticTurret)
-        {
-            targetPosition = _target.position;
-            var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-            //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-            predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-        }
+        var predictedPosition = targetPosition * 1000;
+
+        if (_target == null || !_isAutomaticTurret)
+            return predictedPosition;
+
+        if (targetRigidbody == null)
+            return _target.position;
+
+        targetPosition = _target.position;
+        var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
+        predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
 
         return predictedPosition;
     }

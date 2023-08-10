@@ -11,7 +11,7 @@ public class TurretInputParser : InputParser
     [SerializeField] private FPCameraController _fpCameraController;
     
     [Header("Other")]
-    private CommandTerminal commandTerminal;
+    [SerializeField] private CommandTerminal commandTerminal;
 
     protected override void InitInput()
     {
@@ -34,7 +34,10 @@ public class TurretInputParser : InputParser
 
     private void Awake()
     {
-        commandTerminal = GetComponentInChildren<CommandTerminal>();
+        if (commandTerminal == null)
+        {
+            commandTerminal = GetComponentInChildren<CommandTerminal>();
+        }
     }
     
     private void FixedUpdate()

@@ -1,26 +1,31 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CommandTerminal : Interactable
 {
-    private InputParser targetInputObject;
-    private InputParser originInputParser;
+    [SerializeField] private InputParser targetInputObject;
+    private InputParser userInputParser;
 
     private void Start()
     {
-        targetInputObject = GetComponentInParent<InputParser>();
+        if (targetInputObject == null)
+        {
+            targetInputObject = GetComponentInParent<InputParser>();
+        }
     }
 
     public override void Interact()
     {
-        if (!OriginInteractor.TryGetComponent(out originInputParser)) return;
-
-        originInputParser.SwitchInput(targetInputObject);
+        if (!UserInteractor.TryGetComponent(out userInputParser)) return;
+        
+        userInputParser.SwitchInput(targetInputObject);
     }
 
     public override void Disconnect()
     {
-        targetInputObject.SwitchInput(originInputParser);
+        targetInputObject.SwitchInput(userInputParser);
+        userInputParser = null;
         IsInUse = false;
     }
 }

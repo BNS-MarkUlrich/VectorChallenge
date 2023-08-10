@@ -14,14 +14,9 @@ public class RTSInputParser : InputParser
     private Vector3 inputMovement;
 
     [Header("Other")]
-    private CommandTerminal commandTerminal;
+    [SerializeField] private CommandTerminal commandTerminal;
 
     public bool IsRefocusingTarget { get; set; }
-
-    private void Awake()
-    {
-        commandTerminal = GetComponentInChildren<CommandTerminal>();
-    }
 
     private void FixedUpdate()
     {
