@@ -182,9 +182,10 @@ MonoBehaviour:
   forwardThrust: 0
   maxForwardThrust: 5
   backwardThrust: 0
-  maxBackwardThrust: 3
+  maxBackwardThrust: -3
   turningThrust: 0
   maxTurningThrust: 0
+  isLockingSpeed: 0
 --- !u!114 &450851721 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5345388130086394101, guid: 2b4a4077ff01fb74298c2037feb25019, type: 3}
