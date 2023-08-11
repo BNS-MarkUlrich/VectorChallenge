@@ -7,23 +7,31 @@ using UnityEngine.InputSystem;
 public class ShipMovement : ZeroGMovement
 {
     [SerializeField] private Transform target;
-    [SerializeField] private bool isMovingToTarget;
     
+    private bool isFollowingTarget;
+
     private void Start()
     {
         InitTarget();
-        //InitVelocity();
-    }
-
-    private void InitVelocity()
-    {
-        MyRigidBody.velocity = transform.forward * 0.05f;
     }
 
     private void InitTarget()
     {
-        Target = target;
+        Target = target; 
         target.transform.parent = transform.root.parent;
+    }
+
+    public void ResetTarget()
+    {
+        target.gameObject.SetActive(true);
+        isFollowingTarget = true;
+        target.transform.position = transform.position;
+    }
+
+    public void DisableTarget()
+    {
+        isFollowingTarget = false;
+        target.gameObject.SetActive(false);
     }
 
     public void SetTargetDestination(Vector3 destination)
@@ -33,11 +41,10 @@ public class ShipMovement : ZeroGMovement
 
     private void Update()
     {
-        if (!isMovingToTarget) return;
-        
+        if (!isFollowingTarget) return;
+
         if (HasReachedTarget(2f))
         {
-            //InitVelocity();
             MyRigidBody.velocity *= 0.5f * Time.deltaTime;
             return;
         }

@@ -572,10 +572,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""CameraRotation"",
+                    ""name"": ""MouseDelta"",
                     ""type"": ""PassThrough"",
                     ""id"": ""d5b60598-add4-48da-9006-add8cc5816c4"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollZoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""739d0da9-25a8-418e-b285-0bd901520caf"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Disconnect"",
+                    ""type"": ""Button"",
+                    ""id"": ""762a01aa-2b8d-4697-82e5-71154971c81b"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -644,7 +662,40 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""CameraRotation"",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8dc6cb9-eb6c-42b8-918d-86b3a5506f3a"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Disconnect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68d2ec5b-1161-4e12-aaeb-417c4b4491cb"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Disconnect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62acd91d-f8a9-4fd4-b746-aa84c8b4d38d"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ScrollZoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -704,7 +755,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         // Ship
         m_Ship = asset.FindActionMap("Ship", throwIfNotFound: true);
         m_Ship_Movement = m_Ship.FindAction("Movement", throwIfNotFound: true);
-        m_Ship_CameraRotation = m_Ship.FindAction("CameraRotation", throwIfNotFound: true);
+        m_Ship_MouseDelta = m_Ship.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Ship_ScrollZoom = m_Ship.FindAction("ScrollZoom", throwIfNotFound: true);
+        m_Ship_Disconnect = m_Ship.FindAction("Disconnect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -993,13 +1046,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Ship;
     private List<IShipActions> m_ShipActionsCallbackInterfaces = new List<IShipActions>();
     private readonly InputAction m_Ship_Movement;
-    private readonly InputAction m_Ship_CameraRotation;
+    private readonly InputAction m_Ship_MouseDelta;
+    private readonly InputAction m_Ship_ScrollZoom;
+    private readonly InputAction m_Ship_Disconnect;
     public struct ShipActions
     {
         private @InputActions m_Wrapper;
         public ShipActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Ship_Movement;
-        public InputAction @CameraRotation => m_Wrapper.m_Ship_CameraRotation;
+        public InputAction @MouseDelta => m_Wrapper.m_Ship_MouseDelta;
+        public InputAction @ScrollZoom => m_Wrapper.m_Ship_ScrollZoom;
+        public InputAction @Disconnect => m_Wrapper.m_Ship_Disconnect;
         public InputActionMap Get() { return m_Wrapper.m_Ship; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1012,9 +1069,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @CameraRotation.started += instance.OnCameraRotation;
-            @CameraRotation.performed += instance.OnCameraRotation;
-            @CameraRotation.canceled += instance.OnCameraRotation;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
+            @ScrollZoom.started += instance.OnScrollZoom;
+            @ScrollZoom.performed += instance.OnScrollZoom;
+            @ScrollZoom.canceled += instance.OnScrollZoom;
+            @Disconnect.started += instance.OnDisconnect;
+            @Disconnect.performed += instance.OnDisconnect;
+            @Disconnect.canceled += instance.OnDisconnect;
         }
 
         private void UnregisterCallbacks(IShipActions instance)
@@ -1022,9 +1085,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @CameraRotation.started -= instance.OnCameraRotation;
-            @CameraRotation.performed -= instance.OnCameraRotation;
-            @CameraRotation.canceled -= instance.OnCameraRotation;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
+            @ScrollZoom.started -= instance.OnScrollZoom;
+            @ScrollZoom.performed -= instance.OnScrollZoom;
+            @ScrollZoom.canceled -= instance.OnScrollZoom;
+            @Disconnect.started -= instance.OnDisconnect;
+            @Disconnect.performed -= instance.OnDisconnect;
+            @Disconnect.canceled -= instance.OnDisconnect;
         }
 
         public void RemoveCallbacks(IShipActions instance)
@@ -1086,6 +1155,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface IShipActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnCameraRotation(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
+        void OnScrollZoom(InputAction.CallbackContext context);
+        void OnDisconnect(InputAction.CallbackContext context);
     }
 }

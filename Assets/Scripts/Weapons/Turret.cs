@@ -25,6 +25,7 @@ public class Turret : Weapon
     private bool hasTarget;
     private bool hasAimAssist;
     private bool hasPulledTrigger;
+    private bool isBeingUsed;
 
     private Collider[] targetsInRange;
     private Rigidbody targetRigidbody;
@@ -37,6 +38,12 @@ public class Turret : Weapon
     {
         get => _isAutomaticTurret;
         set => _isAutomaticTurret = value;
+    }
+
+    public bool IsBeingUsed
+    {
+        get => isBeingUsed;
+        set => isBeingUsed = value;
     }
 
     private void Start()
@@ -125,13 +132,13 @@ public class Turret : Weapon
 
         DetectTargets();
         
-        if (!hasTarget) return;
+        if (_isAutomaticTurret && !hasTarget) return;
 
         if (_autoFire)
         {
             AutoFire();
         }
-
+        
         if (hasPulledTrigger)
         {
             Fire();
@@ -144,7 +151,7 @@ public class Turret : Weapon
     private Vector3 Aim(float speed)
     {
         // Todo: Add Aim Assist/Lock on feature?
-        
+
         var targetPosition = transform.forward;
         var predictedPosition = targetPosition * 1000;
 

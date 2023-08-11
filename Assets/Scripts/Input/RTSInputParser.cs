@@ -13,7 +13,7 @@ public class RTSInputParser : InputParser
     [Header("MoveInput")]
     private Vector3 inputMovement;
 
-    [Header("Other")]
+    [Header("Connection")]
     [SerializeField] private CommandTerminal commandTerminal;
 
     public bool IsRefocusingTarget { get; set; }
@@ -42,6 +42,18 @@ public class RTSInputParser : InputParser
                 FollowMousePosition();
                 break;
         }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _shipMovement.ResetTarget();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        _shipMovement.DisableTarget();
     }
 
     // RTS

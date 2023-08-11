@@ -19,14 +19,14 @@ public abstract class InputParser : MonoBehaviour
     protected PlayerInput PlayerInput;
     protected InputActionMap CurrentActionMap => PlayerInput.currentActionMap;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         InitInput();
 
         AddListeners(out HasListeners);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         RemoveListeners();
     }

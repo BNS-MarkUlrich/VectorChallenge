@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8217435466983254310
 Transform:
   m_ObjectHideFlags: 0
@@ -111,8 +111,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255617713350600033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.28, y: -1.17, z: -0.77}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3333333, y: 0.6666667, z: 0.3333333}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5678023766500624273}
@@ -202,7 +202,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockInPlace: 1
-  targetInputObject: {fileID: 0}
+  targetInputObject: {fileID: 19501914809365141}
+  onConnect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1647119152740009276}
+        m_TargetAssemblyTypeName: Turret, Assembly-CSharp
+        m_MethodName: set_IsBeingUsed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  onDisconnect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1647119152740009276}
+        m_TargetAssemblyTypeName: Turret, Assembly-CSharp
+        m_MethodName: set_IsBeingUsed
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4534642584539617273
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +268,7 @@ Transform:
   - {fileID: 8217435466983254310}
   - {fileID: 9007272381376066688}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1647119152740009276
 MonoBehaviour:
@@ -293,12 +323,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputActionMap: 2
   _myCamera: {fileID: 6073975960318396029}
-  _mouseSensitivity: 15
+  _mouseSensitivity: 5
   _cursorVisibility: 0
   _cursorLockMode: 1
   _turret: {fileID: 1647119152740009276}
   _fpCameraController: {fileID: 6948551301743510741}
-  commandTerminal: {fileID: 0}
+  commandTerminal: {fileID: 4865754434431692983}
 --- !u!1 &8418993302811254816
 GameObject:
   m_ObjectHideFlags: 0

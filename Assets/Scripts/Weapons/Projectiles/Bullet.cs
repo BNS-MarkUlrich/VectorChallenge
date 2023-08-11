@@ -33,7 +33,7 @@ public class Bullet : Projectile
     private void OnCollisionEnter(Collision collision)
     {
         // Todo: Add Hit Event
-        Destroy(gameObject);
+        TargetHit(collision.gameObject);
     }
 
 }

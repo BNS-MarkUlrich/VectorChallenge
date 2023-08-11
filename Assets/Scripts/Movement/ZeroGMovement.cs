@@ -9,7 +9,7 @@ public class ZeroGMovement : Movement
 
     protected bool HasReachedTarget(float distanceThreshold = 1f)
     {
-        if (Target == null) return false;
+        if (Target == null) return true;
 
         _distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
 
@@ -29,6 +29,15 @@ public class ZeroGMovement : Movement
         if (currentSpeed >= speed) currentSpeed = speed;
 
         MyRigidBody.velocity = transform.forward.normalized * (currentSpeed) / Mass;
+    }
+
+    protected void MoveToTargetIgnoreAngle(Transform target, float speed = 0f)
+    {
+        if (speed == 0f) speed = maxSpeed;
+
+        var velocityDirection = target.position - transform.position;
+
+        MyRigidBody.velocity = velocityDirection.normalized * (speed) / Mass;
     }
     
     protected void RotateToTarget(Transform rotationTarget, float rotatespeed = 0f)
