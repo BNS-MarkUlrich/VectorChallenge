@@ -7,11 +7,12 @@ using UnityEngine.InputSystem;
 public class ShipMovement : ZeroGMovement
 {
     [SerializeField] private Transform target;
+    [SerializeField] private bool isMovingToTarget;
     
     private void Start()
     {
         InitTarget();
-        InitVelocity();
+        //InitVelocity();
     }
 
     private void InitVelocity()
@@ -32,6 +33,8 @@ public class ShipMovement : ZeroGMovement
 
     private void Update()
     {
+        if (!isMovingToTarget) return;
+        
         if (HasReachedTarget(2f))
         {
             //InitVelocity();

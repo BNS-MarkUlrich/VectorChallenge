@@ -570,6 +570,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraRotation"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""d5b60598-add4-48da-9006-add8cc5816c4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -627,6 +636,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c32c7f6-bdf2-4a3a-8279-19bb0691d8a3"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""CameraRotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -684,6 +704,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         // Ship
         m_Ship = asset.FindActionMap("Ship", throwIfNotFound: true);
         m_Ship_Movement = m_Ship.FindAction("Movement", throwIfNotFound: true);
+        m_Ship_CameraRotation = m_Ship.FindAction("CameraRotation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -972,11 +993,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Ship;
     private List<IShipActions> m_ShipActionsCallbackInterfaces = new List<IShipActions>();
     private readonly InputAction m_Ship_Movement;
+    private readonly InputAction m_Ship_CameraRotation;
     public struct ShipActions
     {
         private @InputActions m_Wrapper;
         public ShipActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Ship_Movement;
+        public InputAction @CameraRotation => m_Wrapper.m_Ship_CameraRotation;
         public InputActionMap Get() { return m_Wrapper.m_Ship; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -989,6 +1012,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @CameraRotation.started += instance.OnCameraRotation;
+            @CameraRotation.performed += instance.OnCameraRotation;
+            @CameraRotation.canceled += instance.OnCameraRotation;
         }
 
         private void UnregisterCallbacks(IShipActions instance)
@@ -996,6 +1022,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @CameraRotation.started -= instance.OnCameraRotation;
+            @CameraRotation.performed -= instance.OnCameraRotation;
+            @CameraRotation.canceled -= instance.OnCameraRotation;
         }
 
         public void RemoveCallbacks(IShipActions instance)
@@ -1057,5 +1086,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface IShipActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnCameraRotation(InputAction.CallbackContext context);
     }
 }

@@ -548,6 +548,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "CameraRotation",
+                    "type": "PassThrough",
+                    "id": "d5b60598-add4-48da-9006-add8cc5816c4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -605,6 +614,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "1c32c7f6-bdf2-4a3a-8279-19bb0691d8a3",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "CameraRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
