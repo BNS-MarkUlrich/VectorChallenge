@@ -61,6 +61,6 @@ public class PlayerInputParser : InputParser
 
     private void RotatePlayer(Vector2 rotationDelta)
     {
-        _fpCameraController.RotateCamera(rotationDelta);
+        _fpCameraController.RotateHorizontally(rotationDelta);
     }
 }

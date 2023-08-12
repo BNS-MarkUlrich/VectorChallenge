@@ -55,7 +55,7 @@ public class ManualFlightInputParser : InputParser
 
     private void ApplyThrust(float thrust)
     {
-        manualFlightMovement.ApplyThrust(thrust);
+        manualFlightMovement.ApplyForwardThrust(thrust);
     }
     
     private void ApplyLateralThrust(float thrust)

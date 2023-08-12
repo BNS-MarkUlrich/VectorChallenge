@@ -49,7 +49,7 @@ public class TurretInputParser : InputParser
 
     private void RotateTurret(Vector2 rotationDelta)
     {
-        _fpCameraController.RotateObject(rotationDelta);
+        _fpCameraController.LookAtRotation(rotationDelta);
     }
     
     private void Disconnect(InputAction.CallbackContext context)

@@ -266,6 +266,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lockInPlace: 1
   targetInputObject: {fileID: 8659579831073471451}
+  onConnect:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisconnect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5188739925191556989
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +392,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lockInPlace: 1
   targetInputObject: {fileID: 1563507824423358252}
+  onConnect:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisconnect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5819812882491744339
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +633,108 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5071540857232519297, guid: 2b4a4077ff01fb74298c2037feb25019, type: 3}
   m_PrefabInstance: {fileID: 1284268102328948168}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3191743128026312230
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6007558081010927647}
+    m_Modifications:
+    - target: {fileID: 4534642584539617273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_Name
+      value: Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.82400006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.06899993
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217435466983254310, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217435466983254310, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217435466983254310, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217435466983254310, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217435466983254310, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8217435466983254310, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.07
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+--- !u!4 &7099711502398237111 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5678023766500624273, guid: c785ef2ff9761d4418c5a21bde85a39c, type: 3}
+  m_PrefabInstance: {fileID: 3191743128026312230}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6112962784319926260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -726,6 +840,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4252507619575557498}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7099711502398237111}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ec31e79999cd5b44a315168afdad277, type: 3}
       insertIndex: -1
@@ -806,12 +923,13 @@ MonoBehaviour:
   currentSpeed: 0
   maxReverseSpeed: -10
   currentRotationSpeed: 0
+  currentRotationVelocity: {x: 0, y: 0}
   maxRotationSpeed: 3
   forwardThrust: 0
   maxForwardThrust: 5
   reverseThrust: 0
   maxReverseThrust: -3
-  turningThrust: 0
+  turningThrust: {x: 0, y: 0}
   maxTurningThrust: 2
   isBrakingAutomatically: 0
 --- !u!1001 &7723443679305366709
