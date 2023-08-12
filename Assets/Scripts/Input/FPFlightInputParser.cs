@@ -36,6 +36,7 @@ public class FPFlightInputParser : InputParser
     private void FixedUpdate()
     {
         ApplyForwardThrust(ReadMoveInput().y);
+        ApplyPitchThrust(ReadMoveInput().x);
         ApplyTurningThrust(GetMouseDelta());
     }
     
@@ -48,6 +49,11 @@ public class FPFlightInputParser : InputParser
     private void ApplyForwardThrust(float thrust)
     {
         manualFlightMovement.ApplyForwardThrust(thrust);
+    }
+    
+    private void ApplyPitchThrust(float thrust)
+    {
+        manualFlightMovement.ApplyPitchThrust(thrust);
     }
     
     private void ApplyTurningThrust(Vector2 thrust)

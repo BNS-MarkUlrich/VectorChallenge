@@ -1213,14 +1213,16 @@ MonoBehaviour:
   rotationSpeed: 5
   currentSpeed: 0
   maxReverseSpeed: -10
-  rotationVelocity: {x: 0, y: 0}
-  maxRotationVelocity: 4
+  rotationVelocity: {x: 0, y: 0, z: 0}
+  maxRotationVelocity: 2
   forwardThrust: 0
   maxForwardThrust: 5
   reverseThrust: 0
   maxReverseThrust: -3
   turningThrust: {x: 0, y: 0}
   maxTurningThrust: 2
+  pitchThrust: 0
+  maxPitchThrust: 2
   isBrakingAutomatically: 0
 --- !u!1001 &7723443679305366709
 PrefabInstance:
