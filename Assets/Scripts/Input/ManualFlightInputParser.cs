@@ -37,6 +37,7 @@ public class ManualFlightInputParser : InputParser
     {
         ApplyForwardThrust(ReadMoveInput().y);
         ApplyLateralThrust(ReadMoveInput().x);
+        //ApplyTurningThrust(ReadMoveInput()); Mark: Testing some stuff
         RotateCamera(GetMouseDelta());
         ZoomCamera(GetScrollDelta());
         rtsCameraMovement.LockToTarget();
@@ -61,6 +62,11 @@ public class ManualFlightInputParser : InputParser
     private void ApplyLateralThrust(float thrust)
     {
         manualFlightMovement.ApplyLateralThrust(thrust);
+    }
+    
+    private void ApplyTurningThrust(Vector2 thrust)
+    {
+        manualFlightMovement.ApplyTurningThrust(thrust);
     }
 
     private void RotateCamera(Vector2 rotationDelta)

@@ -112,6 +112,11 @@ public class ManualFlightMovement : Movement
     
     public void ApplyTurningThrust(Vector2 thrustVelocity)
     {
+        // BEGIN Mark: Testing some stuff
+        /*thrustVelocity.y = -thrustVelocity.x / 2;
+        ApplyPitchThrust(thrustVelocity.x);*/
+        // END Mark: Testing some stuff
+        
         /*if (thrustVelocity == Vector2.zero) // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
         {
             turningThrust = Vector2.zero;
@@ -132,17 +137,17 @@ public class ManualFlightMovement : Movement
         turningThrust.y = Mathf.Clamp(turningThrust.y, -maxTurningThrust, maxTurningThrust);
         
         rotationVelocity = (turningThrust / maxTurningThrust) * maxRotationVelocity;
-        //rotationVelocity += turningThrust / Mass;  // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
+        //rotationVelocity += (Vector3)turningThrust / Mass;  // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
         
         rotationVelocity.x = Mathf.Clamp(rotationVelocity.x, -maxRotationVelocity, maxRotationVelocity);
         rotationVelocity.y = Mathf.Clamp(rotationVelocity.y, -maxRotationVelocity, maxRotationVelocity);
         
         // BEGIN Mark: Auto Pitch Rotation
-        /*pitchThrust = thrustVelocity.x * maxPitchThrust;
+        pitchThrust += thrustVelocity.x * maxPitchThrust;
         pitchThrust = Mathf.Clamp(pitchThrust, -maxPitchThrust, maxPitchThrust);
         rotationVelocity.z = Mathf.Clamp(rotationVelocity.z, -(maxRotationVelocity), (maxRotationVelocity));
         //rotationVelocity.z = rotationVelocity.x / maxRotationVelocity;
-        transform.Rotate(Vector3.forward * -rotationVelocity.z / Mass);*/
+        transform.Rotate(Vector3.forward * -rotationVelocity.z / Mass);
         // END Mark: Auto Pitch Rotation
 
         transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
