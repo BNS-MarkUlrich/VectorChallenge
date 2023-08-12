@@ -7,12 +7,13 @@ using UnityEngine.Serialization;
 public class FPCameraController : MonoBehaviour
 {
     [SerializeField] private Camera _myCamera;
-    [SerializeField] private Vector2 cameraRotation;
-    [SerializeField] private Vector2 clampedCameraRotation;
-    [SerializeField] private float clampDistance;
-    [SerializeField] private Vector2 normalizedVector;
+    
+    private Vector2 cameraRotation;
+    private Vector2 clampedCameraRotation;
+    private float clampDistance;
+    private Vector2 normalizedVelocity;
 
-    public Vector2 CameraVelocity => normalizedVector;
+    public Vector2 NormalizedVelocity => normalizedVelocity;
 
     public void RotateHorizontally(Vector2 input)
     {
@@ -26,15 +27,14 @@ public class FPCameraController : MonoBehaviour
     
     public void LookRotation(Vector2 input)
     {
-        cameraRotation.x += -input.y;
-        cameraRotation.y += input.x;
+        cameraRotation += input;
         
-        cameraRotation.x = Mathf.Clamp(cameraRotation.x, -60f, 60f);
+        cameraRotation.y = Mathf.Clamp(cameraRotation.y, -60f, 60f);
 
-        transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0);
+        transform.rotation = Quaternion.Euler(-cameraRotation.y, cameraRotation.x, 0);
     }
     
-    public void LookRotationClamped(Vector2 input, float radius)
+    public void LookRotationClamped(Vector2 input, float radius, float microRadius)
     {
         cameraRotation += input;
 
@@ -45,13 +45,18 @@ public class FPCameraController : MonoBehaviour
 
         clampDistance = cameraRotation.magnitude;
 
-        if (clampDistance < radius / radius)
+        if (clampDistance < microRadius)
         {
             clampedCameraRotation = Vector2.zero;
         }
-        
-        normalizedVector = clampedCameraRotation / radius;
+
+        normalizedVelocity = GetNormalizedVelocity(clampedCameraRotation, radius);
         
         transform.localRotation = Quaternion.Euler(-clampedCameraRotation.y, clampedCameraRotation.x, 0);
+    }
+
+    private static Vector2 GetNormalizedVelocity(Vector2 velocity, float maxDelta)
+    {
+        return velocity / maxDelta;
     }
 }

@@ -9,9 +9,11 @@ public class ManualFlightMovement : Movement
     [Header("Speed")]
     [SerializeField] protected float currentSpeed;
     [SerializeField] protected float maxReverseSpeed;
-    [SerializeField] protected Vector2 currentRotationVelocity;
-    [SerializeField] protected float maxRotationSpeed;
     
+    [Header("Rotation")]
+    [SerializeField] protected Vector2 rotationVelocity;
+    [SerializeField] protected float maxRotationVelocity;
+
     [Header("Forward Thrust")]
     [SerializeField] protected float forwardThrust;
     [SerializeField] protected float maxForwardThrust;
@@ -27,32 +29,47 @@ public class ManualFlightMovement : Movement
     [Header("Pilot Options")]
     [SerializeField] protected bool isBrakingAutomatically;
 
+    private void Update()
+    {
+        /*if (rotationVelocity == Vector2.zero && transform.rotation.z is < 0.5f and > -0.5f)
+        {
+            var rotation = transform.rotation;
+            rotation.z = Mathf.Lerp(rotation.z, 0, maxTurningThrust * Time.deltaTime / Mass);
+
+            if (rotation.z is < 0.05f and > -0.05f)
+            {
+                rotation.z = 0;
+            }
+            
+            transform.rotation = rotation;
+            print(transform.rotation.z);
+        }*/
+    }
+
     public void ApplyForwardThrust(float thrustMultiplier)
     {
         if (thrustMultiplier == 0)
         {
+            forwardThrust = 0;
+            reverseThrust = 0;
+            
             if (isBrakingAutomatically)
             {
-                forwardThrust = 0;
-                reverseThrust = 0;
-            
-                var lerp = Mathf.Lerp(currentSpeed, 0,  Time.deltaTime / Mass);
-                if (lerp is < 0.5f and > 0 or > -0.5f and < 0)
-                {
-                    lerp = 0;
-                }
-                currentSpeed = lerp;
+                currentSpeed = Mathf.Lerp(currentSpeed, 0,  Time.deltaTime / Mass);
+
+                if (currentSpeed is < 0.5f and > -0.5f)
+                    currentSpeed = 0;
             }
         }
         else if (thrustMultiplier > 0)
         {
-            forwardThrust += maxForwardThrust * thrustMultiplier * Time.deltaTime;
+            forwardThrust += thrustMultiplier * maxForwardThrust * Time.deltaTime;
             forwardThrust = Mathf.Clamp(forwardThrust, 0, maxForwardThrust);
             currentSpeed += forwardThrust / Mass;
         }
         else if (thrustMultiplier < 0)
         {
-            reverseThrust -= maxReverseThrust * thrustMultiplier * Time.deltaTime;
+            reverseThrust -= thrustMultiplier * maxReverseThrust * Time.deltaTime;
             reverseThrust = Mathf.Clamp(reverseThrust, maxReverseThrust, 0);
             currentSpeed += reverseThrust / Mass;
         }
@@ -68,53 +85,48 @@ public class ManualFlightMovement : Movement
         {
             turningThrust.x = 0;
             
-            var lerp = Mathf.Lerp(currentRotationVelocity.x, 0,  Time.deltaTime / (Mass / 2));
-            if (lerp is < 0.5f and > 0 or > -0.5f and < 0)
-            {
-                lerp = 0;
-            }
-
-            currentRotationVelocity.x = lerp;
+            rotationVelocity.x = Mathf.Lerp(rotationVelocity.x, 0,  Time.deltaTime / (Mass / 2));
+            if (rotationVelocity.x is < 0.5f and > -0.5f)
+                rotationVelocity.x = 0;
         }
 
         turningThrust.x += maxTurningThrust * thrustMultiplier * Time.deltaTime;
         turningThrust.x = Mathf.Clamp(turningThrust.x, -maxTurningThrust, maxTurningThrust);
-        currentRotationVelocity.x += turningThrust.x / Mass;
+        rotationVelocity.x += turningThrust.x / Mass;
         
-        currentRotationVelocity.x = Mathf.Clamp(currentRotationVelocity.x, -maxRotationSpeed, maxRotationSpeed);
+        rotationVelocity.x = Mathf.Clamp(rotationVelocity.x, -maxRotationVelocity, maxRotationVelocity);
         
-        transform.Rotate(Vector3.up * currentRotationVelocity.x / Mass);
+        transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
     }
     
     public void ApplyTurningThrust(Vector2 thrustVelocity)
     {
-        if (thrustVelocity == Vector2.zero)
+        /*if (thrustVelocity == Vector2.zero) // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
         {
             turningThrust = Vector2.zero;
             
-            var lerpV = Vector2.Lerp(currentRotationVelocity, Vector2.zero,  maxTurningThrust * Time.deltaTime);
+            rotationVelocity = Vector2.Lerp(rotationVelocity, Vector2.zero,  maxTurningThrust * Time.deltaTime);
 
-            var distanceToZero = currentRotationVelocity.magnitude;
+            var distanceToZero = rotationVelocity.magnitude;
 
             if (distanceToZero <= 0.1f)
             {
-                lerpV = Vector2.zero;
+                rotationVelocity = Vector2.zero;
             }
-            
-            currentRotationVelocity = lerpV;
-        }
+        }*/
 
         turningThrust = thrustVelocity * maxTurningThrust;
 
         turningThrust.x = Mathf.Clamp(turningThrust.x, -maxTurningThrust, maxTurningThrust);
         turningThrust.y = Mathf.Clamp(turningThrust.y, -maxTurningThrust, maxTurningThrust);
 
-        currentRotationVelocity = (turningThrust / maxTurningThrust) * maxRotationSpeed;
+        rotationVelocity = (turningThrust / maxTurningThrust) * maxRotationVelocity;
+        //rotationVelocity += turningThrust / Mass;  // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
         
-        currentRotationVelocity.x = Mathf.Clamp(currentRotationVelocity.x, -maxRotationSpeed, maxRotationSpeed);
-        currentRotationVelocity.y = Mathf.Clamp(currentRotationVelocity.y, -maxRotationSpeed, maxRotationSpeed);
+        rotationVelocity.x = Mathf.Clamp(rotationVelocity.x, -maxRotationVelocity, maxRotationVelocity);
+        rotationVelocity.y = Mathf.Clamp(rotationVelocity.y, -maxRotationVelocity, maxRotationVelocity);
 
-        transform.Rotate(Vector3.up * currentRotationVelocity.x / Mass);
-        transform.Rotate(Vector3.right * -currentRotationVelocity.y / Mass);
+        transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
+        transform.Rotate(Vector3.right * -rotationVelocity.y / Mass);
     }
 }

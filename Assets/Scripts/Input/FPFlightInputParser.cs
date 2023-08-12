@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class FPFlightInputParser : InputParser
 {
@@ -10,11 +11,14 @@ public class FPFlightInputParser : InputParser
     [SerializeField] protected ManualFlightMovement manualFlightMovement;
     [SerializeField] protected FPCameraController fpCameraController;
     [SerializeField] private CommandTerminal commandTerminal;
-
+    
     [Header("Input Variables")]
+    [SerializeField] private float cameraBoundsRadius;
     [SerializeField] private float cameraClampRadius;
     private Vector2 inputMovement;
     private Vector2 mouseDelta;
+
+    private bool isMovingMouse;
 
     protected override void AddListeners(out bool hasListeners)
     {
@@ -31,7 +35,14 @@ public class FPFlightInputParser : InputParser
 
     private void FixedUpdate()
     {
-        ApplyTurningThrust(GetMouseDelta(), cameraClampRadius);
+        ApplyForwardThrust(ReadMoveInput().y);
+        ApplyTurningThrust(GetMouseDelta());
+    }
+    
+    private Vector2 ReadMoveInput()
+    {
+        inputMovement = ControlsActions["Movement"].ReadValue<Vector2>();
+        return inputMovement;
     }
 
     private void ApplyForwardThrust(float thrust)
@@ -39,10 +50,10 @@ public class FPFlightInputParser : InputParser
         manualFlightMovement.ApplyForwardThrust(thrust);
     }
     
-    private void ApplyTurningThrust(Vector2 thrust, float radius)
+    private void ApplyTurningThrust(Vector2 thrust)
     {
-        fpCameraController.LookRotationClamped(thrust, radius);
-        manualFlightMovement.ApplyTurningThrust(fpCameraController.CameraVelocity);
+        fpCameraController.LookRotationClamped(thrust, cameraBoundsRadius, cameraClampRadius);
+        manualFlightMovement.ApplyTurningThrust(fpCameraController.NormalizedVelocity);
     }
     
     private void Disconnect(InputAction.CallbackContext context)

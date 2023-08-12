@@ -1,21 +1,19 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public abstract class InputParser : MonoBehaviour
 {
     [SerializeField] protected InputTypes _inputActionMap;
     [SerializeField] protected Camera _myCamera;
-    protected InputActionAsset ControlsActions;
-    
+
     [Header("Cursor")]
     [SerializeField] protected float _mouseSensitivity = 5;
     [SerializeField] private bool _cursorVisibility = true;
     [SerializeField] private CursorLockMode _cursorLockMode;
+    protected InputActionAsset ControlsActions;
 
     protected bool HasListeners;
+    protected bool IsMovingMouse;
     protected PlayerInput PlayerInput;
     protected InputActionMap CurrentActionMap => PlayerInput.currentActionMap;
 
@@ -42,7 +40,7 @@ public abstract class InputParser : MonoBehaviour
         ControlsActions = PlayerInput.actions;
 
         ControlsActions.Enable();
-        
+
         Cursor.lockState = _cursorLockMode;
         Cursor.visible = _cursorVisibility;
     }
@@ -66,17 +64,21 @@ public abstract class InputParser : MonoBehaviour
         else
         {
             _myCamera.gameObject.SetActive(false);
-            var targetCamera = target._myCamera;
+            Camera targetCamera = target._myCamera;
             targetCamera.gameObject.SetActive(true);
             Camera.SetupCurrent(targetCamera);
         }
 
         enabled = false;
     }
-    
+
     protected Vector2 GetMouseDelta()
     {
-        return ControlsActions["MouseDelta"].ReadValue<Vector2>() * (_mouseSensitivity * Time.deltaTime);
+        var mouseDelta = ControlsActions["MouseDelta"].ReadValue<Vector2>() * (_mouseSensitivity * Time.deltaTime);
+        
+        IsMovingMouse = !(mouseDelta.magnitude < 0.01f);
+
+        return mouseDelta;
     }
 
     public void DestroyInputHandler()

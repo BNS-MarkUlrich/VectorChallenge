@@ -35,7 +35,7 @@ public class ManualFlightInputParser : InputParser
 
     private void FixedUpdate()
     {
-        ApplyThrust(ReadMoveInput().y);
+        ApplyForwardThrust(ReadMoveInput().y);
         ApplyLateralThrust(ReadMoveInput().x);
         RotateCamera(GetMouseDelta());
         ZoomCamera(GetScrollDelta());
@@ -53,7 +53,7 @@ public class ManualFlightInputParser : InputParser
         return ControlsActions["ScrollZoom"].ReadValue<Vector2>();
     }
 
-    private void ApplyThrust(float thrust)
+    private void ApplyForwardThrust(float thrust)
     {
         manualFlightMovement.ApplyForwardThrust(thrust);
     }
