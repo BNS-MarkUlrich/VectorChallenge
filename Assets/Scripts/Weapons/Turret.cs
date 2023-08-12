@@ -14,7 +14,6 @@ public class Turret : Weapon
 
     [Header("Automatic Turret")]
     [SerializeField] private bool _isAutomaticTurret;
-    [SerializeField] private bool _autoFire;
     [SerializeField] private Transform _target;
     [SerializeField] private float _maxRange = 100f;
     [SerializeField] private LayerMask _detectionLayer;
@@ -60,6 +59,13 @@ public class Turret : Weapon
     {
         targetsInRange = Physics.OverlapSphere(transform.position, _maxRange, _detectionLayer);
 
+        // Todo: Add better detection for friendly targets
+
+        if (targetsInRange.Length == 0) return;
+
+        var targetIsParent = targetsInRange[0].transform == transform.parent;
+        if (targetsInRange.Length == 1 && targetIsParent) return;
+
         for (int i = 0; i < targetsInRange.Length; i++)
         {
             if (targetsInRange[i].transform == transform.parent)
@@ -70,7 +76,7 @@ public class Turret : Weapon
             var direction = targetsInRange[i].transform.position - transform.position;
             Physics.Raycast(transform.position, direction, out var hitInfo, _maxRange);
 
-            if (hitInfo.transform == null || hitInfo.transform != targetsInRange[i].transform)
+            if (hitInfo.transform == null) // Removed, caused hasTarget to constantly be set to false. Unknown why added in the first place: || hitInfo.transform != targetsInRange[i].transform
             {
                 hasTarget = false;
                 continue;
@@ -131,55 +137,49 @@ public class Turret : Weapon
         ShootCooldown();
 
         DetectTargets();
-        
+
         if (_isAutomaticTurret && !hasTarget) return;
 
-        if (_autoFire)
-        {
-            AutoFire();
-        }
-        
-        if (hasPulledTrigger)
-        {
-            Fire();
-        }
+        if (hasTarget) MoveAimAssist();
 
-        if (hasAimAssist) return;
-        MoveAimAssist();
+        if (_isAutomaticTurret) AutoFire();
+
+        if (hasPulledTrigger) Fire();
     }
 
-    private Vector3 Aim(float speed)
+    private Vector3 ManualAim(float speed)
+    {
+        var targetPosition = transform.forward;
+        var aimPosition = targetPosition * (_projectilePrefab.MaxTravelDistance * 10); // Todo: improve manual aim
+
+        return aimPosition;
+    }
+
+    private Vector3 AssistedAim(float speed)
     {
         // Todo: Add Aim Assist/Lock on feature?
-
-        var targetPosition = transform.forward;
-        var predictedPosition = targetPosition * 1000;
-
-        if (_target == null || !_isAutomaticTurret)
-            return predictedPosition;
-
+        
         if (targetRigidbody == null)
             return _target.position;
 
-        targetPosition = _target.position;
+        var targetPosition = _target.position;
         var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
         //var predictedPosition = targetPosition + (_targetRigidbody.angularVelocity / _targetRigidbody.angularDrag) + _targetRigidbody.velocity / (speed / (distanceToTarget / speed));
-        predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
+        var predictedPosition = targetPosition + targetRigidbody.velocity / (speed / (distanceToTarget / speed));
 
         return predictedPosition;
     }
 
     private void MoveAimAssist()
     {
-        _aimAssist.position = Aim(_projectilePrefab.MaxSpeed);
+        _aimAssist.position = AssistedAim(_projectilePrefab.MaxSpeed);
     }
     
-    public Vector3 CalculatePredictionVelocity(float speed)
+    public Vector3 CalculateVelocity(float speed)
     {
-        predictedVelocity = Aim(speed);
+        predictedVelocity = hasTarget ? AssistedAim(speed) : ManualAim(speed);
+        
         var velocityDirection = predictedVelocity - transform.position;
-
-        //var velocityMagnitude = velocityDirection.magnitude;
 
         predictedVelocity = velocityDirection.normalized;
 
@@ -192,7 +192,7 @@ public class Turret : Weapon
     {
         if (!canShoot) return;
         
-        CalculatePredictionVelocity(_projectilePrefab.MaxSpeed);
+        CalculateVelocity(_projectilePrefab.MaxSpeed);
         var newProjectile = Instantiate(_projectilePrefab, transform.position, transform.rotation);
         newProjectile.InitBullet(transform.parent, this);
 

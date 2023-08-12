@@ -11,6 +11,7 @@ public abstract class Projectile : ZeroGMovement
     protected Turret Origin;
 
     public float OverheatCost => _overheatCost;
+    public float MaxTravelDistance => maxTravelDistance;
     
     public virtual void InitBullet(Transform shipOrigin, Turret newOrigin)
     {

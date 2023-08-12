@@ -8,7 +8,7 @@ public class Bullet : Projectile
     private void LateUpdate()
     {
         var travelDistance = Vector3.Distance(transform.position, Origin.transform.position);
-        if (travelDistance >= maxTravelDistance || HasReachedTarget())
+        if (travelDistance >= maxTravelDistance)
         {
             Destroy(gameObject);
             return;

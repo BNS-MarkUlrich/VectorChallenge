@@ -28,6 +28,8 @@ public class ManualFlightInputParser : InputParser
 
     protected override void RemoveListeners()
     {
+        if (!HasListeners) return;
+
         ControlsActions["Disconnect"].performed -= Disconnect;
     }
 

@@ -28,6 +28,8 @@ public class TurretInputParser : InputParser
 
     protected override void RemoveListeners()
     {
+        if (!HasListeners) return;
+
         ControlsActions["Disconnect"].performed -= Disconnect;
         ControlsActions["Shoot"].performed -= Shoot;
     }
