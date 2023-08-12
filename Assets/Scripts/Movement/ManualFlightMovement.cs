@@ -86,45 +86,35 @@ public class ManualFlightMovement : Movement
         transform.Rotate(Vector3.up * currentRotationVelocity.x / Mass);
     }
     
-    public void ApplyTurningThrust(Vector2 thrustMultiplier)
+    public void ApplyTurningThrust(Vector2 thrustVelocity)
     {
-        if (thrustMultiplier == Vector2.zero)
+        if (thrustVelocity == Vector2.zero)
         {
             turningThrust = Vector2.zero;
-
-            var lerpV = Vector2.Lerp(currentRotationVelocity, Vector2.zero, Time.deltaTime / (Mass / 2));
             
-            /*if (lerpV.x is < 0.1f and > 0 or > -0.1f and < 0)
-            {
-                lerpV.x = 0;
-            }
-            if (lerpV.y is < 0.1f and > 0 or > -0.1f and < 0)
-            {
-                lerpV.y = 0;
-            }*/
-            if (lerpV.sqrMagnitude is < 0.1f and > 0 or > -0.1f and < 0)
+            var lerpV = Vector2.Lerp(currentRotationVelocity, Vector2.zero,  maxTurningThrust * Time.deltaTime);
+
+            var distanceToZero = currentRotationVelocity.magnitude;
+
+            if (distanceToZero <= 0.1f)
             {
                 lerpV = Vector2.zero;
             }
-
+            
             currentRotationVelocity = lerpV;
         }
 
-        turningThrust += thrustMultiplier * (maxTurningThrust * Time.deltaTime);
+        turningThrust = thrustVelocity * maxTurningThrust;
+
         turningThrust.x = Mathf.Clamp(turningThrust.x, -maxTurningThrust, maxTurningThrust);
         turningThrust.y = Mathf.Clamp(turningThrust.y, -maxTurningThrust, maxTurningThrust);
 
-        currentRotationVelocity += turningThrust / Mass;
+        currentRotationVelocity = (turningThrust / maxTurningThrust) * maxRotationSpeed;
         
         currentRotationVelocity.x = Mathf.Clamp(currentRotationVelocity.x, -maxRotationSpeed, maxRotationSpeed);
         currentRotationVelocity.y = Mathf.Clamp(currentRotationVelocity.y, -maxRotationSpeed, maxRotationSpeed);
 
         transform.Rotate(Vector3.up * currentRotationVelocity.x / Mass);
         transform.Rotate(Vector3.right * -currentRotationVelocity.y / Mass);
-    }
-
-    public void RotateTowards()
-    {
-        
     }
 }

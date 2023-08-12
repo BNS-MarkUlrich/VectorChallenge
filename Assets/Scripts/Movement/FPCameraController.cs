@@ -7,38 +7,51 @@ using UnityEngine.Serialization;
 public class FPCameraController : MonoBehaviour
 {
     [SerializeField] private Camera _myCamera;
+    [SerializeField] private Vector2 cameraRotation;
+    [SerializeField] private Vector2 clampedCameraRotation;
+    [SerializeField] private float clampDistance;
+    [SerializeField] private Vector2 normalizedVector;
 
-    private float xRotation;
-    private float yRotation;
+    public Vector2 CameraVelocity => normalizedVector;
 
     public void RotateHorizontally(Vector2 input)
     {
-        xRotation += -input.y;
-        xRotation = Mathf.Clamp(xRotation, -60f, 60f);
+        cameraRotation.x += -input.y;
+        cameraRotation.x = Mathf.Clamp(cameraRotation.x, -60f, 60f);
 
         transform.Rotate(Vector3.up * input.x);
         
-        _myCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        _myCamera.transform.localRotation = Quaternion.Euler(cameraRotation.x, 0, 0);
     }
     
-    public void LookAtRotation(Vector2 input)
+    public void LookRotation(Vector2 input)
     {
-        xRotation += -input.y;
-        yRotation += input.x;
+        cameraRotation.x += -input.y;
+        cameraRotation.y += input.x;
         
-        xRotation = Mathf.Clamp(xRotation, -60f, 60f);
+        cameraRotation.x = Mathf.Clamp(cameraRotation.x, -60f, 60f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0);
     }
     
-    public Quaternion LookAtRotationClamped(Vector2 input, float radius)
+    public void LookRotationClamped(Vector2 input, float radius)
     {
-        xRotation += -input.y;
-        yRotation += input.x;
-        
-        xRotation = Mathf.Clamp(xRotation, -radius, radius);
-        yRotation = Mathf.Clamp(yRotation, -radius, radius);
+        cameraRotation += input;
 
-        return transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+        cameraRotation.x = Mathf.Clamp(cameraRotation.x, -radius, radius);
+        cameraRotation.y = Mathf.Clamp(cameraRotation.y, -radius, radius);
+
+        clampedCameraRotation = cameraRotation;
+
+        clampDistance = cameraRotation.magnitude;
+
+        if (clampDistance < radius / radius)
+        {
+            clampedCameraRotation = Vector2.zero;
+        }
+        
+        normalizedVector = clampedCameraRotation / radius;
+        
+        transform.localRotation = Quaternion.Euler(-clampedCameraRotation.y, clampedCameraRotation.x, 0);
     }
 }

@@ -41,8 +41,8 @@ public class FPFlightInputParser : InputParser
     
     private void ApplyTurningThrust(Vector2 thrust, float radius)
     {
-        fpCameraController.LookAtRotationClamped(thrust, radius);
-        manualFlightMovement.ApplyTurningThrust(thrust);
+        fpCameraController.LookRotationClamped(thrust, radius);
+        manualFlightMovement.ApplyTurningThrust(fpCameraController.CameraVelocity);
     }
     
     private void Disconnect(InputAction.CallbackContext context)

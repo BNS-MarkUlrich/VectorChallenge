@@ -922,9 +922,8 @@ MonoBehaviour:
   rotationSpeed: 5
   currentSpeed: 0
   maxReverseSpeed: -10
-  currentRotationSpeed: 0
   currentRotationVelocity: {x: 0, y: 0}
-  maxRotationSpeed: 3
+  maxRotationSpeed: 2
   forwardThrust: 0
   maxForwardThrust: 5
   reverseThrust: 0
