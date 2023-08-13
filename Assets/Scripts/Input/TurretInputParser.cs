@@ -7,11 +7,16 @@ using UnityEngine.Serialization;
 
 public class TurretInputParser : InputParser
 {
+    [Header("Applied Scripts")]
     [SerializeField] private Turret _turret;
+    [SerializeField] private ManualFlightMovement manualFlightMovement;
     [SerializeField] private FPCameraController _fpCameraController;
-    
-    [Header("Other")]
     [SerializeField] private CommandTerminal commandTerminal;
+
+    [Header("Input Variables")]
+    [SerializeField] private float cameraBoundsRadius = 15;
+    [SerializeField] private float cameraSnapRadius = 1;
+    [SerializeField] private bool ignorePitch =  true;
 
     protected override void InitInput()
     {
@@ -49,7 +54,8 @@ public class TurretInputParser : InputParser
 
     private void RotateTurret(Vector2 rotationDelta)
     {
-        _fpCameraController.LookRotation(rotationDelta);
+        _fpCameraController.LookRotationClamped(rotationDelta, cameraBoundsRadius, cameraSnapRadius);
+        manualFlightMovement.ApplyTurningThrust(_fpCameraController.NormalizedVelocity, ignorePitch);
     }
     
     private void Disconnect(InputAction.CallbackContext context)

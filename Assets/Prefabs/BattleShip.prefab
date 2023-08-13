@@ -364,6 +364,7 @@ MonoBehaviour:
   rtsCameraMovement: {fileID: 5069183938924444806}
   commandTerminal: {fileID: 101213565121674387}
   inputMovement: {x: 0, y: 0}
+  ignorePitch: 1
 --- !u!1 &2711424548295476315
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +434,8 @@ MonoBehaviour:
   fpCameraController: {fileID: 3283455204359487372}
   commandTerminal: {fileID: 8340965817097589752}
   cameraBoundsRadius: 15
-  cameraClampRadius: 1
+  cameraSnapRadius: 1
+  ignorePitch: 0
 --- !u!1 &4315429194529328777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1215,7 @@ MonoBehaviour:
   rotationSpeed: 5
   currentSpeed: 0
   maxReverseSpeed: -10
-  rotationVelocity: {x: 0, y: 0, z: 0}
+  rotationVelocity: {x: 0, y: 0}
   maxRotationVelocity: 2
   forwardThrust: 0
   maxForwardThrust: 5
@@ -1223,6 +1225,8 @@ MonoBehaviour:
   maxTurningThrust: 2
   pitchThrust: 0
   maxPitchThrust: 2
+  pitchVelocity: 0
+  maxPitchVelocity: 1
   isBrakingAutomatically: 0
 --- !u!1001 &7723443679305366709
 PrefabInstance:

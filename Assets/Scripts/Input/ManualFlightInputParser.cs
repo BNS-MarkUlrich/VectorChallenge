@@ -13,6 +13,7 @@ public class ManualFlightInputParser : InputParser
 
     [Header("Input Variables")]
     [SerializeField] private Vector2 inputMovement;
+    [SerializeField] private bool ignorePitch = true;
     private Vector2 mouseDelta;
 
     protected override void OnEnable()
@@ -66,7 +67,7 @@ public class ManualFlightInputParser : InputParser
     
     private void ApplyTurningThrust(Vector2 thrust)
     {
-        manualFlightMovement.ApplyTurningThrust(thrust);
+        manualFlightMovement.ApplyTurningThrust(thrust, ignorePitch);
     }
 
     private void RotateCamera(Vector2 rotationDelta)

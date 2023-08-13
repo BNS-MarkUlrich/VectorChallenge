@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 public class Turret : Weapon
 {
+    [SerializeField] private Transform barrel;
     [SerializeField] private Projectile _projectilePrefab;
     [SerializeField] private float _shootCooldownTimer = 1f;
     [SerializeField] private Transform _aimAssist;
@@ -53,6 +54,8 @@ public class Turret : Weapon
         if (_target == null) hasTarget = false;
         
         if (_aimAssist == null) hasAimAssist = false;
+
+        if (barrel == null) barrel = transform;
     }
 
     private void DetectTargets()
@@ -149,7 +152,7 @@ public class Turret : Weapon
 
     private Vector3 ManualAim(float speed)
     {
-        var targetPosition = transform.forward;
+        var targetPosition = barrel.transform.forward;
         var aimPosition = targetPosition * (_projectilePrefab.MaxTravelDistance * 10); // Todo: improve manual aim
 
         return aimPosition;

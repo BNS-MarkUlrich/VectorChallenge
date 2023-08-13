@@ -339,6 +339,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -3.413
       objectReference: {fileID: 0}
+    - target: {fileID: 5792312144150816002, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6007558081010927647, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -387,6 +391,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleShip
       objectReference: {fileID: 0}
+    - target: {fileID: 6385291438249758214, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7173490882133240375, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -408,8 +416,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 8965171980680267854, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
-    - {fileID: 4120761642485127452, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     m_RemovedGameObjects:
     - {fileID: 6179332849199262540, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}
     - {fileID: 1166584776092095358, guid: b8881b7deff10c841b96e3faabd2a301, type: 3}

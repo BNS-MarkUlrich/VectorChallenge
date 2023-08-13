@@ -11,7 +11,7 @@ public class ManualFlightMovement : Movement
     [SerializeField] protected float maxReverseSpeed;
     
     [Header("Rotation")]
-    [SerializeField] protected Vector3 rotationVelocity;
+    [SerializeField] protected Vector2 rotationVelocity;
     [SerializeField] protected float maxRotationVelocity;
 
     [Header("Forward Thrust")]
@@ -29,33 +29,11 @@ public class ManualFlightMovement : Movement
     [Header("Pitch Thrust")]
     [SerializeField] protected float pitchThrust;
     [SerializeField] protected float maxPitchThrust;
+    [SerializeField] protected float pitchVelocity;
+    [SerializeField] protected float maxPitchVelocity;
     
     [Header("Pilot Options")]
     [SerializeField] protected bool isBrakingAutomatically;
-
-    /*private void Update()
-    {
-        if (rotationVelocity == Vector2.zero)
-        {
-            var rotation = transform.rotation;
-
-            /*rotation.z = Mathf.Lerp(rotation.z, 0, maxTurningThrust * Time.deltaTime / Mass);
-
-            if (rotation.z is < 0.5f and > -0.5f)
-            {
-                rotation.z = 0;
-            }#1#
-
-            rotation.z = 0;
-            
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
-            
-            //transform.Rotate(Vector3.forward, rotation.z);
-            //transform.rotation.Set(rotation.x, rotation.y, rotation.z, 1);
-            //transform.localRotation = Quaternion.Euler(rotation);
-            //print(rotation.z);
-        }
-    }*/
 
     public void ApplyForwardThrust(float thrustMultiplier)
     {
@@ -110,26 +88,18 @@ public class ManualFlightMovement : Movement
         transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
     }
     
-    public void ApplyTurningThrust(Vector2 thrustVelocity)
+    public void ApplyTurningThrust(Vector2 thrustVelocity, bool ignorePitch)
     {
         // BEGIN Mark: Testing some stuff
         /*thrustVelocity.y = -thrustVelocity.x / 2;
         ApplyPitchThrust(thrustVelocity.x);*/
         // END Mark: Testing some stuff
-        
-        /*if (thrustVelocity == Vector2.zero) // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
+        if (thrustVelocity.magnitude <= 0.05) // Mark Note #1: Use for slower maybe more realistic looking rotation, doesn't feel as nice
         {
-            turningThrust = Vector2.zero;
-            
-            rotationVelocity = Vector2.Lerp(rotationVelocity, Vector2.zero,  maxTurningThrust * Time.deltaTime);
-
-            var distanceToZero = rotationVelocity.magnitude;
-
-            if (distanceToZero <= 0.1f)
-            {
-                rotationVelocity = Vector2.zero;
-            }
-        }*/
+            thrustVelocity = Vector2.zero;
+            turningThrust = thrustVelocity;
+            rotationVelocity = turningThrust;
+        }
 
         turningThrust = thrustVelocity * maxTurningThrust;
 
@@ -141,42 +111,62 @@ public class ManualFlightMovement : Movement
         
         rotationVelocity.x = Mathf.Clamp(rotationVelocity.x, -maxRotationVelocity, maxRotationVelocity);
         rotationVelocity.y = Mathf.Clamp(rotationVelocity.y, -maxRotationVelocity, maxRotationVelocity);
-        
-        // BEGIN Mark: Auto Pitch Rotation
-        pitchThrust += thrustVelocity.x * maxPitchThrust;
-        pitchThrust = Mathf.Clamp(pitchThrust, -maxPitchThrust, maxPitchThrust);
-        rotationVelocity.z = Mathf.Clamp(rotationVelocity.z, -(maxRotationVelocity), (maxRotationVelocity));
-        //rotationVelocity.z = rotationVelocity.x / maxRotationVelocity;
-        transform.Rotate(Vector3.forward * -rotationVelocity.z / Mass);
-        // END Mark: Auto Pitch Rotation
+
+        if (!ignorePitch)
+        {
+            // BEGIN Mark: Auto Pitch Rotation
+            pitchThrust += thrustVelocity.x * maxPitchThrust;
+            pitchThrust = Mathf.Clamp(pitchThrust, -maxPitchThrust, maxPitchThrust);
+            pitchVelocity = (pitchThrust / maxPitchThrust) * maxPitchVelocity;
+            pitchVelocity = Mathf.Clamp(pitchVelocity, -(maxPitchVelocity), (maxPitchVelocity));
+            //pitchVelocity = rotationVelocity.x / maxRotationVelocity;
+            transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
+            // END Mark: Auto Pitch Rotation
+        }
+        else
+        {
+            ResetPitch();
+        }
 
         transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
         transform.Rotate(Vector3.right * -rotationVelocity.y / Mass);
+    }
+
+    private void ResetPitch()
+    {
+        var eulerAngles = transform.rotation.eulerAngles;
+        
+        var isInSafeZone = eulerAngles.z is < 1f and > -1f;
+        if (isInSafeZone)
+        {
+            pitchThrust = 0;
+        }
+        else if (eulerAngles.z > 180)
+        {
+            var fixedAngle = 360 - eulerAngles.z;
+            fixedAngle = -fixedAngle;
+            eulerAngles.z = fixedAngle;
+
+            pitchThrust = -maxPitchThrust;
+        }
+        else if (eulerAngles.z is > 0 and < 180)
+        {
+            pitchThrust = maxPitchThrust;
+        }
+
+        pitchThrust = Mathf.Clamp(pitchThrust, -maxPitchThrust, maxPitchThrust);
+        
+        pitchVelocity = (pitchThrust / maxPitchThrust) * maxPitchVelocity;
+        pitchVelocity = Mathf.Clamp(pitchVelocity, -maxPitchVelocity, maxPitchVelocity);
+        
+        transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
     }
 
     public void ApplyPitchThrust(float thrustMultiplier)
     {
         if (thrustMultiplier == 0 && rotationVelocity.x == 0)
         {
-            var eulerAngles = transform.rotation.eulerAngles;
-
-            if (eulerAngles.z > 180)
-            {
-                var fixedAngle = 360 - eulerAngles.z;
-                fixedAngle = -fixedAngle;
-                eulerAngles.z = fixedAngle;
-
-                pitchThrust = -maxPitchThrust;
-            }
-            else if (eulerAngles.z is > 0 and < 180)
-            {
-                pitchThrust = maxPitchThrust;
-            }
-
-            if (eulerAngles.z is < 0.1f and > -0.1f)
-            {
-                pitchThrust = 0;
-            }
+            ResetPitch();
         }
         else
         {
@@ -185,9 +175,9 @@ public class ManualFlightMovement : Movement
         
         pitchThrust = Mathf.Clamp(pitchThrust, -maxPitchThrust, maxPitchThrust);
         
-        rotationVelocity.z = (pitchThrust / maxPitchThrust) * (maxRotationVelocity / 2);
-        rotationVelocity.z = Mathf.Clamp(rotationVelocity.z, -(maxRotationVelocity / 2), (maxRotationVelocity / 2));
+        pitchVelocity = (pitchThrust / maxPitchThrust) * maxPitchVelocity;
+        pitchVelocity = Mathf.Clamp(pitchVelocity, -maxPitchVelocity, maxPitchVelocity);
         
-        transform.Rotate(Vector3.forward * -rotationVelocity.z / Mass);
+        transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
     }
 }

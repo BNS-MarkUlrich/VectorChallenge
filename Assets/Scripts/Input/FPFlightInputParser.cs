@@ -13,8 +13,9 @@ public class FPFlightInputParser : InputParser
     [SerializeField] private CommandTerminal commandTerminal;
     
     [Header("Input Variables")]
-    [SerializeField] private float cameraBoundsRadius;
-    [SerializeField] private float cameraClampRadius;
+    [SerializeField] private float cameraBoundsRadius = 15;
+    [SerializeField] private float cameraSnapRadius = 1;
+    [SerializeField] private bool ignorePitch;
     private Vector2 inputMovement;
     private Vector2 mouseDelta;
 
@@ -58,8 +59,8 @@ public class FPFlightInputParser : InputParser
     
     private void ApplyTurningThrust(Vector2 thrust)
     {
-        fpCameraController.LookRotationClamped(thrust, cameraBoundsRadius, cameraClampRadius);
-        manualFlightMovement.ApplyTurningThrust(fpCameraController.NormalizedVelocity);
+        fpCameraController.LookRotationClamped(thrust, cameraBoundsRadius, cameraSnapRadius);
+        manualFlightMovement.ApplyTurningThrust(fpCameraController.NormalizedVelocity, ignorePitch);
     }
     
     private void Disconnect(InputAction.CallbackContext context)
