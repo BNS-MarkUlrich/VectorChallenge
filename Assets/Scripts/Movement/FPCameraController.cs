@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class FPCameraController : MonoBehaviour
 {
     [SerializeField] private Camera _myCamera;
-    
+
     private Vector2 cameraRotation;
     private Vector2 clampedCameraRotation;
     private float clampDistance;
@@ -49,9 +49,9 @@ public class FPCameraController : MonoBehaviour
         {
             clampedCameraRotation = Vector2.zero;
         }
-
-        normalizedVelocity = GetNormalizedVelocity(cameraRotation, radius);
         
+        normalizedVelocity = GetNormalizedVelocity(clampedCameraRotation, radius);
+
         transform.localRotation = Quaternion.Euler(-clampedCameraRotation.y, clampedCameraRotation.x, 0);
     }
 

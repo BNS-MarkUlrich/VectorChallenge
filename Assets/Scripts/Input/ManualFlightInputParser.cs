@@ -16,11 +16,6 @@ public class ManualFlightInputParser : InputParser
     [SerializeField] private bool ignorePitch = true;
     private Vector2 mouseDelta;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-    }
-
     protected override void AddListeners(out bool hasListeners)
     {
         ControlsActions["Disconnect"].performed += Disconnect;
@@ -37,7 +32,7 @@ public class ManualFlightInputParser : InputParser
     private void FixedUpdate()
     {
         ApplyForwardThrust(ReadMoveInput().y);
-        ApplyLateralThrust(ReadMoveInput().x);
+        ApplyLateralThrust(ReadMoveInput());
         //ApplyTurningThrust(ReadMoveInput()); Mark: Testing some stuff
         RotateCamera(GetMouseDelta());
         ZoomCamera(GetScrollDelta());
@@ -60,9 +55,9 @@ public class ManualFlightInputParser : InputParser
         manualFlightMovement.ApplyForwardThrust(thrust);
     }
     
-    private void ApplyLateralThrust(float thrust)
+    private void ApplyLateralThrust(Vector2 thrust)
     {
-        manualFlightMovement.ApplyLateralThrust(thrust);
+        manualFlightMovement.ApplyLateralThrust(thrust, ignorePitch);
     }
     
     private void ApplyTurningThrust(Vector2 thrust)

@@ -34,6 +34,20 @@ public class ManualFlightMovement : Movement
     
     [Header("Pilot Options")]
     [SerializeField] protected bool isBrakingAutomatically;
+    [SerializeField] protected bool isPitchingAutomatically;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        maxReverseSpeed = -maxSpeed / 2;
+        maxRotationVelocity = maxSpeed / Mass;
+        maxPitchVelocity = maxRotationVelocity / 2;
+    }
+
+    private void Update()
+    {
+        if (isPitchingAutomatically) ResetPitch();
+    }
 
     public void ApplyForwardThrust(float thrustMultiplier)
     {
@@ -68,24 +82,10 @@ public class ManualFlightMovement : Movement
         MyRigidBody.velocity = transform.forward.normalized * (currentSpeed * Time.deltaTime);
     }
 
-    public void ApplyLateralThrust(float thrustMultiplier)
+    public void ApplyLateralThrust(Vector2 thrustVelocity, bool ignorePitch)
     {
-        if (thrustMultiplier == 0)
-        {
-            turningThrust.x = 0;
-            
-            rotationVelocity.x = Mathf.Lerp(rotationVelocity.x, 0,  Time.deltaTime / (Mass / 2));
-            if (rotationVelocity.x is < 0.5f and > -0.5f)
-                rotationVelocity.x = 0;
-        }
-
-        turningThrust.x += maxTurningThrust * thrustMultiplier * Time.deltaTime;
-        turningThrust.x = Mathf.Clamp(turningThrust.x, -maxTurningThrust, maxTurningThrust);
-        rotationVelocity.x += turningThrust.x / Mass;
-        
-        rotationVelocity.x = Mathf.Clamp(rotationVelocity.x, -maxRotationVelocity, maxRotationVelocity);
-        
-        transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
+        thrustVelocity.y = 0;
+        ApplyTurningThrust(thrustVelocity, ignorePitch);
     }
     
     public void ApplyTurningThrust(Vector2 thrustVelocity, bool ignorePitch)
@@ -94,22 +94,24 @@ public class ManualFlightMovement : Movement
         /*thrustVelocity.y = -thrustVelocity.x / 2;
         ApplyPitchThrust(thrustVelocity.x);*/
         // END Mark: Testing some stuff
-        
-        if (thrustVelocity.magnitude <= 0.05)
+
+        if (thrustVelocity.magnitude <= 0.05f)
         {
             thrustVelocity = Vector2.zero;
             turningThrust = thrustVelocity;
-            rotationVelocity = turningThrust;
+            rotationVelocity = EaseOutVelocity(rotationVelocity, maxTurningThrust);
         }
-
-        turningThrust = GetThrust(thrustVelocity, maxPitchThrust);
-        rotationVelocity = GetAngularVelocity(turningThrust, maxTurningThrust, maxRotationVelocity);
+        else
+        {
+            turningThrust = GetThrust(thrustVelocity, maxPitchThrust);
+            rotationVelocity = GetAngularVelocity(turningThrust, maxTurningThrust, maxRotationVelocity);
+            //rotationVelocity = GetClampedAngularVelocity(rotationVelocity, maxRotationVelocity);
+        }
 
         if (!ignorePitch)
         {
             pitchThrust = GetThrustAdditive(pitchThrust,thrustVelocity.x, maxPitchThrust);
             pitchVelocity = GetAngularVelocity(pitchThrust, maxPitchThrust, maxPitchVelocity);
-            //pitchVelocity = rotationVelocity.x / maxRotationVelocity;
             transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
         }
         else
@@ -141,19 +143,6 @@ public class ManualFlightMovement : Movement
         transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
     }
 
-    public float FixedEulerAngle(float angle)
-    {
-        if (angle < 180)
-        {
-            return angle;
-        }
-        
-        var fixedAngle = 360 - angle;
-        fixedAngle = -fixedAngle;
-
-        return fixedAngle;
-    }
-
     private static float GetThrust(float thrustMultiplier, float maxThrust)
     {
         var thrust = thrustMultiplier * maxThrust;
@@ -180,16 +169,15 @@ public class ManualFlightMovement : Movement
     {
         var angle = Mathf.DeltaAngle(fromAngle, toAngle);
 
-        if (fromAngle > 180)
+        if (angle is < 0.5f and > 0 or < 0 and > -0.5f)
         {
-            angle = 360 - angle;
-            angle = -angle;;
+            return 0;
         }
-        
-        return angle switch
+
+        return fromAngle switch
         {
-            >= 1 => GetThrust(angle / 10, maxThrust),
-            <= -1 => GetThrust(angle / 10, -maxThrust),
+            > 180 => -GetThrust(angle / 10, maxThrust),
+            <= 180 => -GetThrust(angle / 10, maxThrust),
             _ => 0
         };
     }
@@ -205,7 +193,15 @@ public class ManualFlightMovement : Movement
     private static Vector2 GetAngularVelocity(Vector2 thrust, float maxThrust, float maxVelocity)
     {
         Vector2 velocity = (thrust / maxThrust) * maxVelocity;
-        
+
+        velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
+        velocity.y = Mathf.Clamp(velocity.y, -maxVelocity, maxVelocity);
+
+        return velocity;
+    }
+    
+    private static Vector2 GetClampedAngularVelocity(Vector2 velocity, float maxVelocity)
+    {
         velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
         velocity.y = Mathf.Clamp(velocity.y, -maxVelocity, maxVelocity);
 
@@ -222,6 +218,28 @@ public class ManualFlightMovement : Movement
 
         transform.rotation = Quaternion.Slerp(rotation, targetRotation, rotationVelocity.magnitude * Time.deltaTime / Mass);
     }
+
+    private void ResetPitch()
+    {
+        var eulerAngles = transform.eulerAngles;
+        
+        pitchThrust = GetThrustFromAngle(eulerAngles.z,0, maxPitchThrust);
+        pitchVelocity = GetAngularVelocity(pitchThrust,maxPitchThrust, maxPitchVelocity);
+
+        transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
+    }
+    
+    // Experimental
+    
+    private static Vector2 EaseOutVelocity(Vector2 velocity, float maxThrust)
+    {
+        if (velocity.magnitude <= 0.25f)
+        {
+            return Vector2.zero;
+        }
+        
+        return Vector2.Lerp(velocity, Vector2.zero, maxThrust * (velocity.magnitude * 2) * Time.deltaTime);
+    }
     
     private void RotateToAngle(Vector2 to) // So far hasn't worked, purely experimental
     {
@@ -236,14 +254,17 @@ public class ManualFlightMovement : Movement
         transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
         transform.Rotate(Vector3.right * -rotationVelocity.y / Mass);
     }
-
-    private void ResetPitch()
+    
+    private float FixedEulerAngle(float angle)
     {
-        var eulerAngles = transform.eulerAngles;
+        if (angle < 180)
+        {
+            return angle;
+        }
         
-        pitchThrust = GetThrustFromAngle(eulerAngles.z,0, maxPitchThrust);
-        pitchVelocity = GetAngularVelocity(pitchThrust,maxPitchThrust, maxPitchVelocity);
+        var fixedAngle = 360 - angle;
+        fixedAngle = -fixedAngle;
 
-        transform.Rotate(Vector3.forward * -pitchVelocity / Mass);
+        return fixedAngle;
     }
 }

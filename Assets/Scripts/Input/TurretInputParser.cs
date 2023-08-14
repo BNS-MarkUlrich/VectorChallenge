@@ -24,6 +24,20 @@ public class TurretInputParser : InputParser
         _turret.IsAutomaticTurret = false;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        transform.SetParent(transform.root.parent);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        Transform myTransform;
+        (myTransform = transform).SetParent(_turret.transform);
+        myTransform.localPosition = Vector3.zero;
+    }
+
     protected override void AddListeners(out bool hasListeners)
     {
         ControlsActions["Disconnect"].performed += Disconnect;
@@ -50,6 +64,8 @@ public class TurretInputParser : InputParser
     private void FixedUpdate()
     {
         RotateTurret(GetMouseDelta());
+
+        transform.position = _turret.transform.position;
     }
 
     private void RotateTurret(Vector2 rotationDelta)
@@ -70,4 +86,5 @@ public class TurretInputParser : InputParser
     
     // Todo: Add Zoom Function (which also increases/specifies aim assist?
     // Todo#2: When in manual mode, aim assist is limited to camera frustum 
+    // Todo#3: Add (better) Camera stabiliser
 }
