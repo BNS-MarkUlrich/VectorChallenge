@@ -18,7 +18,7 @@ public class PlayerMovement : Movement
     private void Update()
     {
         groundedPlayer = characterController.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
+        if (groundedPlayer)
         {
             playerVelocity.y = 0f;
         }

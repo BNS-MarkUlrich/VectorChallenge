@@ -10,7 +10,7 @@ public class TurretInputParser : InputParser
     [Header("Applied Scripts")]
     [SerializeField] private Turret _turret;
     [SerializeField] private ManualFlightMovement manualFlightMovement;
-    [SerializeField] private FPCameraController _fpCameraController;
+    [SerializeField] private FPCameraController fpCameraController;
     [SerializeField] private CommandTerminal commandTerminal;
 
     [Header("Input Variables")]
@@ -54,8 +54,8 @@ public class TurretInputParser : InputParser
 
     private void RotateTurret(Vector2 rotationDelta)
     {
-        _fpCameraController.LookRotationClamped(rotationDelta, cameraBoundsRadius, cameraSnapRadius);
-        manualFlightMovement.ApplyTurningThrust(_fpCameraController.NormalizedVelocity, ignorePitch);
+        fpCameraController.LookRotationClamped(rotationDelta, cameraBoundsRadius, cameraSnapRadius);
+        manualFlightMovement.RotateTowards(fpCameraController.transform.rotation);
     }
     
     private void Disconnect(InputAction.CallbackContext context)

@@ -38,11 +38,6 @@ public class FPCameraController : MonoBehaviour
     {
         cameraRotation += input;
 
-        /*if (cameraRotation.magnitude <= 0.1f)
-        {
-            cameraRotation = Vector2.zero;
-        }*/
-
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, -radius, radius);
         cameraRotation.y = Mathf.Clamp(cameraRotation.y, -radius, radius);
 
