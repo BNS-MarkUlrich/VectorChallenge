@@ -2,12 +2,20 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class CommandTerminal : Interactable
 {
+    [Header("Applied Scripts")]
     [SerializeField] private InputParser targetInputObject;
     private InputParser userInputParser;
 
+    /*[Header("Display")]
+    [TextArea(4,0)]
+    [SerializeField] private string inputField;
+    [SerializeField] private Text displayText;*/
+    
+    [Header("Unity Events")]
     [SerializeField] private UnityEvent onConnect;
     [SerializeField] private UnityEvent onDisconnect;
 

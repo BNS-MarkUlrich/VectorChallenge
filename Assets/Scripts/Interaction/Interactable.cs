@@ -5,6 +5,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected bool _lockInPlace = true;
 
     private Vector3 originalPosition; // Temp
+    private Quaternion originalRotation; // Temp
     protected Interactor UserInteractor;
     
     protected bool IsInUse;
@@ -12,6 +13,7 @@ public abstract class Interactable : MonoBehaviour
     private void Awake()
     {
         originalPosition = transform.position;
+        originalRotation = transform.rotation;
     }
 
     private void Update()
@@ -37,5 +39,6 @@ public abstract class Interactable : MonoBehaviour
     private void LockInPlace()
     {
         transform.position = originalPosition;
+        transform.rotation = originalRotation;
     }
 }

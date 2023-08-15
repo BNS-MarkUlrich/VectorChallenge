@@ -68,7 +68,7 @@ public class TurretInputParser : InputParser
     {
         if (commandTerminal == null)
         {
-            commandTerminal = GetComponentInChildren<CommandTerminal>();
+            commandTerminal = _turret.GetComponentInChildren<CommandTerminal>();
         }
     }
     

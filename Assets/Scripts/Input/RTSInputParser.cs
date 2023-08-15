@@ -4,18 +4,15 @@ using UnityEngine.InputSystem;
 
 public class RTSInputParser : InputParser
 {
-    [Header("RTS")]
+    [Header("Applied Scripts")]
     [SerializeField] private RTSCameraMovement _rtsCameraMovement;
     [SerializeField] private ShipMovement _shipMovement;
+    [SerializeField] private CommandTerminal commandTerminal;
+    
     private Vector3 mousePosition;
     private bool activateCameraRotation;
-
-    [Header("MoveInput")]
     private Vector3 inputMovement;
-
-    [Header("Connection")]
-    [SerializeField] private CommandTerminal commandTerminal;
-
+    
     public bool IsRefocusingTarget { get; set; }
 
     private void FixedUpdate()

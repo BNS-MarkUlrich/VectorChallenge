@@ -20,6 +20,14 @@ public class FPFlightInputParser : InputParser
     private Vector2 mouseDelta;
 
     private bool isMovingMouse;
+    
+    private void Awake()
+    {
+        if (commandTerminal == null)
+        {
+            commandTerminal = GetComponentInChildren<CommandTerminal>();
+        }
+    }
 
     protected override void AddListeners(out bool hasListeners)
     {
