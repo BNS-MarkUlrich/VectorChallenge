@@ -207,8 +207,28 @@ public class ManualFlightMovement : Movement
 
         return velocity;
     }
+    
+    public void MoveTowards(Transform target)
+    {
+        var position = transform.position;
+        var distance = Vector3.Distance(target.position, position);
+        
+        RotateTowards(target);
+        ApplyForwardThrust(distance);
+    }
 
-    public void RotateTowards(Quaternion targetRotation)
+    public void RotateTowards(Transform rotationTarget)
+    {
+        var targetDirection = rotationTarget.position - transform.position;
+        /*var angle = Vector3.Angle(targetDirection, transform.forward);
+        var turnDirection = Vector3.Dot(targetDirection, transform.right);*/
+
+        transform.LookAt(rotationTarget);
+        
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), rotationVelocity.magnitude * Time.deltaTime / Mass);
+    }
+
+    public void AlignRotation(Quaternion targetRotation)
     {
         var rotation = transform.rotation;
         var angle = Quaternion.Angle(targetRotation, rotation);

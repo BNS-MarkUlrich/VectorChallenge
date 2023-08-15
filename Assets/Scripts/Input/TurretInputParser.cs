@@ -18,22 +18,26 @@ public class TurretInputParser : InputParser
     [SerializeField] private float cameraSnapRadius = 1;
     [SerializeField] private bool ignorePitch =  true;
 
+    private bool wasAutomaticTurret;
+
     protected override void InitInput()
     {
         base.InitInput();
-        _turret.IsAutomaticTurret = false;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
         MakeOwnParent(true);
+        wasAutomaticTurret = _turret.IsAutomaticTurret;
+        _turret.IsAutomaticTurret = false;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         MakeOwnParent(false);
+        _turret.IsAutomaticTurret = wasAutomaticTurret;
     }
 
     protected void MakeOwnParent(bool makeOwnParent)
@@ -87,7 +91,7 @@ public class TurretInputParser : InputParser
     private void RotateTurret(Vector2 rotationDelta)
     {
         fpCameraController.LookRotationClamped(rotationDelta, cameraBoundsRadius, cameraSnapRadius, _turret.AimAssist);
-        manualFlightMovement.RotateTowards(fpCameraController.transform.rotation);
+        manualFlightMovement.AlignRotation(fpCameraController.transform.rotation);
     }
     
     private void Disconnect(InputAction.CallbackContext context)

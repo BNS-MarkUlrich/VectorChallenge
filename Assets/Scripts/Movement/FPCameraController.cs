@@ -64,7 +64,7 @@ public class FPCameraController : MonoBehaviour
         clampDistance = Vector3.Angle(targetDirection, myTransform.forward) / 10;
         if (clampDistance < snapRadius)
         {
-            transform.localRotation = Quaternion.LookRotation(targetDirection);
+            transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * 30);
         }
     }
 

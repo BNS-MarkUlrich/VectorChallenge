@@ -44,13 +44,8 @@ public class RTSInputParser : InputParser
     protected override void OnEnable()
     {
         base.OnEnable();
-        _shipMovement.ResetTarget();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        _shipMovement.DisableTarget();
+        _shipMovement.EnableTarget();
+        _rtsCameraMovement.FocusOnTarget();
     }
 
     // RTS

@@ -17,21 +17,23 @@ public class ShipMovement : ZeroGMovement
 
     private void InitTarget()
     {
-        Target = target; 
-        target.transform.parent = transform.root.parent;
+        Target = target;
     }
 
-    public void ResetTarget()
+    public void EnableTarget()
     {
-        target.gameObject.SetActive(true);
         isFollowingTarget = true;
+        target.transform.parent = transform.root.parent;
+        target.gameObject.SetActive(true);
         target.transform.position = transform.position;
     }
 
     public void DisableTarget()
     {
         isFollowingTarget = false;
+        target.transform.parent = transform;
         target.gameObject.SetActive(false);
+        target.transform.position = transform.position;
     }
 
     public void SetTargetDestination(Vector3 destination)

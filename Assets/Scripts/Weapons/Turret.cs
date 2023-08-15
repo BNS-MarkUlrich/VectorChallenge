@@ -16,7 +16,7 @@ public class Turret : Weapon
     [Header("Automatic Turret")]
     [SerializeField] private bool _isAutomaticTurret;
     [SerializeField] private Transform _target;
-    [SerializeField] private float _maxRange = 100f;
+    [SerializeField] private float _detectionRange = 100f;
     [SerializeField] private LayerMask _detectionLayer;
 
     private float maxCooldownStartTimer;
@@ -61,7 +61,7 @@ public class Turret : Weapon
 
     private void DetectTargets()
     {
-        targetsInRange = Physics.OverlapSphere(transform.position, _maxRange, _detectionLayer);
+        targetsInRange = Physics.OverlapSphere(transform.position, _detectionRange, _detectionLayer);
 
         // Todo: Add better detection for friendly targets
 
@@ -78,7 +78,7 @@ public class Turret : Weapon
             }
             
             var direction = targetsInRange[i].transform.position - transform.position;
-            Physics.Raycast(transform.position, direction, out var hitInfo, _maxRange);
+            Physics.Raycast(transform.position, direction, out var hitInfo, _detectionRange);
 
             if (hitInfo.transform == null) // Removed, caused hasTarget to constantly be set to false. Unknown why added in the first place: || hitInfo.transform != targetsInRange[i].transform
             {
@@ -90,7 +90,7 @@ public class Turret : Weapon
 
             if (hasTarget)
             {
-                _aimAssist.gameObject.SetActive(true);
+                if (isBeingUsed) _aimAssist.gameObject.SetActive(true);
                 Debug.DrawLine(transform.position, _target.transform.position);
                 continue;
             }
@@ -189,9 +189,7 @@ public class Turret : Weapon
         predictedVelocity = _isAutomaticTurret ? AssistedAim(speed) : ManualAim(speed);
         
         var velocityDirection = predictedVelocity - transform.position;
-
         predictedVelocity = velocityDirection.normalized;
-
         predictedVelocity *= speed * speed;
 
         return predictedVelocity;
@@ -235,6 +233,6 @@ public class Turret : Weapon
     private void OnDrawGizmos()
     {
         //Gizmos.DrawRay(transform.position, transform.forward * maxRange);
-        Gizmos.DrawWireSphere(transform.position, _maxRange);
+        Gizmos.DrawWireSphere(transform.position, _detectionRange);
     }
 }
