@@ -14,7 +14,7 @@ public class Rocket : Projectile
     public override void InitBullet(Transform shipOrigin, Turret newOrigin)
     {
         base.InitBullet(shipOrigin, newOrigin);
-        Target = Origin.Target;
+        Target = Origin.AimAssist;
     }
 
     protected override void TargetHit(GameObject target)

@@ -54,6 +54,19 @@ public class FPCameraController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(-clampedCameraRotation.y, clampedCameraRotation.x, 0);
     }
+    
+    public void LookRotationClamped(Vector2 input, float radius, float snapRadius, Transform snapTarget)
+    {
+        LookRotationClamped(input, radius, snapRadius);
+
+        var myTransform = transform;
+        var targetDirection = snapTarget.position - myTransform.position;
+        clampDistance = Vector3.Angle(targetDirection, myTransform.forward) / 10;
+        if (clampDistance < snapRadius)
+        {
+            transform.localRotation = Quaternion.LookRotation(targetDirection);
+        }
+    }
 
     private static Vector2 GetNormalizedVelocity(Vector2 velocity, float maxDelta)
     {

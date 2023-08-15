@@ -21,7 +21,7 @@ public class Bullet : Projectile
     {
         base.InitBullet(shipOrigin, newOrigin);
         launchVelocity = Origin.PredictedVelocity;
-        Target = Origin.Target;
+        Target = Origin.AimAssist;
     }
 
     protected override void TargetHit(GameObject target)

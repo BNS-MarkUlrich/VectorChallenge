@@ -27,12 +27,23 @@ public class TurretInputParser : InputParser
     protected override void OnEnable()
     {
         base.OnEnable();
-        transform.SetParent(transform.root.parent);
+        MakeOwnParent(true);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
+        MakeOwnParent(false);
+    }
+
+    protected void MakeOwnParent(bool makeOwnParent)
+    {
+        if (makeOwnParent)
+        {
+            transform.SetParent(transform.root.parent);
+            return;
+        }
+        
         Transform myTransform;
         (myTransform = transform).SetParent(_turret.transform);
         myTransform.localPosition = Vector3.zero;
@@ -65,12 +76,17 @@ public class TurretInputParser : InputParser
     {
         RotateTurret(GetMouseDelta());
 
+        FollowTurretPosition();
+    }
+
+    private void FollowTurretPosition()
+    {
         transform.position = _turret.transform.position;
     }
 
     private void RotateTurret(Vector2 rotationDelta)
     {
-        fpCameraController.LookRotationClamped(rotationDelta, cameraBoundsRadius, cameraSnapRadius);
+        fpCameraController.LookRotationClamped(rotationDelta, cameraBoundsRadius, cameraSnapRadius, _turret.AimAssist);
         manualFlightMovement.RotateTowards(fpCameraController.transform.rotation);
     }
     

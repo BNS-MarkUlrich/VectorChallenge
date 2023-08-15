@@ -31,6 +31,7 @@ public class Turret : Weapon
     private Rigidbody targetRigidbody;
     private Vector3 predictedVelocity;
 
+    public Transform AimAssist => _aimAssist.transform;
     public Transform Target => _target;
     public Vector3 PredictedVelocity => predictedVelocity;
 
@@ -82,11 +83,14 @@ public class Turret : Weapon
             if (hitInfo.transform == null) // Removed, caused hasTarget to constantly be set to false. Unknown why added in the first place: || hitInfo.transform != targetsInRange[i].transform
             {
                 hasTarget = false;
+                hasAimAssist = false;
+                _aimAssist.gameObject.SetActive(false);
                 continue;
             }
 
             if (hasTarget)
             {
+                _aimAssist.gameObject.SetActive(true);
                 Debug.DrawLine(transform.position, _target.transform.position);
                 continue;
             }
@@ -141,6 +145,8 @@ public class Turret : Weapon
 
         DetectTargets();
 
+        if (!hasAimAssist) _aimAssist.localPosition = -barrel.forward;
+        
         if (_isAutomaticTurret && !hasTarget) return;
 
         if (hasTarget) MoveAimAssist();
@@ -180,7 +186,7 @@ public class Turret : Weapon
     
     public Vector3 CalculateVelocity(float speed)
     {
-        predictedVelocity = hasTarget ? AssistedAim(speed) : ManualAim(speed);
+        predictedVelocity = _isAutomaticTurret ? AssistedAim(speed) : ManualAim(speed);
         
         var velocityDirection = predictedVelocity - transform.position;
 
