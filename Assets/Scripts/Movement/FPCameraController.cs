@@ -12,8 +12,14 @@ public class FPCameraController : MonoBehaviour
     private Vector2 clampedCameraRotation;
     private float clampDistance;
     private Vector2 normalizedVelocity;
+    private Quaternion originalRotation;
 
     public Vector2 NormalizedVelocity => normalizedVelocity;
+
+    private void Awake()
+    {
+        originalRotation = transform.localRotation;
+    }
 
     public void RotateHorizontally(Vector2 input)
     {
@@ -48,11 +54,17 @@ public class FPCameraController : MonoBehaviour
         if (clampDistance < snapRadius)
         {
             clampedCameraRotation = Vector2.zero;
+            
         }
         
         normalizedVelocity = GetNormalizedVelocity(clampedCameraRotation, radius);
 
         transform.localRotation = Quaternion.Euler(-clampedCameraRotation.y, clampedCameraRotation.x, 0);
+        
+        if (clampDistance < snapRadius)
+        {
+            transform.localRotation = originalRotation;
+        }
     }
     
     public void LookRotationClamped(Vector2 input, float radius, float snapRadius, Transform snapTarget)

@@ -80,7 +80,7 @@ public class Turret : Weapon
             var direction = targetsInRange[i].transform.position - transform.position;
             Physics.Raycast(transform.position, direction, out var hitInfo, _detectionRange);
 
-            if (hitInfo.transform == null) // Removed, caused hasTarget to constantly be set to false. Unknown why added in the first place: || hitInfo.transform != targetsInRange[i].transform
+            if (hitInfo.transform == null || hitInfo.collider.gameObject.layer != 6) // Removed, caused hasTarget to constantly be set to false. Unknown why added in the first place: || hitInfo.transform != targetsInRange[i].transform
             {
                 hasTarget = false;
                 hasAimAssist = false;
