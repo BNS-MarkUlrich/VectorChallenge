@@ -366,7 +366,7 @@ MonoBehaviour:
   manualFlightMovement: {fileID: 2717918376514794181}
   fpCameraController: {fileID: 7554940268790665848}
   commandTerminal: {fileID: 0}
-  cameraBoundsRadius: 90
+  cameraBoundsRadius: 180
   cameraSnapRadius: 0.5
   ignorePitch: 1
 --- !u!114 &7554940268790665848
