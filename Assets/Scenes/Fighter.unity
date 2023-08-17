@@ -1309,14 +1309,6 @@ PrefabInstance:
       propertyPath: m_TranslationOffsets.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3664960012247941951, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
-      propertyPath: _maxHeatCapacity
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3664960012247941951, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
-      propertyPath: _isAutomaticTurret
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3828931450035564043, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
       propertyPath: m_Text
       value: '- Individual Turret -

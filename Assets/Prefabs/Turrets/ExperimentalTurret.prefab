@@ -461,6 +461,8 @@ MonoBehaviour:
   maxReverseSpeed: -10
   rotationVelocity: {x: 0, y: 0}
   maxRotationVelocity: 20
+  pitchVelocity: 0
+  maxPitchVelocity: 0.25
   forwardThrust: 0
   maxForwardThrust: 5
   reverseThrust: 0
@@ -469,8 +471,6 @@ MonoBehaviour:
   maxTurningThrust: 2
   pitchThrust: 0
   maxPitchThrust: 0.1
-  pitchVelocity: 0
-  maxPitchVelocity: 0.25
   isBrakingAutomatically: 0
   isPitchingAutomatically: 0
 --- !u!1001 &3261764435452674752
