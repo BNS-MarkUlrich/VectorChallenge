@@ -13,13 +13,10 @@ public class FPFlightInputParser : InputParser
     [SerializeField] private CommandTerminal commandTerminal;
     
     [Header("Input Variables")]
-    [SerializeField] private float cameraBoundsRadius = 15;
-    [SerializeField] private float cameraSnapRadius = 1;
-    [SerializeField] private bool ignorePitch;
-    private Vector2 inputMovement;
-    private Vector2 mouseDelta;
-
-    private bool isMovingMouse;
+    [SerializeField] protected float cameraBoundsRadius = 15;
+    [SerializeField] protected float cameraSnapRadius = 1;
+    [SerializeField] protected bool ignorePitch;
+    protected Vector2 inputMovement;
     
     private void Awake()
     {
@@ -42,36 +39,36 @@ public class FPFlightInputParser : InputParser
         ControlsActions["Disconnect"].performed -= Disconnect;
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         ApplyForwardThrust(ReadMoveInput().y);
         ApplyPitchThrust(ReadMoveInput().x);
         ApplyTurningThrust(GetMouseDelta());
     }
     
-    private Vector2 ReadMoveInput()
+    protected Vector2 ReadMoveInput()
     {
         inputMovement = ControlsActions["Movement"].ReadValue<Vector2>();
         return inputMovement;
     }
 
-    private void ApplyForwardThrust(float thrust)
+    protected void ApplyForwardThrust(float thrust)
     {
         manualFlightMovement.ApplyForwardThrust(thrust);
     }
     
-    private void ApplyPitchThrust(float thrust)
+    protected void ApplyPitchThrust(float thrust)
     {
         manualFlightMovement.ApplyPitchThrust(thrust);
     }
     
-    private void ApplyTurningThrust(Vector2 thrust)
+    protected void ApplyTurningThrust(Vector2 thrust)
     {
         fpCameraController.LookRotationClamped(thrust, cameraBoundsRadius, cameraSnapRadius);
         manualFlightMovement.ApplyTurningThrust(fpCameraController.NormalizedVelocity, ignorePitch);
     }
     
-    private void Disconnect(InputAction.CallbackContext context)
+    protected void Disconnect(InputAction.CallbackContext context)
     {
         commandTerminal.Disconnect();
     }

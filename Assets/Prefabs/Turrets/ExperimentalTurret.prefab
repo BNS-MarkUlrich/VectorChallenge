@@ -141,6 +141,7 @@ MonoBehaviour:
   _cooldownStartTimer: 0.5
   _isAutomaticTurret: 0
   _target: {fileID: 0}
+  shouldDetectTargets: 1
   _detectionRange: 40
   _detectionLayer:
     serializedVersion: 2

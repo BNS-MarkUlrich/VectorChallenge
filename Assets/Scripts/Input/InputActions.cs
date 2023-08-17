@@ -700,6 +700,180 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Fighter"",
+            ""id"": ""d0aef565-ee79-4881-ba26-2af42ef3dc18"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""19afe8d7-20fa-4341-9d39-acc31c4ab2bc"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""d5b3f330-83d1-4f48-9fb8-ef8936e3681b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollZoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ea9c5e8a-1d10-4007-932c-f43897ff9771"",
+                    ""expectedControlType"": ""Delta"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Disconnect"",
+                    ""type"": ""Button"",
+                    ""id"": ""1bb21570-f524-4ecc-ab16-6c08a47eac92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""60115287-f19a-4a38-a459-fa0dbcd8c39d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7a561238-e9b5-42c2-bf7b-58a0c4ae0a06"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""411a414d-e412-4531-a1e9-494200a4de35"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""49433c5f-9722-4e8a-b7f8-0dc9f5ee3b5d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""3e536d50-5618-43b3-86cc-148a5546c110"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e26a7de6-948f-4574-9118-95b08da87b44"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c6c6fc7-6890-42b4-88f9-81d1dba65f4e"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37a78940-8fa4-4de5-a91e-5c75ed91f926"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Disconnect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1aed32aa-c492-40d5-b48c-28b9529126a8"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Disconnect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15926f71-a730-4043-a0b5-2b9a67879cc8"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ScrollZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6ab172b-301d-49ca-8ced-12bc7a58a849"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""780fe470-d06a-4131-bd2a-4a9361fb6068"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -758,6 +932,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Ship_MouseDelta = m_Ship.FindAction("MouseDelta", throwIfNotFound: true);
         m_Ship_ScrollZoom = m_Ship.FindAction("ScrollZoom", throwIfNotFound: true);
         m_Ship_Disconnect = m_Ship.FindAction("Disconnect", throwIfNotFound: true);
+        // Fighter
+        m_Fighter = asset.FindActionMap("Fighter", throwIfNotFound: true);
+        m_Fighter_Movement = m_Fighter.FindAction("Movement", throwIfNotFound: true);
+        m_Fighter_MouseDelta = m_Fighter.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Fighter_ScrollZoom = m_Fighter.FindAction("ScrollZoom", throwIfNotFound: true);
+        m_Fighter_Disconnect = m_Fighter.FindAction("Disconnect", throwIfNotFound: true);
+        m_Fighter_Shoot = m_Fighter.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1111,6 +1292,84 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         }
     }
     public ShipActions @Ship => new ShipActions(this);
+
+    // Fighter
+    private readonly InputActionMap m_Fighter;
+    private List<IFighterActions> m_FighterActionsCallbackInterfaces = new List<IFighterActions>();
+    private readonly InputAction m_Fighter_Movement;
+    private readonly InputAction m_Fighter_MouseDelta;
+    private readonly InputAction m_Fighter_ScrollZoom;
+    private readonly InputAction m_Fighter_Disconnect;
+    private readonly InputAction m_Fighter_Shoot;
+    public struct FighterActions
+    {
+        private @InputActions m_Wrapper;
+        public FighterActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Fighter_Movement;
+        public InputAction @MouseDelta => m_Wrapper.m_Fighter_MouseDelta;
+        public InputAction @ScrollZoom => m_Wrapper.m_Fighter_ScrollZoom;
+        public InputAction @Disconnect => m_Wrapper.m_Fighter_Disconnect;
+        public InputAction @Shoot => m_Wrapper.m_Fighter_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_Fighter; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FighterActions set) { return set.Get(); }
+        public void AddCallbacks(IFighterActions instance)
+        {
+            if (instance == null || m_Wrapper.m_FighterActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FighterActionsCallbackInterfaces.Add(instance);
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
+            @ScrollZoom.started += instance.OnScrollZoom;
+            @ScrollZoom.performed += instance.OnScrollZoom;
+            @ScrollZoom.canceled += instance.OnScrollZoom;
+            @Disconnect.started += instance.OnDisconnect;
+            @Disconnect.performed += instance.OnDisconnect;
+            @Disconnect.canceled += instance.OnDisconnect;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+        }
+
+        private void UnregisterCallbacks(IFighterActions instance)
+        {
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
+            @ScrollZoom.started -= instance.OnScrollZoom;
+            @ScrollZoom.performed -= instance.OnScrollZoom;
+            @ScrollZoom.canceled -= instance.OnScrollZoom;
+            @Disconnect.started -= instance.OnDisconnect;
+            @Disconnect.performed -= instance.OnDisconnect;
+            @Disconnect.canceled -= instance.OnDisconnect;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+        }
+
+        public void RemoveCallbacks(IFighterActions instance)
+        {
+            if (m_Wrapper.m_FighterActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IFighterActions instance)
+        {
+            foreach (var item in m_Wrapper.m_FighterActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_FighterActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public FighterActions @Fighter => new FighterActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -1158,5 +1417,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnMouseDelta(InputAction.CallbackContext context);
         void OnScrollZoom(InputAction.CallbackContext context);
         void OnDisconnect(InputAction.CallbackContext context);
+    }
+    public interface IFighterActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
+        void OnScrollZoom(InputAction.CallbackContext context);
+        void OnDisconnect(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

@@ -1309,6 +1309,18 @@ PrefabInstance:
       propertyPath: m_TranslationOffsets.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3664960012247941951, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
+      propertyPath: _projectilePrefab
+      value: 
+      objectReference: {fileID: 2129984051130309635, guid: 4451213e81e5509409fb1e2f2908cb5f, type: 3}
+    - target: {fileID: 3664960012247941951, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
+      propertyPath: _isAutomaticTurret
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664960012247941951, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
+      propertyPath: _shootCooldownTimer
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3828931450035564043, guid: b11510f677b9d4b4ab71c0fcc8325003, type: 3}
       propertyPath: m_Text
       value: '- Individual Turret -
@@ -1597,6 +1609,10 @@ PrefabInstance:
     - target: {fileID: 4698737158931928344, guid: b5d7868ae99337a459384f0358f8c7cb, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4896534809805365944, guid: b5d7868ae99337a459384f0358f8c7cb, type: 3}
+      propertyPath: m_Drag
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5811334467860459074, guid: b5d7868ae99337a459384f0358f8c7cb, type: 3}
       propertyPath: m_Layer

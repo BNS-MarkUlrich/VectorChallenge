@@ -16,6 +16,7 @@ public class Turret : Weapon
     [Header("Automatic Turret")]
     [SerializeField] private bool _isAutomaticTurret;
     [SerializeField] private Transform _target;
+    [SerializeField] private bool shouldDetectTargets = true;
     [SerializeField] private float _detectionRange = 100f;
     [SerializeField] private LayerMask _detectionLayer;
 
@@ -143,7 +144,7 @@ public class Turret : Weapon
 
         ShootCooldown();
 
-        DetectTargets();
+        if (shouldDetectTargets) DetectTargets();
 
         if (!hasAimAssist) _aimAssist.localPosition = -barrel.forward;
         
