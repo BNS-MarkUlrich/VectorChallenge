@@ -13,6 +13,9 @@ public class ManualFlightMovement : Movement
     [Header("Rotation")]
     [SerializeField] protected Vector2 rotationVelocity;
     [SerializeField] protected float maxRotationVelocity;
+    
+    [SerializeField] protected float pitchVelocity;
+    [SerializeField] protected float maxPitchVelocity;
 
     [Header("Forward Thrust")]
     [SerializeField] protected float forwardThrust;
@@ -29,9 +32,7 @@ public class ManualFlightMovement : Movement
     [Header("Pitch Thrust")]
     [SerializeField] protected float pitchThrust;
     [SerializeField] protected float maxPitchThrust;
-    [SerializeField] protected float pitchVelocity;
-    [SerializeField] protected float maxPitchVelocity;
-    
+
     [Header("Pilot Options")]
     [SerializeField] protected bool isBrakingAutomatically;
     [SerializeField] protected bool isPitchingAutomatically;
@@ -39,9 +40,9 @@ public class ManualFlightMovement : Movement
     protected override void Awake()
     {
         base.Awake();
-        maxReverseSpeed = -maxSpeed / 2;
+        maxReverseSpeed = -maxSpeed / Mass;
         maxRotationVelocity = maxSpeed / Mass;
-        maxPitchVelocity = maxRotationVelocity / 2;
+        maxPitchVelocity = maxRotationVelocity / 4;
     }
 
     private void Update()
@@ -124,7 +125,7 @@ public class ManualFlightMovement : Movement
         transform.Rotate(Vector3.up * rotationVelocity.x / Mass);
         transform.Rotate(Vector3.right * -rotationVelocity.y / Mass);
         
-        MyRigidBody.MoveRotation(transform.rotation);
+        //MyRigidBody.MoveRotation(transform.rotation);
     }
     
     public void ApplyPitchThrust(float thrustMultiplier)
