@@ -103,6 +103,7 @@ public class Waypoint : MonoBehaviour
         isOccupied = false;
         parentGrid.SubscribeToGrid(this);
         RefreshConnectedWaypoints();
+        InitialCollisionCheck();
     }
 
     private void OnDrawGizmos()
