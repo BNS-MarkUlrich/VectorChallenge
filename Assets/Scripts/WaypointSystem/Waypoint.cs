@@ -11,7 +11,7 @@ public class Waypoint : MonoBehaviour
     [SerializeField] private Grid parentGrid;
     [SerializeField] private float connectedWaypointRadius;
     [SerializeField] private bool isOccupied;
-    [SerializeField] private Collider2D[] hits = new Collider2D[7];
+    [SerializeField] private Collider2D[] hits = new Collider2D[8];
     [SerializeField] private List<Waypoint> connectedWaypoints = new List<Waypoint>();
 
     [Header("Debugging")]
@@ -56,6 +56,12 @@ public class Waypoint : MonoBehaviour
         RefreshConnectedWaypoints();
 
         isDeadEnd = connectedWaypoints.Count <= 1;
+
+        if (isDeadEnd)
+        {
+            newWaypoint = null;
+            return;
+        }
         var randomIndex = Random.Range(0, connectedWaypoints.Count);
         newWaypoint = connectedWaypoints[randomIndex];
     }
@@ -72,7 +78,7 @@ public class Waypoint : MonoBehaviour
 
             if (hits[i].TryGetComponent(out connectedWaypoint))
             {
-                if (connectedWaypoints.Contains(connectedWaypoint))
+                if (connectedWaypoints.Contains(connectedWaypoint) || !hits.Contains(hits[i]))
                 {
                     if (connectedWaypoint.isOccupied) connectedWaypoints.Remove(connectedWaypoint);
                     continue;
@@ -85,7 +91,7 @@ public class Waypoint : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         if (isOccupied) return;
         isOccupied = true;
@@ -96,6 +102,7 @@ public class Waypoint : MonoBehaviour
     {
         isOccupied = false;
         parentGrid.SubscribeToGrid(this);
+        RefreshConnectedWaypoints();
     }
 
     private void OnDrawGizmos()
