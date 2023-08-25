@@ -16,11 +16,22 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         myRigidBody = GetComponent<Rigidbody2D>();
+        
+        InitialiseWaypoint();
+    }
 
-        if (currentWaypoint == null)
+    private void InitialiseWaypoint()
+    {
+        if (currentWaypoint != null) return;
+        
+        var hits = new Collider2D[2];
+        var hitCount = Physics2D.OverlapBoxNonAlloc(transform.position, transform.localScale, 0, hits);
+
+        for (int i = 0; i < hitCount; i++)
         {
-            var hit = Physics2D.OverlapCircle(transform.position, transform.localScale.magnitude);
-            hit.TryGetComponent(out currentWaypoint);
+            if (currentWaypoint != null) continue;
+                
+            hits[i].TryGetComponent(out currentWaypoint);
             lastWaypoint = currentWaypoint;
         }
         

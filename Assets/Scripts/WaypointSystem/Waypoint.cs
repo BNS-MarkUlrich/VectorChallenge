@@ -18,6 +18,32 @@ public class Waypoint : MonoBehaviour
     [SerializeField] private bool drawGizmos;
 
     private Waypoint connectedWaypoint;
+    private bool gameStart;
+
+    private void Awake()
+    {
+        gameStart = true;
+        InitialCollisionCheck();
+    }
+
+    private void InitialCollisionCheck()
+    {
+        var hitCount = Physics2D.OverlapBoxNonAlloc(transform.position, transform.localScale / 2, 0, hits);
+
+        if (hitCount <= 1)
+        {
+            isOccupied = false;
+            return;
+        }
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            if (isOccupied) continue;
+            if (hits[i].gameObject == gameObject) continue;
+            
+            isOccupied = true;
+        }
+    }
 
     public void SetGrid(Grid grid)
     {
@@ -61,6 +87,7 @@ public class Waypoint : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        if (isOccupied) return;
         isOccupied = true;
         parentGrid.UnsubscribeFromGrid(this);
     }
@@ -73,6 +100,18 @@ public class Waypoint : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.gray;
+
+        if (!gameStart)
+        {
+            InitialCollisionCheck();
+        }
+        
+        if (!isOccupied)
+        {
+            Gizmos.DrawWireCube(transform.position, transform.localScale / 2);
+        }
+
         if (drawGizmos)
         {
             Gizmos.DrawWireSphere(transform.position, connectedWaypointRadius);

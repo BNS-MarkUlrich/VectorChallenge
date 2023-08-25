@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d5725ef69f0fa24d807b56337a29a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentGrid: {fileID: 0}
   connectedWaypointRadius: 1
   isOccupied: 0
   hits:
@@ -56,6 +57,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   connectedWaypoints: []
+  drawGizmos: 0
 --- !u!61 &4460970928859456367
 BoxCollider2D:
   m_ObjectHideFlags: 0
