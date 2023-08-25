@@ -9,11 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private Waypoint currentWaypoint;
     [SerializeField] private Waypoint lastWaypoint;
-
-    [Header("Performance")]
-    [SerializeField] private int maxWaypointCallStack = 2;
     
-    private int newWaypointCallStack;
     private Vector2 moveVelocity;
     private Rigidbody2D myRigidBody;
 
@@ -35,32 +31,29 @@ public class EnemyMovement : MonoBehaviour
     {
         if (HasReachedWaypoint())
         {
-            GetNewWaypoint();
+            UpdateWaypoint();
             MoveToWaypoint();
         }
 
         Debug.DrawLine(transform.position, currentWaypoint.transform.position);
     }
 
-    private void GetNewWaypoint()
+    private void UpdateWaypoint()
     {
-        if (newWaypointCallStack >= maxWaypointCallStack)
+        currentWaypoint.GetConnectedWaypoint(out var newWaypoint, out var isDeadEnd);
+
+        if (isDeadEnd)
         {
             currentWaypoint = lastWaypoint;
-            newWaypointCallStack = 0;
         }
-        
-        if (currentWaypoint.GetConnectedWaypoint() != lastWaypoint)
+        else if (newWaypoint == lastWaypoint)
         {
-            lastWaypoint = currentWaypoint;
-            currentWaypoint = currentWaypoint.GetConnectedWaypoint();
-            newWaypointCallStack = 0;
+            UpdateWaypoint();
         }
         else
         {
-            currentWaypoint.GetConnectedWaypoint();
-            newWaypointCallStack++;
-            print($"{transform.name} : {newWaypointCallStack}");
+            lastWaypoint = currentWaypoint;
+            currentWaypoint = newWaypoint;
         }
     }
 

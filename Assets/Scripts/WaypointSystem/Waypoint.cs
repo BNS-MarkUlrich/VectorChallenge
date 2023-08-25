@@ -19,25 +19,19 @@ public class Waypoint : MonoBehaviour
 
     private Waypoint connectedWaypoint;
 
-    public bool IsOccupied => isOccupied;
-
-    /*private void Awake()
-    {
-        SetGrid(GetComponentInParent<Grid>());
-    }*/
-
     public void SetGrid(Grid grid)
     {
         parentGrid = grid;
         parentGrid.SubscribeToGrid(this);
     }
 
-    public Waypoint GetConnectedWaypoint()
+    public void GetConnectedWaypoint(out Waypoint newWaypoint, out bool isDeadEnd)
     {
         RefreshConnectedWaypoints();
-        
+
+        isDeadEnd = connectedWaypoints.Count <= 1;
         var randomIndex = Random.Range(0, connectedWaypoints.Count);
-        return connectedWaypoints[randomIndex];
+        newWaypoint = connectedWaypoints[randomIndex];
     }
 
     private void RefreshConnectedWaypoints()
